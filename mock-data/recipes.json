@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Chicken Pesto Wrap",
+    "imgPath": "/mock-images/ds-img-1.jpg",
+    "description": "Chicken, pesto, spinach and sun-dried tomatoes in a tortilla."
+  },
+  {
+    "name": "Berry Spinach Salad",
+    "imgPath": "/mock-images/taylor-kiser-EvoIiaIVRzU-unsplash.jpg",
+    "description": "Fresh spinach, mixed berries, and feta, vibrant salad."
+  },
+  {
+    "name": "Spicy Mango Salsa",
+    "imgPath": "/mock-images/tai-s-captures-6cguFN39fKU-unsplash.jpg",
+    "description": "A zesty blend of diced ripe mangoes, red onions, jalapeños, and fresh cilantro, creating a tantalizing balance of sweetness and heat."
+  },
+  {
+    "name": "Greek Yoghurt Parfait",
+    "imgPath": "/mock-images/alisha-hieb-LzrMzmVWhJw-unsplash.jpg",
+    "description": "Layers of creamy Greek yogurt, honey, crunchy granola, and a medley of mixed berries, forming a delectable and nutritious parfait."
+  },
+  {
+    "name": "Roasted Garlic Broccoli",
+    "imgPath": "/mock-images/jessica-tan-NCNPlp7ZpKA-unsplash.jpg",
+    "description": "Tender broccoli roasted with garlic, rich in flavor."
+  },
+  {
+    "name": "Avocado Toast",
+    "imgPath": "/mock-images/douglas-bagg-7GO11y7bznw-unsplash.jpg",
+    "description": "Creamy avocado on toasted bread, simple delight."
+  },
+  {
+    "name": "Mediterranean Quinoa Salad",
+    "imgPath": "/mock-images/shashi-chaturvedula-oYvZ-stypr4-unsplash.jpg",
+    "description": "Quinoa, veggies, feta, lemon dressing - light and zesty."
+  }
+]
