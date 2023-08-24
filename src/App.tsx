@@ -1,11 +1,11 @@
+import Home from "./home";
+
 function App() {
   return (
-    <>
-      <p className="text-red-500 text-lg">
-        Welcome to project
-      </p>
-    </>
-  )
+    <div className="bg-[#f6efdd]">
+      <Home />
+    </div>
+  );
 }
 
-export default App
+export default App;
