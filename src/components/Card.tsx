@@ -1,16 +1,18 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface CardProps {
+  id: number;
   name: string;
   imgPath: string;
   description: string;
 }
 
-function Card({ name, imgPath, description }: CardProps) {
+function Card({ id, name, imgPath, description }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
-    <a href="/">
+    <Link to={`/recipe/${id}`}>
       <div className="flex flex-col">
         <img
           className="h-64 w-full object-cover rounded-2xl"
@@ -19,7 +21,12 @@ function Card({ name, imgPath, description }: CardProps) {
         />
         <div className="flex justify-between mt-6">
           <h2 className="text-xl text-green-800">{name}</h2>
-          <button onClick={() => setIsBookmarked(!isBookmarked)}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsBookmarked(!isBookmarked);
+            }}
+          >
             {isBookmarked ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +58,7 @@ function Card({ name, imgPath, description }: CardProps) {
         </div>
         <p className="text-md mt-2">{description}</p>
       </div>
-    </a>
+    </Link>
   );
 }
 
