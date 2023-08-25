@@ -9,6 +9,10 @@ export default {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
     },
+    screens: {
+      xs: "360px",
+      ...defaultTheme.screens,
+    },
   },
   plugins: [],
 };
