@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-interface CardProps {
-  id: number;
-  name: string;
-  imgPath: string;
-  description: string;
-}
+import ICard from "../types/CardInterface";
+
+interface CardProps extends ICard {}
 
 function Card({ id, name, imgPath, description }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
