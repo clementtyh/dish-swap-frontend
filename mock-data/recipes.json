@@ -39,6 +39,24 @@
     "id": 7,
     "name": "Mediterranean Quinoa Salad",
     "imgPath": "/mock-images/shashi-chaturvedula-oYvZ-stypr4-unsplash.jpg",
-    "description": "Quinoa, veggies, feta, lemon dressing - light and zesty."
+    "description": "Quinoa, veggies, feta, lemon dressing - light and zesty"
+  },
+  {
+    "id": 8,
+    "name": "Berries & Pancakes",
+    "imgPath": "/mock-images/mekht-GuvimT4IFok-unsplash.jpg",
+    "description": "Strawberries, blueberries and pancakes for sweet and filling breakfast."
+  },
+  {
+    "id": 9,
+    "name": "Banana Bread",
+    "imgPath": "/mock-images/20144-banana-banana-bread-mfs-57-0bb49d050a6941c4b3715e57b8e6badd.webp",
+    "description": "Delicious, moist loaf with lots of banana flavour."
+  },
+  {
+    "id": 10,
+    "name": "Classic Cheesy Lasagna",
+    "imgPath": "/mock-images/23600-worlds-best-lasagna-armag-4x3-1-b24f9ad518d74090bf197828492c64a6.webp",
+    "description": "Cheesy lasagna layered with ricotta, mozzarella, and parmesan."
   }
 ]
