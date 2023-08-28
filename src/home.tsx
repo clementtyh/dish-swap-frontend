@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
+import recipesData from "../mock-data/recipes.json";
+
 import ICard from "./types/CardInterface";
 
-import recipesData from "../mock-data/recipes.json";
 import Container from "./components/Container";
 import NavBar from "./components/NavBar";
 import CardsGrid from "./components/CardsGrid";
