@@ -1,11 +1,15 @@
+import { QueryClient, QueryClientProvider } from "react-query";
+
+import Home from "./home";
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <>
-      <p className="text-red-500 text-lg">
-        Welcome to project
-      </p>
-    </>
-  )
+    <QueryClientProvider client={queryClient}>
+      <Home />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
