@@ -72,14 +72,16 @@ function Recipe() {
                 <p className="text-green-900 text-xl font-bold">642</p>
               </button>
             </div>
-            <p className="text-md mt-4 max-w-[50%]">{data.description}</p>
+            <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
+              {data.description}
+            </p>
             <img
               className="mt-8 h-96 w-full object-cover rounded-xl"
               src={data.imgPath}
               alt={data.name}
             />
-            <div className="flex mt-16 gap-8">
-              <div className="w-2/3">
+            <div className="flex mt-16 gap-8 flex-col lg:flex-row">
+              <div className="w-full lg:w-2/3">
                 <div className="bg-[#dce0ba] rounded-lg p-4">
                   <p className="text-xl text-green-900 font-bold">
                     Ingredients
@@ -101,7 +103,7 @@ function Recipe() {
                   </ol>
                 </div>
               </div>
-              <div className="w-1/3">
+              <div className="w-full lg:w-1/3">
                 <div className="flex flex-col gap-8 bg-[#eedcb4] rounded-lg p-8">
                   <div className="flex justify-between">
                     <p className="text-xl text-green-900 font-bold">
