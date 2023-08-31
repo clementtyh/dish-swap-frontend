@@ -1,3 +1,5 @@
+import IReview from "./ReviewInterface";
+
 interface Card {
   id: number;
   name: string;
@@ -16,6 +18,7 @@ interface Card {
   difficulty: string;
   totalTime: string;
   servings: number;
+  reviews: IReview[];
 }
 
 export default Card;
