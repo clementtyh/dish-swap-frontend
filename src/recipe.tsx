@@ -9,9 +9,11 @@ import ICard from "./types/CardInterface";
 import Container from "./components/Container";
 import NavBar from "./components/NavBar";
 import ReviewCardsGrid from "./components/ReviewCardsGrid";
+import PaginationButtons from "./components/PaginationButtons";
 
 function Recipe() {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [reviewsPage, setReviewsPage] = useState(1);
 
   const { recipeId } = useParams();
 
@@ -134,8 +136,20 @@ function Recipe() {
             </div>
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-xl text-green-900 font-bold">Reviews</h2>
-              <div className="mt-16">
-                <ReviewCardsGrid cards={data.reviews} />
+              <div className="mt-16 w-full">
+                <ReviewCardsGrid
+                  cards={data.reviews.slice(
+                    (reviewsPage - 1) * 6,
+                    reviewsPage * 6
+                  )}
+                />
+              </div>
+              <div>
+                <PaginationButtons
+                  pages={Math.ceil(data.reviews.length / 6)}
+                  page={reviewsPage}
+                  setPage={setReviewsPage}
+                />
               </div>
             </div>
           </>
