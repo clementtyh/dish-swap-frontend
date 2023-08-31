@@ -104,7 +104,7 @@ function Recipe() {
                 </div>
               </div>
               <div className="w-full lg:w-1/3">
-                <div className="flex flex-col gap-8 bg-[#eedcb4] rounded-lg p-8">
+                <div className="flex flex-col gap-8 bg-[#eedcb4] rounded-lg p-4 md:p-8">
                   <div className="flex justify-between">
                     <p className="text-xl text-green-900 font-bold">
                       Difficulty

@@ -4,7 +4,7 @@ interface ReviewCardProps extends IReview {}
 
 function ReviewCard({ reviewer, rating, review }: ReviewCardProps) {
   return (
-    <div className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-8">
+    <div className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-4 md:p-8">
       <div className="self-center flex gap-2">
         {[...Array(rating).keys()].map(() => (
           <svg
