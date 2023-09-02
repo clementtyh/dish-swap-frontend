@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import ICard from "../types/CardInterface";
+import ICard from "../types/CardInterface.js";
 
 interface CardProps extends ICard {}
 

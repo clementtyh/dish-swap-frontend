@@ -4,12 +4,12 @@ import { useQuery } from "react-query";
 
 import recipesData from "../mock-data/recipes.json";
 
-import ICard from "./types/CardInterface";
+import ICard from "./types/CardInterface.js";
 
-import Container from "./components/Container";
-import NavBar from "./components/NavBar";
-import ReviewCardsGrid from "./components/ReviewCardsGrid";
-import PaginationButtons from "./components/PaginationButtons";
+import Container from "./components/Container.js";
+import NavBar from "./components/NavBar.js";
+import ReviewCardsGrid from "./components/ReviewCardsGrid.js";
+import PaginationButtons from "./components/PaginationButtons.js";
 
 function Recipe() {
   const [isBookmarked, setIsBookmarked] = useState(false);

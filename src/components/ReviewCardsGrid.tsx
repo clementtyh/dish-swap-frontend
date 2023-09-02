@@ -1,6 +1,6 @@
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "./ReviewCard.js";
 
-import IReview from "../types/ReviewInterface";
+import IReview from "../types/ReviewInterface.js";
 
 interface ReivewCardsGridProps {
   cards: IReview[];

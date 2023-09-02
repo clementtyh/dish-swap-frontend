@@ -1,4 +1,4 @@
-import IReview from "../types/ReviewInterface";
+import IReview from "../types/ReviewInterface.js";
 
 interface ReviewCardProps extends IReview {}
 

@@ -3,12 +3,12 @@ import { useQuery } from "react-query";
 
 import recipesData from "../mock-data/recipes.json";
 
-import ICard from "./types/CardInterface";
+import ICard from "./types/CardInterface.js";
 
-import Container from "./components/Container";
-import NavBar from "./components/NavBar";
-import CardsGrid from "./components/CardsGrid";
-import PaginationButtons from "./components/PaginationButtons";
+import Container from "./components/Container.js";
+import NavBar from "./components/NavBar.js";
+import CardsGrid from "./components/CardsGrid.js";
+import PaginationButtons from "./components/PaginationButtons.js";
 
 function Home() {
   const [page, setPage] = useState(1);

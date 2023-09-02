@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import Home from "./home.tsx";
-import Recipe from "./recipe.tsx";
+import Home from "./home.js";
+import Recipe from "./recipe.js";
 import "./index.css";
 
 const router = createBrowserRouter([

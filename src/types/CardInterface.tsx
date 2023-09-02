@@ -1,4 +1,4 @@
-import IReview from "./ReviewInterface";
+import IReview from "./ReviewInterface.js";
 
 interface Card {
   id: number;
