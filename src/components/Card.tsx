@@ -17,7 +17,7 @@ function Card({ id, name, imgPath, description }: CardProps) {
           alt={name}
         />
         <div className="flex justify-between mt-6">
-          <h2 className="text-xl text-green-800">{name}</h2>
+          <h2 className="text-xl text-green-900">{name}</h2>
           <button
             onClick={(e) => {
               e.preventDefault();

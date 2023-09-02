@@ -3,60 +3,605 @@
     "id": 1,
     "name": "Chicken Pesto Wrap",
     "imgPath": "/mock-images/ds-img-1.jpg",
-    "description": "Chicken, pesto, spinach and sun-dried tomatoes in a tortilla."
+    "description": "Chicken, pesto, spinach and sun-dried tomatoes in a tortilla.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      },
+      {
+        "reviewer": "HeyDude",
+        "rating": 5,
+        "review": "Delicious!"
+      },
+      {
+        "reviewer": "GiantFondue",
+        "rating": 3,
+        "review": "So-so for me, quite tasty but really made a big mess doing it."
+      },
+      {
+        "reviewer": "MomsCooking",
+        "rating": 4,
+        "review": "Great recipe!"
+      }
+    ]
   },
   {
     "id": 2,
     "name": "Berry Spinach Salad",
     "imgPath": "/mock-images/taylor-kiser-EvoIiaIVRzU-unsplash.jpg",
-    "description": "Fresh spinach, mixed berries, and feta, vibrant salad."
+    "description": "Fresh spinach, mixed berries, and feta, vibrant salad.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      }
+    ]
   },
   {
     "id": 3,
     "name": "Spicy Mango Salsa",
     "imgPath": "/mock-images/tai-s-captures-6cguFN39fKU-unsplash.jpg",
-    "description": "A zesty blend of diced ripe mangoes, red onions, jalapeños, and fresh cilantro, creating a tantalizing balance of sweetness and heat."
+    "description": "A zesty blend of diced ripe mangoes, red onions, jalapeños, and fresh cilantro, creating a tantalizing balance of sweetness and heat.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      }
+    ]
   },
   {
     "id": 4,
     "name": "Greek Yoghurt Parfait",
     "imgPath": "/mock-images/alisha-hieb-LzrMzmVWhJw-unsplash.jpg",
-    "description": "Layers of creamy Greek yogurt, honey, crunchy granola, and a medley of mixed berries, forming a delectable and nutritious parfait."
+    "description": "Layers of creamy Greek yogurt, honey, crunchy granola, and a medley of mixed berries, forming a delectable and nutritious parfait.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      },
+      {
+        "reviewer": "HeyDude",
+        "rating": 5,
+        "review": "Delicious!"
+      },
+      {
+        "reviewer": "GiantFondue",
+        "rating": 3,
+        "review": "So-so for me, quite tasty but really made a big mess doing it."
+      }
+    ]
   },
   {
     "id": 5,
     "name": "Roasted Garlic Broccoli",
     "imgPath": "/mock-images/jessica-tan-NCNPlp7ZpKA-unsplash.jpg",
-    "description": "Tender broccoli roasted with garlic, rich in flavor."
+    "description": "Tender broccoli roasted with garlic, rich in flavor.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      },
+      {
+        "reviewer": "HeyDude",
+        "rating": 5,
+        "review": "Delicious!"
+      },
+      {
+        "reviewer": "GiantFondue",
+        "rating": 3,
+        "review": "So-so for me, quite tasty but really made a big mess doing it."
+      }
+    ]
   },
   {
     "id": 6,
     "name": "Avocado Toast",
     "imgPath": "/mock-images/douglas-bagg-7GO11y7bznw-unsplash.jpg",
-    "description": "Creamy avocado on toasted bread, simple delight."
+    "description": "Creamy avocado on toasted bread, simple delight.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      }
+    ]
   },
   {
     "id": 7,
     "name": "Mediterranean Quinoa Salad",
     "imgPath": "/mock-images/shashi-chaturvedula-oYvZ-stypr4-unsplash.jpg",
-    "description": "Quinoa, veggies, feta, lemon dressing - light and zesty"
+    "description": "Quinoa, veggies, feta, lemon dressing - light and zesty",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      }
+    ]
   },
   {
     "id": 8,
     "name": "Berries & Pancakes",
     "imgPath": "/mock-images/mekht-GuvimT4IFok-unsplash.jpg",
-    "description": "Strawberries, blueberries and pancakes for sweet and filling breakfast."
+    "description": "Strawberries, blueberries and pancakes for sweet and filling breakfast.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      },
+      {
+        "reviewer": "HeyDude",
+        "rating": 5,
+        "review": "Delicious!"
+      },
+      {
+        "reviewer": "GiantFondue",
+        "rating": 3,
+        "review": "So-so for me, quite tasty but really made a big mess doing it."
+      },
+      {
+        "reviewer": "MomsCooking",
+        "rating": 4,
+        "review": "Great recipe!"
+      }
+    ]
   },
   {
     "id": 9,
     "name": "Banana Bread",
     "imgPath": "/mock-images/20144-banana-banana-bread-mfs-57-0bb49d050a6941c4b3715e57b8e6badd.webp",
-    "description": "Delicious, moist loaf with lots of banana flavour."
+    "description": "Delicious, moist loaf with lots of banana flavour.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      }
+    ]
   },
   {
     "id": 10,
     "name": "Classic Cheesy Lasagna",
     "imgPath": "/mock-images/23600-worlds-best-lasagna-armag-4x3-1-b24f9ad518d74090bf197828492c64a6.webp",
-    "description": "Cheesy lasagna layered with ricotta, mozzarella, and parmesan."
+    "description": "Cheesy lasagna layered with ricotta, mozzarella, and parmesan.",
+    "ingredients": [
+      "1 cup Greek yoghurt",
+      "2 tablespoons honey",
+      "1/2 cup granola",
+      "1/2 cup mixed berries (strawberries, blueberries, raspberries)"
+    ],
+    "preparationSteps": [
+      "In a bowl, mix Greek yogurt with honey until well combined.",
+      "Start assembling the parfait in glasses or bowls. Begin with a spoonful of the Greek yogurt mixture at the bottom.",
+      "Add a layer of granola on top of the yogurt.",
+      "Follow with a layer of mixed berries.",
+      "Repeat the layers until you've used up all the ingredients, finishing with a few berries on top.",
+      "Serve immediately or refrigerate until ready to enjoy.",
+      "To eat, you can either mix all the layers together or scoop each layer with a spoon for a variety of flavors in each bite."
+    ],
+    "nutrition": {
+      "calories": "220",
+      "protein": "12g",
+      "fat": "5g",
+      "carbohydrates": "35g",
+      "fiber": "4g",
+      "sugar": "20g"
+    },
+    "difficulty": "easy",
+    "totalTime": "10 mins",
+    "servings": 1,
+    "reviews": [
+      {
+        "reviewer": "ChefBMO",
+        "rating": 4,
+        "review": "This was delicious!"
+      },
+      {
+        "reviewer": "KaseyHolt",
+        "rating": 5,
+        "review": "lovee this so much, easy to make! will make it everyday now.."
+      },
+      {
+        "reviewer": "TempuraJones",
+        "rating": 2,
+        "review": "I didn't like this at all."
+      },
+      {
+        "reviewer": "GeneralKenobi",
+        "rating": 3,
+        "review": "Makes for a good and easy snack!"
+      },
+      {
+        "reviewer": "JonSnack",
+        "rating": 4,
+        "review": "Quick and easy to make, will definitely make again!"
+      },
+      {
+        "reviewer": "HeyDude",
+        "rating": 5,
+        "review": "Delicious!"
+      },
+      {
+        "reviewer": "GiantFondue",
+        "rating": 3,
+        "review": "So-so for me, quite tasty but really made a big mess doing it."
+      },
+      {
+        "reviewer": "MomsCooking",
+        "rating": 4,
+        "review": "Great recipe!"
+      }
+    ]
   }
 ]
