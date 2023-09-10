@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import recipesData from "../mock-data/recipes.json";
+import recipesData from "../../mock-data/recipes.json";
 
-import ICard from "./types/CardInterface.js";
+import ICard from "../types/CardInterface.js";
 
-import Container from "./components/Container.js";
-import NavBar from "./components/NavBar.js";
-import CardsGrid from "./components/CardsGrid.js";
-import PaginationButtons from "./components/PaginationButtons.js";
+import Container from "../components/Container.js";
+import CardsGrid from "../components/CardsGrid.js";
+import PaginationButtons from "../components/PaginationButtons.js";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -23,7 +22,6 @@ function Home() {
 
   return (
     <Container>
-      <NavBar />
       <main className="mt-16">
         {!isLoading && !isError && data && <CardsGrid cards={data} />}
         <PaginationButtons
