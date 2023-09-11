@@ -11,7 +11,7 @@ import ISignIn from "../types/SignInInterface.js";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const SignIn = ({ setIsSignedIn, isSignedIn }: ISignIn) => {
+const SignIn = ({ setIsSignedIn }: ISignIn) => {
   // if (isSignedIn === true) {
   //   console.log("do smtg here.. if alr signed in then show ??? page????");
   // }

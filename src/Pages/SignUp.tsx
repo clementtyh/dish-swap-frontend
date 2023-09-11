@@ -15,7 +15,7 @@ type SignUp = {
   isSignedIn: boolean;
 };
 
-const SignUp = ({ isSignedIn }: SignUp) => {
+const SignUp = ({ }: SignUp) => {
   // if (isSignedIn === true) {
   //   console.log("do smtg here.. if alr signed in then show ??? page????");
   // }
@@ -34,7 +34,7 @@ const SignUp = ({ isSignedIn }: SignUp) => {
 
     axios
       .post(url, values)
-      .then((data) => {
+      .then(() => {
         navigate("/signin");
         // save data to local storage
       })
