@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import recipesData from "../mock-data/recipes.json";
+import recipesData from "../../mock-data/recipes.json";
 
-import ICard from "./types/CardInterface";
+import ICard from "../types/CardInterface.js";
 
-import Container from "./components/Container";
-import NavBar from "./components/NavBar";
-import ReviewCardsGrid from "./components/ReviewCardsGrid";
-import PaginationButtons from "./components/PaginationButtons";
+import Container from "../components/Container.js";
+import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
+import PaginationButtons from "../components/PaginationButtons.js";
 
 function Recipe() {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -27,7 +26,7 @@ function Recipe() {
 
   return (
     <Container>
-      <NavBar />
+      {/* <NavBar /> */}
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>

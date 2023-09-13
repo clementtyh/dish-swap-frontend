@@ -1,6 +1,6 @@
-import Card from "./Card";
+import Card from "./Card.js";
 
-import ICard from "../types/CardInterface";
+import ICard from "../types/CardInterface.js";
 
 interface CardsGridProps {
   cards: ICard[];

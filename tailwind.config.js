@@ -14,5 +14,30 @@ export default {
       ...defaultTheme.screens,
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#8eb44f",
+  
+          secondary: "#daaf53",
+  
+          accent: "#ed6160",
+  
+          neutral: "#304922",
+  
+          "base-100": "#f6efdd",
+  
+          info: "#0891b2",
+  
+          success: "#059669",
+  
+          warning: "#d97706",
+  
+          error: "#b91c1c",
+        },
+      }
+    ]
+  }
 };
