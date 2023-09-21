@@ -23,7 +23,7 @@ function Recipes() {
           import.meta.env.API_URL_PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe/all/${page}`
+        }/recipe?page=${page}`
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
