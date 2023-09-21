@@ -17,7 +17,13 @@ function Recipe() {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipe", recipeId],
     queryFn: async (): Promise<IRecipe> => {
-      const response = await fetch(`http://0.0.0.0:8081/recipe/${recipeId}`);
+      const response = await fetch(
+        `${
+          import.meta.env.API_URL_PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${recipeId}`
+      );
       return response.json();
     },
   });
@@ -84,7 +90,7 @@ function Recipe() {
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
                     {data.ingredients.map((ingredient) => (
-                      <li>{ingredient}</li>
+                      <li key={ingredient}>{ingredient}</li>
                     ))}
                   </ul>
                 </div>
@@ -94,7 +100,7 @@ function Recipe() {
                   </p>
                   <ol className="flex flex-col gap-4 mt-4 list-decimal list-inside">
                     {data.preparationSteps.map((step) => (
-                      <li>{step}</li>
+                      <li key={step}>{step}</li>
                     ))}
                   </ol>
                 </div>
@@ -124,7 +130,7 @@ function Recipe() {
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
                     {Object.entries(data.nutrition).map(([key, value]) => (
-                      <li>
+                      <li key={`${key}: ${value}`}>
                         {key}: {value}
                       </li>
                     ))}

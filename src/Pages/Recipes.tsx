@@ -12,13 +12,19 @@ interface RecipesPageData {
   recipes: IRecipe[];
 }
 
-function Home() {
+function Recipes() {
   const [page, setPage] = useState(1);
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
     queryFn: async (): Promise<RecipesPageData> => {
-      const response = await fetch(`http://0.0.0.0:8081/recipe/all/${page}`);
+      const response = await fetch(
+        `${
+          import.meta.env.API_URL_PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/all/${page}`
+      );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
 
@@ -47,4 +53,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Recipes;
