@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import recipesData from "../../mock-data/recipes.json";
-
-import ICard from "../types/CardInterface.js";
+import IRecipe from "../types/RecipeInterface.js";
 
 import Container from "../components/Container.js";
 import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
@@ -18,15 +16,14 @@ function Recipe() {
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipe", recipeId],
-    queryFn: () =>
-      new Promise<ICard>((resolve) =>
-        resolve(recipesData.find((d) => d.id === Number(recipeId)) as ICard)
-      ),
+    queryFn: async (): Promise<IRecipe> => {
+      const response = await fetch(`http://0.0.0.0:8081/recipe/${recipeId}`);
+      return response.json();
+    },
   });
 
   return (
     <Container>
-      {/* <NavBar /> */}
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>

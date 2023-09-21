@@ -1,9 +1,9 @@
 import Card from "./Card.js";
 
-import ICard from "../types/CardInterface.js";
+import IRecipe from "../types/RecipeInterface.js";
 
 interface CardsGridProps {
-  cards: ICard[];
+  cards: IRecipe[];
 }
 
 function CardsGrid({ cards }: CardsGridProps) {

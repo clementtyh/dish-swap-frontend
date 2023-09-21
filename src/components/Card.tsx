@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import ICard from "../types/CardInterface.js";
+import IRecipe from "../types/RecipeInterface.js";
 
-interface CardProps extends ICard {}
+interface CardProps extends IRecipe {}
 
-function Card({ id, name, imgPath, description }: CardProps) {
+function Card({ _id, name, imgPath, description }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
-    <Link to={`/recipe/${id}`}>
+    <Link to={`/recipe/${_id}`}>
       <div className="flex flex-col">
         <img
           className="h-64 w-full object-cover rounded-2xl"
