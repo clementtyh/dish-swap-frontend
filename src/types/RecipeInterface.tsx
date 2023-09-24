@@ -1,7 +1,7 @@
 import IReview from "./ReviewInterface.js";
 
-interface Card {
-  id: number;
+interface Recipe {
+  _id: string;
   name: string;
   imgPath: string;
   description: string;
@@ -21,4 +21,4 @@ interface Card {
   reviews: IReview[];
 }
 
-export default Card;
+export default Recipe;

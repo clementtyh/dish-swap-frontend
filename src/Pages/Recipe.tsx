@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import recipesData from "../../mock-data/recipes.json";
-
-import ICard from "../types/CardInterface.js";
+import IRecipe from "../types/RecipeInterface.js";
 
 import Container from "../components/Container.js";
 import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
@@ -18,15 +16,20 @@ function Recipe() {
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipe", recipeId],
-    queryFn: () =>
-      new Promise<ICard>((resolve) =>
-        resolve(recipesData.find((d) => d.id === Number(recipeId)) as ICard)
-      ),
+    queryFn: async (): Promise<IRecipe> => {
+      const response = await fetch(
+        `${
+          import.meta.env.API_URL_PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${recipeId}`
+      );
+      return response.json();
+    },
   });
 
   return (
     <Container>
-      {/* <NavBar /> */}
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>
@@ -87,7 +90,7 @@ function Recipe() {
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
                     {data.ingredients.map((ingredient) => (
-                      <li>{ingredient}</li>
+                      <li key={ingredient}>{ingredient}</li>
                     ))}
                   </ul>
                 </div>
@@ -97,7 +100,7 @@ function Recipe() {
                   </p>
                   <ol className="flex flex-col gap-4 mt-4 list-decimal list-inside">
                     {data.preparationSteps.map((step) => (
-                      <li>{step}</li>
+                      <li key={step}>{step}</li>
                     ))}
                   </ol>
                 </div>
@@ -127,7 +130,7 @@ function Recipe() {
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
                     {Object.entries(data.nutrition).map(([key, value]) => (
-                      <li>
+                      <li key={`${key}: ${value}`}>
                         {key}: {value}
                       </li>
                     ))}
