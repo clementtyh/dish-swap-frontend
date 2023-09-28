@@ -20,7 +20,7 @@ function Recipes() {
     queryFn: async (): Promise<RecipesPageData> => {
       const response = await fetch(
         `${
-          import.meta.env.API_URL_PROD
+          import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
         }/recipe?page=${page}`

@@ -19,7 +19,7 @@ function Recipe() {
     queryFn: async (): Promise<IRecipe> => {
       const response = await fetch(
         `${
-          import.meta.env.API_URL_PROD
+          import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
         }/recipe/${recipeId}`
@@ -33,8 +33,8 @@ function Recipe() {
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>
-            <div className="flex justify-between items-end">
-              <h1 className="text-4xl text-green-900 font-bold uppercase">
+            <div className="flex items-end justify-between">
+              <h1 className="text-4xl font-bold text-green-900 uppercase">
                 {data.name}
               </h1>
               <button
@@ -47,7 +47,7 @@ function Recipe() {
                 {isBookmarked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
+                    viewBox="0 24"
                     className="w-8 h-8 fill-yellow-500"
                   >
                     <path
@@ -60,7 +60,7 @@ function Recipe() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 24 24"
+                    viewBox="0 24"
                     strokeWidth="1.5"
                     className="w-8 h-8 stroke-yellow-500"
                   >
@@ -71,21 +71,21 @@ function Recipe() {
                     />
                   </svg>
                 )}
-                <p className="text-green-900 text-xl font-bold">642</p>
+                <p className="text-xl font-bold text-green-900">642</p>
               </button>
             </div>
             <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
               {data.description}
             </p>
             <img
-              className="mt-8 h-96 w-full object-cover rounded-xl"
+              className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.imgPath}
               alt={data.name}
             />
-            <div className="flex mt-16 gap-8 flex-col lg:flex-row">
+            <div className="flex flex-col gap-8 mt-16 lg:flex-row">
               <div className="w-full lg:w-2/3">
                 <div className="bg-[#dce0ba] rounded-lg p-4">
-                  <p className="text-xl text-green-900 font-bold">
+                  <p className="text-xl font-bold text-green-900">
                     Ingredients
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
@@ -95,7 +95,7 @@ function Recipe() {
                   </ul>
                 </div>
                 <div className="bg-[#dce0ba] rounded-lg mt-8 p-4">
-                  <p className="text-xl text-green-900 font-bold">
+                  <p className="text-xl font-bold text-green-900">
                     Preparation Steps
                   </p>
                   <ol className="flex flex-col gap-4 mt-4 list-decimal list-inside">
@@ -108,24 +108,24 @@ function Recipe() {
               <div className="w-full lg:w-1/3">
                 <div className="flex flex-col gap-8 bg-[#eedcb4] rounded-lg p-4 md:p-8">
                   <div className="flex justify-between">
-                    <p className="text-xl text-green-900 font-bold">
+                    <p className="text-xl font-bold text-green-900">
                       Difficulty
                     </p>
                     <p className="text-xl text-[#8eb44f]">{data.difficulty}</p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-xl text-green-900 font-bold">
+                    <p className="text-xl font-bold text-green-900">
                       Total Time
                     </p>
                     <p className="text-xl text-[#8eb44f]">{data.totalTime}</p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-xl text-green-900 font-bold">Servings</p>
+                    <p className="text-xl font-bold text-green-900">Servings</p>
                     <p className="text-xl text-[#8eb44f]">{data.servings}</p>
                   </div>
                 </div>
                 <div className="bg-[#eedcb4] rounded-lg p-4 mt-8">
-                  <p className="text-xl text-green-900 font-bold">
+                  <p className="text-xl font-bold text-green-900">
                     Nutritional Information (per serving)
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
@@ -139,8 +139,8 @@ function Recipe() {
               </div>
             </div>
             <div className="flex flex-col items-center w-full mt-16">
-              <h2 className="text-xl text-green-900 font-bold">Reviews</h2>
-              <div className="mt-16 w-full">
+              <h2 className="text-xl font-bold text-green-900">Reviews</h2>
+              <div className="w-full mt-16">
                 <ReviewCardsGrid
                   cards={data.reviews.slice(
                     (reviewsPage - 1) * 6,
