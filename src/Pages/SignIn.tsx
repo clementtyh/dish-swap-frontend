@@ -9,7 +9,9 @@ import signInValidation from "../validations/signInValidation.js";
 
 import ISignIn from "../types/SignInInterface.js";
 
-const SERVER = import.meta.env.VITE_SERVER;
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 
 const SignIn = ({ setIsSignedIn }: ISignIn) => {
   // if (isSignedIn === true) {
@@ -22,18 +24,19 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
 
   const submitSignIn = (values: {
     email: string;
-    display_name: string;
     password: string;
-    confirm_password: string;
   }) => {
-    const url = urlcat(SERVER, "/user/...");
-    console.log("here", url, values);
+    const url = urlcat(SERVER, "/auth/login");
 
     axios
       .post(url, values)
-      .then(() => {
-        setIsSignedIn(true);
+      .then((result) => {
+        localStorage.setItem("token", result.data.payload.token);
         navigate("/recipes");
+
+        //every time render necessary page with data, will check if token is still valid(through api etc). if not, bring to signup page
+        
+        // setIsSignedIn(true);
       })
       .catch((error) => {
         console.log(error);
@@ -55,9 +58,7 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
           <Formik
             initialValues={{
               email: "",
-              display_name: "",
               password: "",
-              confirm_password: "",
             }}
             validationSchema={signInValidation}
             onSubmit={(values) => {

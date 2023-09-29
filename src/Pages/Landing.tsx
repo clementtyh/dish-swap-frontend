@@ -7,7 +7,7 @@ const Landing = () => {
       className="hero min-h-screen"
       style={{ backgroundImage: `url(${landingimg})` }}
     >
-      <div className="hero-content text-center text-neutral flex-col max-w-md gap-y-36 self-center">
+      <div className="hero-content text-center text-neutral flex-col max-w-md gap-y-20 sm:gap-y-36 self-center">
         <h1 className="text-5xl font-bold">DISH SWAP</h1>
         <p>
           Embark on a journey of flavor exploration, recipe sharing, and

@@ -9,13 +9,15 @@ import signUpValidation from "../validations/signUpValidation.js";
 import infosvg from "../content/svg/Info_fill.svg";
 import tooltip from "../content/tooltip/data.js";
 
-const SERVER = import.meta.env.VITE_SERVER;
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 
 type SignUp = {
   isSignedIn: boolean;
 };
 
-const SignUp = ({ }: SignUp) => {
+const SignUp = ({}: SignUp) => {
   // if (isSignedIn === true) {
   //   console.log("do smtg here.. if alr signed in then show ??? page????");
   // }
@@ -36,7 +38,6 @@ const SignUp = ({ }: SignUp) => {
       .post(url, values)
       .then(() => {
         navigate("/signin");
-        // save data to local storage
       })
       .catch((error) => {
         console.log(error);
