@@ -10,8 +10,11 @@ const verifyToken = async () => {
 
   const token = sessionStorage.getItem("token");
 
-  const result = token
-    ? await axios
+  if (!token) {
+    return false;
+  }
+
+  const result = await axios
         .get(url, {
           headers: { Authorization: "Bearer " + token },
         })
@@ -21,9 +24,7 @@ const verifyToken = async () => {
         .catch(() => {
           return false;
         })
-    : false;
-
-  console.log(result);
+        
   return result;
 };
 

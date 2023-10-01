@@ -1,26 +1,44 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
 
 import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signInValidation from "../validations/signInValidation.js";
-
-import ISignIn from "../types/SignInInterface.js";
+import verifyToken from "../functions/verifyToken.js";
+import ITokenValid from "../types/TokenValidInterface.js";
 
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
 
-const SignIn = ({ setIsSignedIn }: ISignIn) => {
-  // if (isSignedIn === true) {
-  //   console.log("do smtg here.. if alr signed in then show ??? page????");
-  // }
-
+const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      const result = await verifyToken();
+
+      if (result) {
+        setIsTokenValid(true);
+      } else {
+        setIsTokenValid(false);
+      }
+    };
+
+    authenticate();
+  }, []);
+
+  //since token valid, signin page not accessible
+  useEffect(() => {
+    if (isTokenValid) {
+      navigate("/recipes");
+    }
+  }, [isTokenValid])
 
   const submitSignIn = (values: { email: string; password: string }) => {
     const url = urlcat(SERVER, "/auth/login");
@@ -29,10 +47,10 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
       .post(url, values)
       .then((result) => {
         sessionStorage.setItem("token", result.data.payload.token);
+        setIsTokenValid(true);
         navigate("/recipes");
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.message);
       });
   };

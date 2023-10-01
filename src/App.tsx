@@ -10,12 +10,12 @@ import Recipe from "./Pages/Recipe.js";
 import "./index.css";
 
 function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isTokenValid, setIsTokenValid] = useState(false);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout isSignedIn={isSignedIn} />,
+      element: <Layout isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
       children: [
         {
           path: "/",
@@ -23,12 +23,12 @@ function App() {
         },
         {
           path: "signup",
-          element: <SignUp isSignedIn={isSignedIn} />,
+          element: <SignUp isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "signin",
           element: 
-            <SignIn setIsSignedIn={setIsSignedIn} isSignedIn={isSignedIn} />
+            <SignIn isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>
           ,
         },
         {
