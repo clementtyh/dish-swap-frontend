@@ -22,21 +22,14 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
 
   const navigate = useNavigate();
 
-  const submitSignIn = (values: {
-    email: string;
-    password: string;
-  }) => {
+  const submitSignIn = (values: { email: string; password: string }) => {
     const url = urlcat(SERVER, "/auth/login");
 
     axios
       .post(url, values)
       .then((result) => {
-        localStorage.setItem("token", result.data.payload.token);
+        sessionStorage.setItem("token", result.data.payload.token);
         navigate("/recipes");
-
-        //every time render necessary page with data, will check if token is still valid(through api etc). if not, bring to signup page
-        
-        // setIsSignedIn(true);
       })
       .catch((error) => {
         console.log(error);
@@ -95,6 +88,10 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>
+                </label>
+                <label className="label cursor-pointer justify-start gap-3 mt-3">
+                  <input type="checkbox" className="checkbox checkbox-xs" />
+                  <span className="label-text-alt">Remember me</span>
                 </label>
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                   <ErrorMessage name="password" />

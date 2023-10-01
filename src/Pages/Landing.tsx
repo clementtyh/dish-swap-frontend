@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import verifyToken from "../functions/verifyToken.js";
 import landingimg from "/mock-images/landing/landing.jpg?url";
 
 const Landing = () => {
+  const navigate = useNavigate();
+
+  const link = async () => {
+    const result = await verifyToken();
+    const linkString = result ? "/recipes" : "/signup";
+    navigate(linkString);
+  };
+
   return (
     <div
       className="hero min-h-screen"
@@ -14,12 +23,12 @@ const Landing = () => {
           community engagement by uniting food enthusiasts, chefs, and home
           cooks in a vibrant gastronomic exchange
         </p>
-        <Link
+        <button
           className="btn btn-neutral rounded-full px-10 tracking-[0.35rem]"
-          to="/signup"
+          onClick={link}
         >
           INDULGE NOW
-        </Link>
+        </button>
       </div>
     </div>
   );

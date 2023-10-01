@@ -23,13 +23,7 @@ function PaginationButtons({ pages, page, setPage }: PaginationButtonsProps) {
             </button>
           );
         })
-      ) : (
-        <button
-          className="px-6 py-2 text-[#8eb44f] border-l border-[#8eb44f] first:rounded-l-lg first:border-l-0 last:rounded-r-lg hover:bg-[#e4e7ca]"
-        >
-          {page}
-        </button>
-      )}
+      ) : ""}
     </div>
   );
 }
