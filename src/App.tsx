@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { authContext } from "./context.js";
 import Layout from "./Pages/Layout.js";
 import Landing from "./Pages/Landing.js";
 import SignIn from "./Pages/SignIn.js";
@@ -11,6 +12,9 @@ import "./index.css";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [token, setToken] = useState("");
+
+  const authContextValue = useMemo(() => ({ token, setToken }), [token]);
 
   const router = createBrowserRouter([
     {
@@ -27,9 +31,9 @@ function App() {
         },
         {
           path: "signin",
-          element: 
+          element: (
             <SignIn setIsSignedIn={setIsSignedIn} isSignedIn={isSignedIn} />
-          ,
+          ),
         },
         {
           path: "recipes",
@@ -51,7 +55,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <authContext.Provider value={authContextValue}>
+      <RouterProvider router={router} />
+    </authContext.Provider>
+  );
 }
 
 export default App;

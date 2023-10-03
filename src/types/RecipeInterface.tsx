@@ -19,6 +19,8 @@ interface Recipe {
   totalTime: string;
   servings: number;
   reviews: IReview[];
+  flavourmarkCount: number;
+  flavourmarks: string[];
 }
 
 export default Recipe;

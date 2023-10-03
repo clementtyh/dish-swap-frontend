@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useQuery } from "react-query";
+
+import { authContext } from "../context.js";
 
 import IRecipe from "../types/RecipeInterface.js";
 
@@ -15,15 +17,25 @@ interface RecipesPageData {
 function Recipes() {
   const [page, setPage] = useState(1);
 
+  const { token } = useContext(authContext);
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
     queryFn: async (): Promise<RecipesPageData> => {
+      const headers = new Headers();
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+
       const response = await fetch(
         `${
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe?page=${page}`
+        }/recipe?page=${page}`,
+        {
+          headers,
+        }
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
