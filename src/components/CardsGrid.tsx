@@ -4,13 +4,14 @@ import IRecipe from "../types/RecipeInterface.js";
 
 interface CardsGridProps {
   cards: IRecipe[];
+  page: number;
 }
 
-function CardsGrid({ cards }: CardsGridProps) {
+function CardsGrid({ cards, page }: CardsGridProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
-      {cards.map((card) => (
-        <Card key={card._id} {...card} />
+    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16">
+      {cards.map((card, idx) => (
+        <Card key={card._id} page={page} idx={idx} {...card} />
       ))}
     </div>
   );

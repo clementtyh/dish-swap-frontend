@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQueryClient, useQuery, useMutation } from "react-query";
 
-import { authContext } from "../context.js";
+import { authContext } from "../utils/context.js";
 
 import IRecipe from "../types/RecipeInterface.js";
 
@@ -12,10 +12,13 @@ import PaginationButtons from "../components/PaginationButtons.js";
 
 function Recipe() {
   const [reviewsPage, setReviewsPage] = useState(1);
+  const [mode, setMode] = useState("add-flavourmark");
 
-  const { token } = useContext(authContext);
+  const { token, decoded } = useContext(authContext);
 
   const { recipeId } = useParams();
+
+  const queryClient = useQueryClient();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipe", recipeId],
@@ -39,6 +42,60 @@ function Recipe() {
     },
   });
 
+  useEffect(() => {
+    setMode(
+      data?.flavourmarks.length ? "remove-flavourmark" : "add-flavourmark"
+    );
+  }, [data]);
+
+  const { mutate } = useMutation({
+    mutationFn: async (recipeId: string): Promise<IRecipe> => {
+      const headers = new Headers();
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${mode}/${recipeId}`,
+        {
+          method: "POST",
+          headers,
+        }
+      );
+      return response.json();
+    },
+    onMutate: async () => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["recipe", recipeId] });
+
+      // Snapshot the previous value
+      const recipe = queryClient.getQueryData(["recipe", recipeId]) as IRecipe;
+      const previousRecipe = JSON.parse(JSON.stringify(data));
+
+      // Optimistically update to the new value
+      recipe["flavourmarks"] =
+        mode === "add-flavourmark" ? [decoded.id as string] : [];
+
+      // Return a context object with the snapshotted value
+      return { previousRecipe };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (_, __, context) => {
+      context &&
+        queryClient.setQueryData(["recipe", recipeId], context.previousRecipe);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["recipe", recipeId] });
+    },
+  });
+
   return (
     <Container>
       <main className="mt-16">
@@ -52,7 +109,7 @@ function Recipe() {
                 className="flex items-center gap-2"
                 onClick={(e) => {
                   e.preventDefault();
-                  // setIsBookmarked(!isBookmarked);
+                  data._id && token && mutate(data._id);
                 }}
               >
                 {token ? (

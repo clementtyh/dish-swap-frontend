@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { authContext } from "./context.js";
+import { authContext } from "./utils/context.js";
+import { useDecoded } from "./utils/useDecoded.js";
 import Layout from "./Pages/Layout.js";
 import Landing from "./Pages/Landing.js";
 import SignIn from "./Pages/SignIn.js";
@@ -13,8 +14,12 @@ import "./index.css";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [token, setToken] = useState("");
+  const [decoded, setDecoded] = useDecoded(token);
 
-  const authContextValue = useMemo(() => ({ token, setToken }), [token]);
+  const authContextValue = useMemo(
+    () => ({ token, setToken, decoded, setDecoded }),
+    [token]
+  );
 
   const router = createBrowserRouter([
     {

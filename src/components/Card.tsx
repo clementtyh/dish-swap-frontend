@@ -1,14 +1,84 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useQueryClient, useMutation } from "react-query";
 
-import { authContext } from "../context.js";
+import { authContext } from "../utils/context.js";
 
 import IRecipe from "../types/RecipeInterface.js";
 
-interface CardProps extends IRecipe {}
+interface CardProps extends IRecipe {
+  page: number;
+  idx: number;
+}
 
-function Card({ _id, name, imgPath, description, flavourmarks }: CardProps) {
-  const { token } = useContext(authContext);
+function Card({
+  page,
+  idx,
+  _id,
+  name,
+  imgPath,
+  description,
+  flavourmarks,
+}: CardProps) {
+  const { token, decoded } = useContext(authContext);
+
+  const mode = flavourmarks.length ? "remove-flavourmark" : "add-flavourmark";
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: async (recipeId: string): Promise<IRecipe> => {
+      const headers = new Headers();
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${mode}/${recipeId}`,
+        {
+          method: "POST",
+          headers,
+        }
+      );
+      return response.json();
+    },
+    onMutate: async () => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["recipes", page] });
+
+      // Snapshot the previous value
+      const data = queryClient.getQueryData(["recipes", page]) as {
+        count: number;
+        recipes: IRecipe[];
+      };
+      const recipe = data.recipes[idx];
+      const previousData = JSON.parse(JSON.stringify(data));
+
+      // Optimistically update to the new value
+      data.recipes.splice(idx, 1, {
+        ...recipe,
+        flavourmarks: mode === "add-flavourmark" ? [decoded.id as string] : [],
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousData };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (_, __, context) => {
+      context &&
+        queryClient.setQueryData(["recipes", page], context.previousData);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["recipes", page] });
+    },
+  });
 
   return (
     <Link to={`/recipe/${_id}`}>
@@ -23,7 +93,7 @@ function Card({ _id, name, imgPath, description, flavourmarks }: CardProps) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              // setIsBookmarked(!isBookmarked);
+              _id && token && mutate(_id);
             }}
           >
             {token ? (

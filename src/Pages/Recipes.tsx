@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useQuery } from "react-query";
 
-import { authContext } from "../context.js";
+import { authContext } from "../utils/context.js";
 
 import IRecipe from "../types/RecipeInterface.js";
 
@@ -52,7 +52,7 @@ function Recipes() {
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>
-            <CardsGrid cards={data.recipes} />
+            <CardsGrid cards={data.recipes} page={page} />
             <PaginationButtons
               pages={Math.ceil(data.count / 9)}
               page={page}
