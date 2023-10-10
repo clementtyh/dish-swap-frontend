@@ -2,15 +2,15 @@ import IReview from "../types/ReviewInterface.js";
 
 interface ReviewCardProps extends IReview {}
 
-function ReviewCard({ reviewer, rating, review }: ReviewCardProps) {
+function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
   return (
     <div className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-4 md:p-8">
-      <div className="self-center flex gap-2">
+      <div className="flex self-center gap-2">
         {[...Array(rating).keys()].map((idx) => (
           <svg
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
+            viewBox="0 24"
             className="w-6 h-6 fill-rose-500"
           >
             <path
@@ -25,7 +25,7 @@ function ReviewCard({ reviewer, rating, review }: ReviewCardProps) {
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 24"
             strokeWidth="1.5"
             className="w-6 h-6 stroke-rose-500"
           >
@@ -37,9 +37,9 @@ function ReviewCard({ reviewer, rating, review }: ReviewCardProps) {
           </svg>
         ))}
       </div>
-      <p>{review}</p>
-      <p className="text-xl text-green-900 font-bold mt-auto self-end">
-        {reviewer}
+      <p>{text}</p>
+      <p className="self-end mt-auto text-xl font-bold text-green-900">
+        {created_by}
       </p>
     </div>
   );

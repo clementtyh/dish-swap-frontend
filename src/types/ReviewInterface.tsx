@@ -1,7 +1,10 @@
 interface Review {
-  reviewer: string;
+  _id: string;
+  text: string;
   rating: number;
-  review: string;
+  recipe_id: string;
+  created_by: string;
+  last_updated_by: string;
 }
 
 export default Review;

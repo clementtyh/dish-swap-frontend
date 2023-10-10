@@ -1,24 +1,15 @@
-import IReview from "./ReviewInterface.js";
-
 interface Recipe {
   _id: string;
-  name: string;
-  imgPath: string;
-  description: string;
+  recipe_name: string;
+  recipe_description: string;
   ingredients: string[];
-  preparationSteps: string[];
-  nutrition: {
-    calories: string;
-    protein: string;
-    fat: string;
-    carbohydrates: string;
-    fiber: string;
-    sugar: string;
-  };
+  steps: string[];
+  total_time: number;
   difficulty: string;
-  totalTime: string;
   servings: number;
-  reviews: IReview[];
+  image_files: string[];
+  created_by: string;
+  last_updated_by: string;
 }
 
 export default Recipe;

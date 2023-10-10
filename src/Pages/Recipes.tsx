@@ -7,7 +7,7 @@ import Container from "../components/Container.js";
 import CardsGrid from "../components/CardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 
-interface RecipesPageData {
+interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
@@ -17,7 +17,7 @@ function Recipes() {
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
-    queryFn: async (): Promise<RecipesPageData> => {
+    queryFn: async (): Promise<IRecipesData> => {
       const response = await fetch(
         `${
           import.meta.env.PROD
