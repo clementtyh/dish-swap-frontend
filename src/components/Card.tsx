@@ -32,7 +32,7 @@ function Card({
             {isBookmarked ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 24"
+                viewBox="0 0 24 24"
                 className="w-6 h-6 fill-yellow-500"
               >
                 <path
@@ -45,7 +45,7 @@ function Card({
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 24"
+                viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 className="w-6 h-6 stroke-yellow-500"
               >

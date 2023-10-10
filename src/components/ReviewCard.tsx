@@ -10,7 +10,7 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
           <svg
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 24"
+            viewBox="0 0 24 24"
             className="w-6 h-6 fill-rose-500"
           >
             <path
@@ -25,7 +25,7 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 24"
+            viewBox="0 0 24 24"
             strokeWidth="1.5"
             className="w-6 h-6 stroke-rose-500"
           >
@@ -39,7 +39,7 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
       </div>
       <p>{text}</p>
       <p className="self-end mt-auto text-xl font-bold text-green-900">
-        {created_by}
+        {created_by.display_name}
       </p>
     </div>
   );

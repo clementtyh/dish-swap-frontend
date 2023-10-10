@@ -9,7 +9,9 @@ interface Recipe {
   servings: number;
   image_files: string[];
   created_by: string;
+  created_date: string;
   last_updated_by: string;
+  last_updated_date: string;
 }
 
 export default Recipe;

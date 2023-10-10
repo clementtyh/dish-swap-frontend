@@ -182,12 +182,7 @@ function Recipe() {
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
                   <div className="w-full mt-16">
-                    <ReviewCardsGrid
-                      cards={reviewsData.reviews.slice(
-                        (reviewsPage - 1) * 6,
-                        reviewsPage * 6
-                      )}
-                    />
+                    <ReviewCardsGrid cards={reviewsData.reviews} />
                   </div>
                   <div>
                     <PaginationButtons
