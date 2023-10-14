@@ -10,7 +10,7 @@ function SearchBar({ searchQuery, setSearchQuery }: SearchQuery) {
   return (
     <>
       <form>
-        <div className="relative mb-12 w-full lg:w-2/5 md:w-2/3 rounded-2xl ">
+        <div className="relative mb-12 w-full rounded-2xl ">
         <input
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -20,7 +20,6 @@ function SearchBar({ searchQuery, setSearchQuery }: SearchQuery) {
         />
         <button className="absolute top-2 right-5"><img src={searchIcon} /></button>
         </div>
-
       </form>
     </>
   );

@@ -5,7 +5,7 @@ function Container({ children }: PropsWithChildren) {
     // <div className="sm:container mx-auto px-4 sm:px-6 lg:px-8 py-16">
     //   {children}
     // </div>
-    <div className="px-20 py-10">{children}</div>
+    <div className="px-28 py-8">{children}</div>
   );
 }
 

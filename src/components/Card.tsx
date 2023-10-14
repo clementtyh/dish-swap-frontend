@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -5,7 +6,7 @@ import IRecipe from "../types/RecipeInterface.js";
 
 interface CardProps extends IRecipe {}
 
-function Card({ _id, recipe_name, imgPath, recipe_description }: CardProps) {
+function Card({ _id, recipe_name, recipe_description, difficulty, created_date }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
@@ -54,6 +55,8 @@ function Card({ _id, recipe_name, imgPath, recipe_description }: CardProps) {
           </button>
         </div>
         <p className="text-md mt-2">{recipe_description}</p>
+        <p className="text-md mt-2">Difficulty level: <b>{difficulty}</b></p>
+        <p className="text-md mt-2">{format(new Date(created_date), 'Pp (ccc)')}</p>
       </div>
     </Link>
   );

@@ -8,6 +8,14 @@ import CardsGrid from "../components/CardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 import SearchBar from "../components/SearchBar.js";
 import axios from "axios";
+import SortDropdown from "../components/SortDropdown.js";
+import {
+  defaultSort,
+  sortNewest,
+  sortRating,
+  sortDifficulty,
+  sortCalories,
+} from "../helpers/SortFunctions.js";
 
 interface RecipesPageData {
   count: number;
@@ -16,21 +24,53 @@ interface RecipesPageData {
 
 function Recipes() {
   const [page, setPage] = useState(1);
-  
+
   // HTML URLSearchParams
-  let searchParams = useMemo(() => new URLSearchParams(window.location.search), [])
+  let searchParams = useMemo(
+    () => new URLSearchParams(window.location.search),
+    []
+  );
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
 
-  const [recipesData, setRecipesData] = useState([]); 
+  const [recipesData, setRecipesData] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState(recipesData);
+  const [sortValue, setSortValue] = useState("newest");
 
-    useEffect(() => {
+  useEffect(() => {
     axios
       .get(`http://localhost:8080/recipe/?search=${searchQuery}`)
       .then((res) => {
-        setRecipesData(res.data);
-        // setFilteredRecipes(res.data);
+        setRecipesData(sortNewest(defaultSort(res.data)));
+        setFilteredRecipes(sortNewest(defaultSort(res.data)));
       });
-  }, [searchQuery])
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (sortValue) {
+      searchParams.set("sortby", sortValue);
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${searchParams}`
+      );
+      switch (sortValue) {
+        case "newest":
+          setFilteredRecipes(sortNewest(defaultSort(filteredRecipes)));
+          break;
+        case "rating":
+          setFilteredRecipes(sortRating(defaultSort(filteredRecipes)));
+          break;
+        case "difficulty":
+          setFilteredRecipes(sortDifficulty(defaultSort(filteredRecipes)));
+          break;
+        case "calories":
+          setFilteredRecipes(sortCalories(defaultSort(filteredRecipes)));
+          break;
+        default:
+          setFilteredRecipes(defaultSort(filteredRecipes));
+      }
+    }
+  }, [sortValue, searchParams, searchQuery]);
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
@@ -69,10 +109,17 @@ function Recipes() {
         </main>
       </Container>
       <Container>
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <CardsGrid cards={recipesData} />
+        <div className="flex flex-row">
+          <div className="flex-none mr-6 lg:w-2/5 md:w-2/3 ">
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+          </div>
+          <SortDropdown sortValue={sortValue} setSortValue={setSortValue} />
+        </div>
+        <CardsGrid cards={filteredRecipes} />
       </Container>
-
     </>
   );
 }
