@@ -2,11 +2,11 @@ import IReview from "./ReviewInterface.js";
 
 interface Recipe {
   _id: string;
-  name: string;
+  recipe_name: string;
   imgPath: string;
-  description: string;
+  recipe_description: string;
   ingredients: string[];
-  preparationSteps: string[];
+  steps: string[];
   nutrition: {
     calories: string;
     protein: string;
@@ -16,7 +16,7 @@ interface Recipe {
     sugar: string;
   };
   difficulty: string;
-  totalTime: string;
+  total_time: string;
   servings: number;
   reviews: IReview[];
 }
