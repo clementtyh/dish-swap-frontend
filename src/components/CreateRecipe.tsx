@@ -51,7 +51,7 @@ const CreateRecipeModal = () => {
     const getUploadParams = () => {
       return axios
         .post(
-          urlcat(SERVER, "/recipe/upload_params"),
+          urlcat(SERVER, "/file/upload_params"),
           {},
           {
             headers: { Authorization: "Bearer " + token },
