@@ -10,14 +10,10 @@ import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateRecipeModal from "../components/CreateRecipe.js";
 
-interface RecipesPageData {
+interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
-
-const SERVER = import.meta.env.PROD
-  ? import.meta.env.VITE_API_URL_PROD
-  : import.meta.env.VITE_API_URL_DEV;
 
 function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [page, setPage] = useState(1);
@@ -33,8 +29,14 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
-    queryFn: async (): Promise<RecipesPageData> => {
-      const response = await fetch(`${SERVER}/recipe?page=${page}`);
+    queryFn: async (): Promise<IRecipesData> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe?page=${page}`
+      );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
 
