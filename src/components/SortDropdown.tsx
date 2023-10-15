@@ -1,5 +1,5 @@
 import SortValue from "../types/SortValueInterface.js";
-import sortDropdownArrow from "../content/svg/sortDropdownArrow.svg"
+// import sortDropdownArrow from "../content/svg/sortDropdownArrow.svg"
 
 function SortDropdown({ sortValue, setSortValue }: SortValue) {
   return (
