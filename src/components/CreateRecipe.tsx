@@ -5,6 +5,7 @@ import trashsvg from "../content/svg/Trash.svg";
 import addsvg from "../content/svg/Add.svg";
 import axios from "axios";
 import urlcat from "urlcat";
+import { useNavigate } from "react-router-dom";
 
 
 interface FieldArrayRenderProps {
@@ -33,6 +34,8 @@ const CreateRecipeModal = () => {
 
   const createRecipeModalRef = useRef<HTMLDialogElement>(null);
   const hiddenImageInput = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
 
   const toggleModal = (action: string) => {
     if (createRecipeModalRef.current && action === "show") {
@@ -106,10 +109,10 @@ const CreateRecipeModal = () => {
         .post(urlcat(SERVER, "/recipe/create"), finalValues, {
           headers: { Authorization: "Bearer " + token },
         })
-        .then(() => {
+        .then((response) => {
           createRecipeModalRef.current?.close();
           console.log("create recipe success");
-          // navigate(`/recipe/${id}`);
+          navigate(`/recipe/${response.data.payload.recipe_id}`);
         })
         .catch((error) => {
           console.log("sending recipe to server failed", error);
