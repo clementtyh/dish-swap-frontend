@@ -5,19 +5,24 @@ import IRecipe from "../types/RecipeInterface.js";
 
 interface CardProps extends IRecipe {}
 
-function Card({ _id, name, imgPath, description }: CardProps) {
+function Card({
+  _id,
+  recipe_name,
+  image_files,
+  recipe_description,
+}: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
     <Link to={`/recipe/${_id}`}>
       <div className="flex flex-col">
         <img
-          className="h-64 w-full object-cover rounded-2xl"
-          src={imgPath}
-          alt={name}
+          className="object-cover w-full h-64 rounded-2xl"
+          src={image_files[0]}
+          alt={recipe_name}
         />
         <div className="flex justify-between mt-6">
-          <h2 className="text-xl text-green-900">{name}</h2>
+          <h2 className="text-xl text-green-900">{recipe_name}</h2>
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -53,7 +58,7 @@ function Card({ _id, name, imgPath, description }: CardProps) {
             )}
           </button>
         </div>
-        <p className="text-md mt-2">{description}</p>
+        <p className="mt-2 text-md">{recipe_description}</p>
       </div>
     </Link>
   );
