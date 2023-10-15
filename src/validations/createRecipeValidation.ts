@@ -41,7 +41,6 @@ const createRecipeValidation = yup.object({
   }),
   servings: yup.number().required("Servings are required.").positive("Servings must be a positive number").min(1, "Servings must be more than 0").max(99, "Servings cannot be more than 99"),
   image_files: yup.array().required().min(1, "At least 1 image is required.").test("areImagesSupported", "Supported file formats: jpg, jpeg, png", areImagesSupported).test("areSizesValid", "Supported file formats: jpg, jpeg, png", areSizesValid),
-  created_by: yup.string().required(),
 });
 
 export default createRecipeValidation;
