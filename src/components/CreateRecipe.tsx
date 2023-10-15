@@ -214,7 +214,7 @@ const CreateRecipeModal = () => {
                       </label>
                       {values.ingredients &&
                         values.ingredients.length > 0 &&
-                        values.ingredients.map((row, i) => (
+                        values.ingredients.map((_, i) => (
                           <div key={i}>
                             <div className="flex">
                               <Field
@@ -256,7 +256,7 @@ const CreateRecipeModal = () => {
                       </label>
                       {values.steps &&
                         values.steps.length > 0 &&
-                        values.steps.map((row, i) => (
+                        values.steps.map((_, i) => (
                           <div key={i}>
                             <div className="flex">
                               <Field
