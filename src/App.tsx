@@ -19,7 +19,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Landing />,
+          element: <Landing isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "signup",
@@ -33,7 +33,7 @@ function App() {
         },
         {
           path: "recipes",
-          element: <Recipes />,
+          element: <Recipes isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "flavourmarks",

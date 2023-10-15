@@ -14,35 +14,26 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
   //check if token valid to detemine whats shown on navbar, necessary for when page is refreshed
   useEffect(() => {
     const authenticate = async () => {
-      const result = await verifyToken()
-      
-      if (result) {
-        setIsTokenValid(true);
-      } else {
-        setIsTokenValid(false)
-      }
+      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
     }
 
     authenticate();
   }, [])
 
   return (
-    <div className="text-base-100 px-20 py-10 absolute w-full">
-      <div className="navbar bg-neutral bg-opacity-60 rounded-full px-10 py-0 justify-between h-max">
+    <div className="text-base-100 px-10 md:px-20 py-10 absolute w-full">
+      <div className="navbar bg-neutral bg-opacity-60 rounded-full px-2 md:px-10 py-0 justify-between h-max">
         <div className="navbar-start w-max">
-          <a className="btn btn-ghost text-xl" onClick={() => navigate("/")}>
+          <a className="btn btn-ghost text-xs md:text-lg lg:text-xl" onClick={() => navigate("/")}>
             DISHSWAP
           </a>
         </div>
         <div className="navbar-end w-max">
-          <ul className="menu menu-horizontal px-1 text-xl gap-x-5 font-regular hidden lg:flex xl:gap-x-24">
+          <ul className="menu menu-horizontal px-1 text-xs md:text-lg lg:text-xl gap-x-5 font-regular hidden lg:flex xl:gap-x-24">
             <li>
-              <a onClick={() => navigate("recipes")}>RECIPES</a>
+              <a onClick={() => navigate("/recipes")}>RECIPES</a>
             </li>
-            <li>
-              <a onClick={() => navigate("flavourmarks")}>FLAVOURMARKS</a>
-            </li>
-            {isTokenValid ? (
+            {isTokenValid ? (<>
               <li tabIndex={0}>
                 <details>
                   <summary>ACCOUNT</summary>
@@ -58,18 +49,19 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                         onClick={() => {
                           sessionStorage.clear();
                           setIsTokenValid(false);
-                          navigate("signup");
+                          navigate("/signin");
                         }}
-                      >
+                        >
                         SIGN OUT
                       </a>
                     </li>
                   </ul>
                 </details>
               </li>
+                        </>
             ) : (
               <li>
-                <a onClick={() => navigate("signup")}>SIGN UP</a>
+                <a onClick={() => navigate("/signup")}>SIGN UP</a>
               </li>
             )}
           </ul>
@@ -92,15 +84,12 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0 text-xs md:text-lg lg:text-xl"
             >
               <li>
-                <a onClick={() => navigate("recipes")}>RECIPES</a>
+                <a onClick={() => navigate("/recipes")}>RECIPES</a>
               </li>
-              <li>
-                <a onClick={() => navigate("flavourmarks")}>FLAVOURMARKS</a>
-              </li>
-              {isTokenValid ? (
+              {isTokenValid ? (<>
                 <li>
                   <details open>
                     <summary>ACCOUNT</summary>
@@ -117,18 +106,19 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                           onClick={() => {
                             sessionStorage.clear();
                             setIsTokenValid(false);
-                            navigate("signup");
+                            navigate("/signin");
                           }}
-                        >
+                          >
                           SIGN OUT
                         </a>
                       </li>
                     </ul>
                   </details>
                 </li>
+                          </>
               ) : (
                 <li>
-                  <a onClick={() => navigate("signup")}>SIGN UP</a>
+                  <a onClick={() => navigate("/signup")}>SIGN UP</a>
                 </li>
               )}
             </ul>

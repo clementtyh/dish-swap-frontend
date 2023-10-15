@@ -15,7 +15,7 @@ const verifyToken = async () => {
   }
 
   const result = await axios
-        .get(url, {
+        .post(url, {}, {
           headers: { Authorization: "Bearer " + token },
         })
         .then(() => {

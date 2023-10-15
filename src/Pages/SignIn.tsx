@@ -21,13 +21,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   //check if token valid
   useEffect(() => {
     const authenticate = async () => {
-      const result = await verifyToken();
-
-      if (result) {
-        setIsTokenValid(true);
-      } else {
-        setIsTokenValid(false);
-      }
+      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
     };
 
     authenticate();
@@ -56,13 +50,13 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
+    <div className="hero min-h-screen">
+      <div className="hero-content flex-col lg:flex-row mt-36">
         <div className="w-1/2">
           <img src={`${signupsigninimg}`} className="rounded-3xl" />
         </div>
         <div className="w-1/2 flex flex-col items-center text-center gap-5">
-          <h1 className="text-5xl font-bold text-neutral tracking-widest leading-snug">
+          <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-neutral tracking-widest leading-snug">
             RESUME YOUR
             <br /> <span className="text-primary">CULINARY</span> JOURNEY
           </h1>
