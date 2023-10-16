@@ -61,7 +61,7 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                         </>
             ) : (
               <li>
-                <a onClick={() => navigate("/signup")}>SIGN UP</a>
+                <a onClick={() => navigate("/signin")}>SIGN IN</a>
               </li>
             )}
           </ul>
@@ -118,7 +118,7 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                           </>
               ) : (
                 <li>
-                  <a onClick={() => navigate("/signup")}>SIGN UP</a>
+                  <a onClick={() => navigate("/signin")}>SIGN IN</a>
                 </li>
               )}
             </ul>
