@@ -7,7 +7,6 @@ import axios from "axios";
 import urlcat from "urlcat";
 import { useNavigate } from "react-router-dom";
 
-
 interface FieldArrayRenderProps {
   push: (obj: any) => void;
   remove<T>(index: number): T | undefined;
@@ -28,9 +27,24 @@ type Values = {
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
-
+// { recipeData }: { recipeData: boolean }
 const CreateRecipeModal = () => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [initialValues, setInitialValues] = useState({
+    recipe_name: "",
+    recipe_description: "",
+    ingredients: [""],
+    steps: [""],
+    total_time_hours: 0,
+    total_time_mins: 0,
+    difficulty: "Easy",
+    servings: 0,
+    image_files: [],
+  });
+
+  // if (isUpdate) {
+  //   setInitialValues()
+  // }
 
   const createRecipeModalRef = useRef<HTMLDialogElement>(null);
   const hiddenImageInput = useRef<HTMLInputElement>(null);
@@ -148,17 +162,7 @@ const CreateRecipeModal = () => {
 
           {/* formik */}
           <Formik
-            initialValues={{
-              recipe_name: "",
-              recipe_description: "",
-              ingredients: [""],
-              steps: [""],
-              total_time_hours: 0,
-              total_time_mins: 0,
-              difficulty: "Easy",
-              servings: 0,
-              image_files: [],
-            }}
+            initialValues={initialValues}
             validationSchema={createRecipeValidation}
             onSubmit={(values, { resetForm }) => {
               submitCreateRecipe(values);

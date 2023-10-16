@@ -8,7 +8,7 @@ import CardsGrid from "../components/CardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
-import CreateRecipeModal from "../components/CreateRecipe.js";
+import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 
 interface IRecipesData {
   count: number;
@@ -51,7 +51,7 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     <Container>
       <main className="mt-24">
         {/* possibly insert search stuff here, will rearrange create recipe buttons accordingly later since dont have others now*/}
-        {isTokenValid && <CreateRecipeModal />}
+        {isTokenValid && <CreateUpdateRecipeModal />}
         {!isLoading && !isError && data && (
           <>
             <CardsGrid cards={data.recipes} />

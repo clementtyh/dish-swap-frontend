@@ -36,16 +36,12 @@ function App() {
           element: <Recipes isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
-          path: "flavourmarks",
-          element: <div>Flavourmarks</div>,
-        },
-        {
           path: "profile",
           element: <div>Profile</div>,
         },
         {
           path: "recipe/:recipeId",
-          element: <Recipe />,
+          element: <Recipe isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
       ],
     },

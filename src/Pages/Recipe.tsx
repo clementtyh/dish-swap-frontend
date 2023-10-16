@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
 import IReview from "../types/ReviewInterface.js";
+import ITokenValid from "../types/TokenValidInterface.js";
 
 import Container from "../components/Container.js";
 import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
+import verifyToken from "../functions/verifyToken.js";
+
 
 const nutrition = {
   calories: "220",
@@ -23,9 +26,18 @@ interface IReviewsData {
   reviews: IReview[];
 }
 
-function Recipe() {
+function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [reviewsPage, setReviewsPage] = useState(1);
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
 
   const { recipeId } = useParams();
 
