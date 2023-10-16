@@ -6,6 +6,7 @@ import addsvg from "../content/svg/Add.svg";
 import axios from "axios";
 import urlcat from "urlcat";
 import { useNavigate } from "react-router-dom";
+import IRecipe from "../types/RecipeInterface.js";
 
 interface FieldArrayRenderProps {
   push: (obj: any) => void;
@@ -27,35 +28,20 @@ type Values = {
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
-// { recipeData }: { recipeData: boolean }
-const CreateRecipeModal = () => {
+
+const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [initialValues, setInitialValues] = useState({
-    recipe_name: "",
-    recipe_description: "",
-    ingredients: [""],
-    steps: [""],
-    total_time_hours: 0,
-    total_time_mins: 0,
-    difficulty: "Easy",
-    servings: 0,
-    image_files: [],
-  });
 
-  // if (isUpdate) {
-  //   setInitialValues()
-  // }
-
-  const createRecipeModalRef = useRef<HTMLDialogElement>(null);
+  const recipeModalRef = useRef<HTMLDialogElement>(null);
   const hiddenImageInput = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
   const toggleModal = (action: string) => {
-    if (createRecipeModalRef.current && action === "show") {
-      createRecipeModalRef.current?.showModal();
-    } else if (createRecipeModalRef.current && action === "close") {
-      createRecipeModalRef.current?.close();
+    if (recipeModalRef.current && action === "show") {
+      recipeModalRef.current?.showModal();
+    } else if (recipeModalRef.current && action === "close") {
+      recipeModalRef.current?.close();
     }
   };
 
@@ -124,7 +110,7 @@ const CreateRecipeModal = () => {
           headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
-          createRecipeModalRef.current?.close();
+          recipeModalRef.current?.close();
           console.log("create recipe success");
           navigate(`/recipe/${response.data.payload.recipe_id}`);
         })
@@ -154,15 +140,39 @@ const CreateRecipeModal = () => {
         className="btn btn-secondary btn-sm text-neutral font-bold normal-case rounded-lg"
         onClick={() => toggleModal("show")}
       >
-        Create Recipe
+        {recipeData ? "Edit Recipe" : "Create Recipe"}
       </button>
-      <dialog ref={createRecipeModalRef} className="modal">
+      <dialog ref={recipeModalRef} className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Create Recipe</h3>
 
           {/* formik */}
           <Formik
-            initialValues={initialValues}
+            initialValues={
+              recipeData
+                ? {
+                    recipe_name: recipeData.recipe_name,
+                    recipe_description: recipeData.recipe_description,
+                    ingredients: recipeData.ingredients,
+                    steps: recipeData.steps,
+                    total_time_hours: Math.floor(recipeData.total_time / 60),
+                    total_time_mins: recipeData.total_time % 60,
+                    difficulty: recipeData.difficulty,
+                    servings: recipeData.servings,
+                    image_files: [],
+                  }
+                : {
+                    recipe_name: "",
+                    recipe_description: "",
+                    ingredients: [""],
+                    steps: [""],
+                    total_time_hours: 0,
+                    total_time_mins: 0,
+                    difficulty: "Easy",
+                    servings: 0,
+                    image_files: [],
+                  }
+            }
             validationSchema={createRecipeValidation}
             onSubmit={(values, { resetForm }) => {
               submitCreateRecipe(values);
@@ -295,29 +305,33 @@ const CreateRecipeModal = () => {
                 <label className="label text-xs sm:text-sm font-medium">
                   Total Time
                 </label>
-                <Field
-                  type="number"
-                  min="0"
-                  max="23"
-                  className="input input-bordered input-xs sm:input-sm md:input-md w-min text-center"
-                  name="total_time_hours"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.total_time_hours}
-                />
+                <div className="flex items-center gap-3">
+                  <Field
+                    type="number"
+                    min="0"
+                    max="23"
+                    className="input input-bordered input-xs sm:input-sm md:input-md w-min text-center"
+                    name="total_time_hours"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.total_time_hours}
+                  />
+                  <label className="label text-xs sm:text-sm">hours</label>
+                  <Field
+                    type="number"
+                    min="0"
+                    max="59"
+                    className="input input-bordered input-xs sm:input-sm md:input-md w-min text-center"
+                    name="total_time_mins"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.total_time_mins}
+                  />
+                  <label className="label text-xs sm:text-sm">mins</label>
+                </div>
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
                   <ErrorMessage name="total_time_hours" />
                 </label>
-                <Field
-                  type="number"
-                  min="0"
-                  max="59"
-                  className="input input-bordered input-xs sm:input-sm md:input-md w-min text-center"
-                  name="total_time_mins"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.total_time_mins}
-                />
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
                   <ErrorMessage name="total_time_mins" />
                 </label>
@@ -358,7 +372,7 @@ const CreateRecipeModal = () => {
                   <ErrorMessage name="difficulty" />
                 </label>
 
-                <label className="label text-xs sm:text-sm font-medium">
+                <label className="label text-xs sm:text-sm font-medium justify-start">
                   Images
                   <img src={addsvg} className="pl-5" onClick={handleImages} />
                 </label>
@@ -377,7 +391,18 @@ const CreateRecipeModal = () => {
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
                   <ErrorMessage name="image_files" />
                 </label>
-
+                <label className="label text-xs sm:text-sm">{`(${values.image_files.length} selected)`}</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {values.image_files.map((file, i) => (
+                    <div key={i} className="relative aspect-w-1 aspect-h-1">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`Image ${i}`}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  ))}
+                </div>
                 <br />
                 <br />
                 <div className="modal-action">

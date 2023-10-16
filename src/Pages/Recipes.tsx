@@ -51,7 +51,7 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     <Container>
       <main className="mt-24">
         {/* possibly insert search stuff here, will rearrange create recipe buttons accordingly later since dont have others now*/}
-        {isTokenValid && <CreateUpdateRecipeModal />}
+        {isTokenValid && <CreateUpdateRecipeModal recipeData={null} />}
         {!isLoading && !isError && data && (
           <>
             <CardsGrid cards={data.recipes} />
