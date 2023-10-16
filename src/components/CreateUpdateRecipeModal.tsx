@@ -31,6 +31,7 @@ const SERVER = import.meta.env.PROD
 
 const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const recipeModalRef = useRef<HTMLDialogElement>(null);
   const hiddenImageInput = useRef<HTMLInputElement>(null);
@@ -384,22 +385,37 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                   name="image_files"
                   onChange={(e) => {
                     const files = Array.from(e.target.files as FileList);
-                    setFieldValue("image_files", files);
+                    setFieldValue("image_files", [...selectedImages, ...files]);
+                    setSelectedImages([...selectedImages, ...files]);
                   }}
                   onBlur={handleBlur}
                 />
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
-                  <ErrorMessage name="image_files" />
+                  {errors.image_files}
                 </label>
-                <label className="label text-xs sm:text-sm">{`(${values.image_files.length} selected)`}</label>
+                <label className="label text-xs sm:text-sm">{`(${selectedImages.length} selected)`}</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {values.image_files.map((file, i) => (
+                  {selectedImages.map((file, i) => (
                     <div key={i} className="relative aspect-w-1 aspect-h-1">
+                      <div className="bg-gray-100 h-full">
                       <img
                         src={URL.createObjectURL(file)}
                         alt={`Image ${i}`}
                         className="object-cover w-full h-full"
                       />
+                      </div>
+                      <div className="absolute top-2 right-2 cursor-pointer">
+                        <img
+                          src={trashsvg}
+                          className="pl-5"
+                          onClick={() => {
+                            const newSelectedImages = selectedImages.filter(
+                              (image) => image !== file
+                            );
+                            setSelectedImages(newSelectedImages);
+                          }}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
