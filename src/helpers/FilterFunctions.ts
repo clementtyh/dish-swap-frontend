@@ -1,8 +1,11 @@
+
+import Recipe from "../types/RecipeInterface.js";
+
 const difficultyLevelsMap = {
     easy: "1", medium: "2", hard: "3"
   }
 
-export const fDiff = (filter, recipes) => {
+export const fDiff = (filter: string, recipes: Recipe[]): Recipe[] => {
     console.log("[Difficulty] Recipes Input (Start):", recipes);
     const split = filter.split("-"); 
     console.log("Wtf inside split:", split)
@@ -46,9 +49,10 @@ export const fDiff = (filter, recipes) => {
             return recipes.filter(recipe => recipe.difficulty !== "hard"); 
         }
     }
+    return recipes; 
 }
 
-export const fIngre = (filter, recipes) => {
+export const fIngre = (filter: string, recipes: Recipe[]): Recipe[] => {
     if (filter === "1"){
         console.log("[Ingredients] Recipes Input (<=5):", recipes); 
         return recipes?.filter(recipe => recipe.ingredients.length <= 5); 
@@ -58,21 +62,21 @@ export const fIngre = (filter, recipes) => {
     }
 }
 
-const fCal = (filter, recipes) => {
-    console.log("[Calories] Recipes inpput:", recipes); 
-    console.log("[Calories] Filter.split:", filter.split("-"))
+// const fCal = (filter: string, recipes: Recipe[]): Recipe[] => {
+//     console.log("[Calories] Recipes inpput:", recipes); 
+//     console.log("[Calories] Filter.split:", filter.split("-"))
 
-    if (filter.split("-")[0] === "") return recipes;
-    else {
-        const [min, max] = filter.split("-"); 
-        console.log("Min Cal value:", min);
-        console.log("Max Cal value:", max); 
-        return recipes?.filter(recipe => parseInt(recipe.nutrition.calories) >= min && parseInt(recipe.nutrition.calories) <= max); 
-    }
+//     if (filter.split("-")[0] === "") return recipes;
+//     else {
+//         const [min, max] = filter.split("-"); 
+//         console.log("Min Cal value:", min);
+//         console.log("Max Cal value:", max); 
+//         return recipes?.filter(recipe => parseInt(recipe.nutrition.calories) >= parseInt(min) && parseInt(recipe.nutrition.calories) <= parseInt(max)); 
+//     }
 
-}
+// }
 
-export const overallFilter = (recipes, setRecipes, difficultyF, ingredientsF, caloriesF) => {
+export const overallFilter = (recipes: Recipe[], setRecipes:React.Dispatch<React.SetStateAction<Recipe[]>>, difficultyF:string, ingredientsF:string) => {
     // setRecipes(fCal(caloriesF, fIngre(ingredientsF, fDiff(difficultyF, recipes)))); 
     setRecipes(fIngre(ingredientsF, fDiff(difficultyF, recipes))); 
 }

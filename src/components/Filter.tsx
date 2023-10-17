@@ -1,7 +1,6 @@
-// @ts-nocheck
+
 import IFilter from "../types/FilterInterface.js";
-import { overallFilter } from "../helpers/FilterFunctions.js";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 const difficultyLevelsMap = {
   easy: "1",
@@ -9,26 +8,7 @@ const difficultyLevelsMap = {
   hard: "3",
 };
 
-// const onSubmitFilter = (
-//     e,
-//     filterSet,
-//     params,
-//     recipesData,
-//     // filteredRecipes,
-//     setFilteredRecipes,
-//     setIsOpen,
-//     isOpen
-//   ) => {
-//     e.preventDefault();
-//     for (const key in filterSet) filterSet[key] === "" ? params?.delete(key) : params?.set(key, filterSet[key]);
-//     window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
-//     setIsOpen(!isOpen);
-//     // document.getElementById("my_modal_2".close())
 
-//     const { difficulty, ingredients, calories } = filterSet;
-//     overallFilter(recipesData, setFilteredRecipes, difficulty, ingredients, calories);
-
-//   };
 
 function Filter({
   filters,
@@ -79,7 +59,7 @@ function Filter({
                       ...filters,
                       difficulty: currentDifficultySelection
                         .filter(
-                          (lvl) => lvl !== difficultyLevelsMap[e.target.value]
+                          (lvl:string) => lvl !== difficultyLevelsMap[e.target.value]
                         )
                         .join("-"),
                     });

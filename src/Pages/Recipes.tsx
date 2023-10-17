@@ -12,13 +12,15 @@ import SortDropdown from "../components/SortDropdown.js";
 import {
   defaultSort,
   sortNewest,
-  sortRating,
+  // sortRating,
   sortDifficulty,
   sortCalories,
 } from "../helpers/SortFunctions.js";
 import Filter from "../components/Filter.js";
 import filterIcon from "../content/svg/filterIcon.svg";
 import { overallFilter } from "../helpers/FilterFunctions.js";
+import { FilterSelection } from "../types/FilterInterface.js";
+import Recipe from "../types/RecipeInterface.js";
 
 interface RecipesPageData {
   count: number;
@@ -26,23 +28,25 @@ interface RecipesPageData {
 }
 
 const onSubmitFilter = (
-  e,
-  filterSet,
-  params,
-  recipesData,
+  e: React.MouseEvent<HTMLLabelElement>,
+  filterSet: FilterSelection,
+  params: URLSearchParams,
+  recipesData: Recipe[],
   // filteredRecipes,
-  setFilteredRecipes,
-  setIsOpen,
-  isOpen
-) => {
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  isOpen: boolean
+): void => {
   e.preventDefault();
   for (const key in filterSet)
-    filterSet[key] === ""
+    filterSet[key as keyof FilterSelection] === ""
       ? params?.delete(key)
-      : params?.set(key, filterSet[key]);
+      : params?.set(key, filterSet[key as keyof FilterSelection]);
   window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
   setIsOpen(!isOpen);
-  document.getElementById("my_modal_6").checked = false;
+
+  const modal = document.getElementById("my_modal_6") as HTMLInputElement; 
+  modal.checked = false;
 
   const { difficulty, ingredients, calories } = filterSet;
   overallFilter(
@@ -50,16 +54,16 @@ const onSubmitFilter = (
     setFilteredRecipes,
     difficulty,
     ingredients,
-    calories
+    // calories
   );
 };
 
 const onClearFilter = (
-  setFilters,
-  filters,
-  params,
-  setFilteredRecipes,
-  recipesData
+  setFilters: React.Dispatch<React.SetStateAction<FilterSelection>>,
+  filters: FilterSelection,
+  params:URLSearchParams,
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
+  recipesData: Recipe[]
 ) => {
   setFilters({
     difficulty: "",
@@ -113,9 +117,9 @@ function Recipes() {
         case "newest":
           setFilteredRecipes(sortNewest(defaultSort(filteredRecipes)));
           break;
-        case "rating":
-          setFilteredRecipes(sortRating(defaultSort(filteredRecipes)));
-          break;
+        // case "rating":
+        //   setFilteredRecipes(sortRating(defaultSort(filteredRecipes)));
+        //   break;
         case "difficulty":
           setFilteredRecipes(sortDifficulty(defaultSort(filteredRecipes)));
           break;
