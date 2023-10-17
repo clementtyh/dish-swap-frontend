@@ -31,7 +31,6 @@ const SERVER = import.meta.env.PROD
 
 const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const recipeModalRef = useRef<HTMLDialogElement>(null);
   const hiddenImageInput = useRef<HTMLInputElement>(null);
@@ -385,17 +384,16 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                   name="image_files"
                   onChange={(e) => {
                     const files = Array.from(e.target.files as FileList);
-                    setFieldValue("image_files", [...selectedImages, ...files]);
-                    setSelectedImages([...selectedImages, ...files]);
+                    setFieldValue("image_files", [...values.image_files, ...files]);
                   }}
                   onBlur={handleBlur}
                 />
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
                   {errors.image_files}
                 </label>
-                <label className="label text-xs sm:text-sm">{`(${selectedImages.length} selected)`}</label>
+                <label className="label text-xs sm:text-sm">{`(${values.image_files.length} selected)`}</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {selectedImages.map((file, i) => (
+                  {values.image_files.map((file, i) => (
                     <div key={i} className="relative aspect-w-1 aspect-h-1">
                       <div className="bg-gray-100 h-full">
                       <img
@@ -409,10 +407,10 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                           src={trashsvg}
                           className="pl-5"
                           onClick={() => {
-                            const newSelectedImages = selectedImages.filter(
+                            const newSelectedImages = values.image_files.filter(
                               (image) => image !== file
                             );
-                            setSelectedImages(newSelectedImages);
+                            setFieldValue("image_files", newSelectedImages);
                           }}
                         />
                       </div>

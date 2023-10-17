@@ -3,23 +3,22 @@ import * as yup from "yup";
 const supportedImageFormats = ['image/jpg', 'image/jpeg', 'image/png']
 
 const areImagesSupported = (images: File[]) => {
-  let supported = true;
   if (images) {
-    images.map(image => {
-      if (!supportedImageFormats.includes(image.type)) {
-        supported = false
+    for (const image of images) {
+      if (!supportedImageFormats.includes(image.type.toLowerCase())) {
+        return false;
       }
-    })
+    }
   }
-  return supported
+  return true;
 }
 
 const areSizesValid = (images: File[])=> {
   let valid = true
   if (images) {
     images.map(image => {
-      const size = image.size / 1024 / 1024
-      if (size > 10) {
+      const maxSize = 10 * 1024 * 1024;
+      if (image.size > maxSize) {
         valid = false
       }
     })
@@ -40,7 +39,7 @@ const createRecipeValidation = yup.object({
     excludeEmptyString: true,
   }),
   servings: yup.number().required("Servings are required.").positive("Servings must be a positive number").min(1, "Servings must be more than 0").max(99, "Servings cannot be more than 99"),
-  image_files: yup.array().required().min(1, "At least 1 image is required.").max(15, "Max images reached (15)").test("areImagesSupported", "Supported file formats: jpg, jpeg, png", areImagesSupported).test("areSizesValid", "Supported file formats: jpg, jpeg, png", areSizesValid),
+  image_files: yup.array().required().min(1, "At least 1 image is required.").max(15, "Max images reached (15)").test("areImagesSupported", "Supported file formats: jpg, jpeg, png", areImagesSupported).test("areSizesValid", "Max image size: 10 MB", areSizesValid),
 });
 
 export default createRecipeValidation;
