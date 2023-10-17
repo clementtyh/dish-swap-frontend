@@ -329,11 +329,11 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                   />
                   <label className="label text-xs sm:text-sm">mins</label>
                 </div>
-                <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
-                  <ErrorMessage name="total_time_hours" />
-                </label>
-                <label className="label text-left text-error text-[10px] sm:text-[12px] w-full">
+                <label className="label text-left text-error text-[10px] sm:text-[12px] w-full justify-start gap-1">
+                  <ErrorMessage name="total_time_hours" />{" "}
                   <ErrorMessage name="total_time_mins" />
+                  {values.total_time_hours * 60 + values.total_time_mins <=
+                    0 && <p>Total Time cannot be less 0.</p>}
                 </label>
 
                 <label className="label text-xs sm:text-sm font-medium">
@@ -384,7 +384,10 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                   name="image_files"
                   onChange={(e) => {
                     const files = Array.from(e.target.files as FileList);
-                    setFieldValue("image_files", [...values.image_files, ...files]);
+                    setFieldValue("image_files", [
+                      ...values.image_files,
+                      ...files,
+                    ]);
                   }}
                   onBlur={handleBlur}
                 />
@@ -396,11 +399,11 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                   {values.image_files.map((file, i) => (
                     <div key={i} className="relative aspect-w-1 aspect-h-1">
                       <div className="bg-gray-100 h-full">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`Image ${i}`}
-                        className="object-cover w-full h-full"
-                      />
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`Image ${i}`}
+                          className="object-cover w-full h-full"
+                        />
                       </div>
                       <div className="absolute top-2 right-2 cursor-pointer">
                         <img
@@ -437,7 +440,8 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
                     !(
                       Object.keys(errors).length === 0 &&
                       Object.keys(touched).length !== 0
-                    )
+                    ) ||
+                    values.total_time_hours * 60 + values.total_time_mins <= 0
                   }
                 >
                   Confirm
