@@ -129,7 +129,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
               {data.recipe_description}
             </p>
-            {isTokenValid && <CreateUpdateRecipeModal recipeData={data} />}
+            {isTokenValid && <CreateUpdateRecipeModal recipeData={data} recipeId={recipeId || null}/>}
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.image_files[0]}

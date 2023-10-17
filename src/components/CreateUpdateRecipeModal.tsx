@@ -7,6 +7,12 @@ import axios from "axios";
 import urlcat from "urlcat";
 import { useNavigate } from "react-router-dom";
 import IRecipe from "../types/RecipeInterface.js";
+import { string } from "yup";
+
+interface CreateUpdateProps {
+  recipeData: IRecipe | null;
+  recipeId: string | null;
+}
 
 interface FieldArrayRenderProps {
   push: (obj: any) => void;
@@ -29,7 +35,7 @@ const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
 
-const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
+const CreateUpdateRecipeModal = ({ recipeData, recipeId }: CreateUpdateProps) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const recipeModalRef = useRef<HTMLDialogElement>(null);
@@ -92,7 +98,7 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
       return Promise.all(promises);
     };
 
-    const createRecipe = (imagesUrls: string[]) => {
+    const createUpdateRecipe = (imagesUrls: string[]) => {
       const totalTime = values.total_time_hours * 60 + values.total_time_mins;
       const finalValues = {
         recipe_name: values.recipe_name,
@@ -103,16 +109,17 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
         difficulty: values.difficulty,
         servings: values.servings,
         image_files: imagesUrls,
+        ...(recipeData && { recipe_id: recipeId }),
       };
 
       return axios
-        .post(urlcat(SERVER, "/recipe/create"), finalValues, {
+        .post(urlcat(SERVER, (recipeData ? "/recipe/update" : "/recipe/create")), finalValues, {
           headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
           recipeModalRef.current?.close();
-          console.log("create recipe success");
-          navigate(`/recipe/${response.data.payload.recipe_id}`);
+          console.log(`${recipeData ? "update" : "create"} recipe success`);
+          navigate(`/recipe/${recipeId}`);
         })
         .catch((error) => {
           console.log("sending recipe to server failed", error);
@@ -123,7 +130,7 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
       .then((uploadParams) => {
         return getImagesUrl(uploadParams);
       })
-      .then(createRecipe)
+      .then(createUpdateRecipe)
       .catch((error) => {
         console.log("create recipe failed", error);
         setErrorMessage(error.response.data.message);
@@ -462,4 +469,4 @@ const CreateRecipeModal = ({ recipeData }: { recipeData: IRecipe | null }) => {
   );
 };
 
-export default CreateRecipeModal;
+export default CreateUpdateRecipeModal;
