@@ -23,7 +23,7 @@ import { overallFilter } from "../helpers/FilterFunctions.js";
 import { FilterSelection } from "../types/FilterInterface.js";
 import Recipe from "../types/RecipeInterface.js";
 
-interface RecipesPageData {
+interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
@@ -135,7 +135,7 @@ function Recipes() {
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
-    queryFn: async (): Promise<RecipesPageData> => {
+    queryFn: async (): Promise<IRecipesData> => {
       const response = await fetch(
         `${
           import.meta.env.PROD

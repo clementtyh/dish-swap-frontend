@@ -3,10 +3,25 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
+import IReview from "../types/ReviewInterface.js";
 
 import Container from "../components/Container.js";
 import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
+
+const nutrition = {
+  calories: "220",
+  protein: "12g",
+  fat: "5g",
+  carbohydrates: "35g",
+  fiber: "4g",
+  sugar: "20g",
+};
+
+interface IReviewsData {
+  count: number;
+  reviews: IReview[];
+}
 
 function Recipe() {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -28,6 +43,30 @@ function Recipe() {
     },
   });
 
+  const {
+    isLoading: isLoadingReviews,
+    isError: isErrorReviews,
+    data: reviewsData,
+  } = useQuery({
+    queryKey: ["reviews", reviewsPage],
+    queryFn: async (): Promise<IReviewsData> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/review?page=${reviewsPage}&recipe=${recipeId}`
+      );
+      const count = parseInt(response.headers.get("x-total-count") as string);
+      const reviews = await response.json();
+
+      return {
+        count,
+        reviews,
+      };
+    },
+  });
+
   return (
     <Container>
       <main className="mt-16">
@@ -35,7 +74,7 @@ function Recipe() {
           <>
             <div className="flex items-end justify-between">
               <h1 className="text-4xl font-bold text-green-900 uppercase">
-                {data.name}
+                {data.recipe_name}
               </h1>
               <button
                 className="flex items-center gap-2"
@@ -75,12 +114,12 @@ function Recipe() {
               </button>
             </div>
             <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
-              {data.description}
+              {data.recipe_description}
             </p>
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
-              src={data.imgPath}
-              alt={data.name}
+              src={data.image_files[0]}
+              alt={data.recipe_name}
             />
             <div className="flex flex-col gap-8 mt-16 lg:flex-row">
               <div className="w-full lg:w-2/3">
@@ -99,7 +138,7 @@ function Recipe() {
                     Preparation Steps
                   </p>
                   <ol className="flex flex-col gap-4 mt-4 list-decimal list-inside">
-                    {data.preparationSteps.map((step) => (
+                    {data.steps.map((step) => (
                       <li key={step}>{step}</li>
                     ))}
                   </ol>
@@ -117,7 +156,7 @@ function Recipe() {
                     <p className="text-xl font-bold text-green-900">
                       Total Time
                     </p>
-                    <p className="text-xl text-[#8eb44f]">{data.totalTime}</p>
+                    <p className="text-xl text-[#8eb44f]">{data.total_time}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-xl font-bold text-green-900">Servings</p>
@@ -129,7 +168,7 @@ function Recipe() {
                     Nutritional Information (per serving)
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
-                    {Object.entries(data.nutrition).map(([key, value]) => (
+                    {Object.entries(nutrition).map(([key, value]) => (
                       <li key={`${key}: ${value}`}>
                         {key}: {value}
                       </li>
@@ -140,21 +179,20 @@ function Recipe() {
             </div>
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-xl font-bold text-green-900">Reviews</h2>
-              <div className="w-full mt-16">
-                <ReviewCardsGrid
-                  cards={data.reviews.slice(
-                    (reviewsPage - 1) * 6,
-                    reviewsPage * 6
-                  )}
-                />
-              </div>
-              <div>
-                <PaginationButtons
-                  pages={Math.ceil(data.reviews.length / 6)}
-                  page={reviewsPage}
-                  setPage={setReviewsPage}
-                />
-              </div>
+              {!isLoadingReviews && !isErrorReviews && reviewsData && (
+                <>
+                  <div className="w-full mt-16">
+                    <ReviewCardsGrid cards={reviewsData.reviews} />
+                  </div>
+                  <div>
+                    <PaginationButtons
+                      pages={Math.ceil(reviewsData.count / 6)}
+                      page={reviewsPage}
+                      setPage={setReviewsPage}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
