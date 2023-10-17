@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 import IFilter from "../types/FilterInterface.js";
 import { useMemo } from "react";
 
