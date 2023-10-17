@@ -12,6 +12,9 @@ function Card({
   recipe_name,
   image_files,
   recipe_description,
+  difficulty, 
+  created_date, 
+  ingredients
 }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
