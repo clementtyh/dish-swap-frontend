@@ -6,15 +6,23 @@ import IRecipe from "../types/RecipeInterface.js";
 
 interface CardProps extends IRecipe {}
 
-function Card({ _id, recipe_name, recipe_description, difficulty, created_date, ingredients }: CardProps) {
+
+function Card({
+  _id,
+  recipe_name,
+  image_files,
+  recipe_description,
+}: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
     <Link to={`/recipe/${_id}`}>
       <div className="flex flex-col">
         <img
-          className="h-64 w-full object-cover rounded-2xl"
-          src="https://www.culinaryhill.com/wp-content/uploads/2021/01/Chipotle-Tomato-Salsa-Copycat-Recipe-Culinary-Hill-1200x800-1.jpg"
+
+          className="object-cover w-full h-64 rounded-2xl"
+          src={image_files[0]}
+
           alt={recipe_name}
         />
         <div className="flex justify-between mt-6">
@@ -54,10 +62,12 @@ function Card({ _id, recipe_name, recipe_description, difficulty, created_date, 
             )}
           </button>
         </div>
+
         <p className="text-md mt-2">{recipe_description}</p>
         <p className="text-md mt-2">Difficulty level: <b>{difficulty}</b></p>
         <p className="text-md mt-2">{format(new Date(created_date), 'Pp (ccc)')}</p>
         <p className="text-md mt-2">Number of Ingredients: {ingredients.length}</p>
+
       </div>
     </Link>
   );

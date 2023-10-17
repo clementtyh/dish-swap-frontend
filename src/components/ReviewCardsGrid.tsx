@@ -8,9 +8,12 @@ interface ReivewCardsGridProps {
 
 function ReviewCardsGrid({ cards }: ReivewCardsGridProps) {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {cards.map((card) => (
-        <ReviewCard key={`${card.reviewer}: ${card.rating}`} {...card} />
+        <ReviewCard
+          key={`${card.created_by.display_name}: ${card.rating}`}
+          {...card}
+        />
       ))}
     </div>
   );
