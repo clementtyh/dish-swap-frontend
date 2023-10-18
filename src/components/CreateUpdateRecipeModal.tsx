@@ -102,8 +102,6 @@ const CreateUpdateRecipeModal = ({
     };
 
     const createUpdateRecipe = (imagesUrls: string[]) => {
-      setIsSubmitting(true);
-
       const totalTime = values.total_time_hours * 60 + values.total_time_mins;
       const finalValues = {
         recipe_name: values.recipe_name,
@@ -167,6 +165,7 @@ const CreateUpdateRecipeModal = ({
             {isSubmitting && (
               <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-70 bg-white">
                 <div className="spinner" />
+                Loading
               </div>
             )}
             {/* formik */}
@@ -198,6 +197,7 @@ const CreateUpdateRecipeModal = ({
               }
               validationSchema={createRecipeValidation}
               onSubmit={(values, { resetForm }) => {
+                setIsSubmitting(true);
                 submitCreateRecipe(values);
                 setErrorMessage(null);
                 resetForm();
