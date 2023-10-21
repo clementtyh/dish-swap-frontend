@@ -1,28 +1,39 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import verifyToken from "../functions/verifyToken.js";
 
-type isSignedIn = {
-  isSignedIn: boolean;
+type NavBarProps = {
+  setIsTokenValid: React.Dispatch<React.SetStateAction<boolean>>;
+  isTokenValid: boolean;
 };
 
-const NavBar = ({ isSignedIn }: isSignedIn) => {
+const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  //check if token valid to detemine whats shown on navbar, necessary for when page is refreshed
+  useEffect(() => {
+    const authenticate = async () => {
+      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
+    }
+
+    authenticate();
+  }, [])
 
   return (
-    <div className="text-base-100 px-20 py-10 absolute w-full">
-      <div className="navbar bg-neutral bg-opacity-60 rounded-full px-10 py-0 justify-between h-max">
+    <div className="text-base-100 px-10 md:px-20 py-10 absolute w-full">
+      <div className="navbar bg-neutral bg-opacity-60 rounded-full px-2 md:px-10 py-0 justify-between h-max">
         <div className="navbar-start w-max">
-          <a className="btn btn-ghost text-xl" onClick={() => navigate('/')}>DISHSWAP</a>
+          <a className="btn btn-ghost text-xs md:text-lg lg:text-xl" onClick={() => navigate("/")}>
+            DISHSWAP
+          </a>
         </div>
         <div className="navbar-end w-max">
-          <ul className="menu menu-horizontal px-1 text-xl gap-x-5 font-regular hidden lg:flex xl:gap-x-24">
+          <ul className="menu menu-horizontal px-1 text-xs md:text-lg lg:text-xl gap-x-5 font-regular hidden lg:flex xl:gap-x-24">
             <li>
-              <a onClick={() => navigate('recipes')}>RECIPES</a>
+              <a onClick={() => navigate("/recipes")}>RECIPES</a>
             </li>
-            <li>
-              <a onClick={() => navigate('flavourmarks')}>FLAVOURMARKS</a>
-            </li>
-            {isSignedIn ? (
+            {isTokenValid ? (<>
               <li tabIndex={0}>
                 <details>
                   <summary>ACCOUNT</summary>
@@ -34,14 +45,23 @@ const NavBar = ({ isSignedIn }: isSignedIn) => {
                       <a>SETTINGS</a>
                     </li>
                     <li>
-                      <a>SIGN OUT</a>
+                      <a
+                        onClick={() => {
+                          sessionStorage.clear();
+                          setIsTokenValid(false);
+                          navigate("/signin");
+                        }}
+                        >
+                        SIGN OUT
+                      </a>
                     </li>
                   </ul>
                 </details>
               </li>
+                        </>
             ) : (
               <li>
-                <a onClick={() => navigate('signup')}>SIGN UP</a>
+                <a onClick={() => navigate("/signin")}>SIGN IN</a>
               </li>
             )}
           </ul>
@@ -64,15 +84,12 @@ const NavBar = ({ isSignedIn }: isSignedIn) => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0 text-xs md:text-lg lg:text-xl"
             >
               <li>
-                <a onClick={() => navigate('recipes')}>RECIPES</a>
+                <a onClick={() => navigate("/recipes")}>RECIPES</a>
               </li>
-              <li>
-                <a onClick={() => navigate('flavourmarks')}>FLAVOURMARKS</a>
-              </li>
-              {isSignedIn ? (
+              {isTokenValid ? (<>
                 <li>
                   <details open>
                     <summary>ACCOUNT</summary>
@@ -85,15 +102,24 @@ const NavBar = ({ isSignedIn }: isSignedIn) => {
                         <a>SETTINGS</a>
                       </li>
                       <li>
-                        <a>SIGN OUT</a>
+                        <a
+                          onClick={() => {
+                            sessionStorage.clear();
+                            setIsTokenValid(false);
+                            navigate("/signin");
+                          }}
+                          >
+                          SIGN OUT
+                        </a>
                       </li>
                     </ul>
                   </details>
                 </li>
+                          </>
               ) : (
                 <li>
-                <a onClick={() => navigate('signup')}>SIGN UP</a>
-              </li>
+                  <a onClick={() => navigate("/signin")}>SIGN IN</a>
+                </li>
               )}
             </ul>
           </div>

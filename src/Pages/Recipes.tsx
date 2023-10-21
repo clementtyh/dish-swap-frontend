@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
@@ -6,14 +6,26 @@ import IRecipe from "../types/RecipeInterface.js";
 import Container from "../components/Container.js";
 import CardsGrid from "../components/CardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
+import ITokenValid from "../types/TokenValidInterface.js";
+import verifyToken from "../functions/verifyToken.js";
+import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 
 interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
 
-function Recipes() {
+function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [page, setPage] = useState(1);
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
@@ -37,7 +49,9 @@ function Recipes() {
 
   return (
     <Container>
-      <main className="mt-16">
+      <main className="mt-24">
+        {/* possibly insert search stuff here, will rearrange create recipe buttons accordingly later since dont have others now*/}
+        {isTokenValid && <CreateUpdateRecipeModal recipeData={null} recipeId={null} />}
         {!isLoading && !isError && data && (
           <>
             <CardsGrid cards={data.recipes} />

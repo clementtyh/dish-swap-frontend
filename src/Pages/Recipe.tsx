@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
 import IReview from "../types/ReviewInterface.js";
+import ITokenValid from "../types/TokenValidInterface.js";
 
 import Container from "../components/Container.js";
 import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
+import verifyToken from "../functions/verifyToken.js";
+import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
+
 
 const nutrition = {
   calories: "220",
@@ -23,9 +27,18 @@ interface IReviewsData {
   reviews: IReview[];
 }
 
-function Recipe() {
+function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [reviewsPage, setReviewsPage] = useState(1);
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
 
   const { recipeId } = useParams();
 
@@ -116,6 +129,7 @@ function Recipe() {
             <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
               {data.recipe_description}
             </p>
+            {isTokenValid && <CreateUpdateRecipeModal recipeData={data} recipeId={recipeId || null}/>}
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.image_files[0]}
