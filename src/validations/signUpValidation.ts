@@ -18,7 +18,7 @@ const signUpValidation = yup.object({
   password: yup
     .string()
     .required("A password is required.")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
       message: "Please enter a valid password.",
       excludeEmptyString: true,
     }),

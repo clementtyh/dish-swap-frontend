@@ -1,14 +1,13 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar.js";
+import ITokenValid from "../types/TokenValidInterface.js";
 
-type Layout = {
-  isSignedIn: boolean;
-};
 
-const Layout = ({ isSignedIn }: Layout) => {
+const Layout = ({ isTokenValid,  setIsTokenValid}: ITokenValid) => {
+
   return (
     <div className="relative">
-      <NavBar isSignedIn={isSignedIn} />
+      <NavBar isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid} />
       <Outlet />
     </div>
   );
