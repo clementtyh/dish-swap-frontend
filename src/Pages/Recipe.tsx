@@ -126,15 +126,20 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 <p className="text-xl font-bold text-green-900">642</p>
               </button>
             </div>
-            <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
-              {data.recipe_description}
-            </p>
-            {/* {isTokenValid && (
-                <CreateUpdateRecipeModal
-                  recipeData={data}
-                  recipeId={recipeId || null}
-                />
-              ) && <DeleteRecipeModal recipeId={recipeId} />} */}
+            <div className="flex items-end justify-between">
+              <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
+                {data.recipe_description}
+              </p>
+              {isTokenValid && (
+                <div className="flex gap-5">
+                  <CreateUpdateRecipeModal
+                    recipeData={data}
+                    recipeId={recipeId || null}
+                  />
+                  <DeleteRecipeModal recipeId={recipeId || null} />
+                </div>
+              )}
+            </div>
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.image_files[0]}
