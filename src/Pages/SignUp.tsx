@@ -43,7 +43,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     confirm_password: string;
   }) => {
     const url = urlcat(SERVER, "/user/register");
-
+    console.log(url)
     axios
       .post(url, values)
       .then(() => {

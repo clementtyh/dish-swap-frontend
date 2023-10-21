@@ -11,7 +11,7 @@ import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
-
+import DeleteRecipeModal from "../components/DeleteRecipeModal.js";
 
 const nutrition = {
   calories: "220",
@@ -129,7 +129,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
               {data.recipe_description}
             </p>
-            {isTokenValid && <CreateUpdateRecipeModal recipeData={data} recipeId={recipeId || null}/>}
+            {/* {isTokenValid && (
+                <CreateUpdateRecipeModal
+                  recipeData={data}
+                  recipeId={recipeId || null}
+                />
+              ) && <DeleteRecipeModal recipeId={recipeId} />} */}
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.image_files[0]}
