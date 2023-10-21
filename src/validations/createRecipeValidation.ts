@@ -2,10 +2,13 @@ import * as yup from "yup";
 
 const supportedImageFormats = ["image/jpg", "image/jpeg", "image/png"];
 
-const areImagesSupported = (images: File[]) => {
+const areImagesSupported = (images: (File | string)[]) => {
   if (images) {
     for (const image of images) {
-      if (!supportedImageFormats.includes(image.type.toLowerCase())) {
+      if (
+        typeof image !== "string" &&
+        !supportedImageFormats.includes(image.type.toLowerCase())
+      ) {
         return false;
       }
     }
@@ -13,17 +16,18 @@ const areImagesSupported = (images: File[]) => {
   return true;
 };
 
-const areSizesValid = (images: File[]) => {
-  let valid = true;
+const areSizesValid = (images: (File | string)[]) => {
   if (images) {
-    images.map((image) => {
-      const maxSize = 10 * 1024 * 1024;
-      if (image.size > maxSize) {
-        valid = false;
+    for (const image of images) {
+      if (typeof image !== "string") {
+        const maxSize = 10 * 1024 * 1024;
+        if (image.size > maxSize) {
+          return false;
+        }
       }
-    });
+    }
   }
-  return valid;
+  return true;
 };
 
 const createRecipeValidation = yup.object({
@@ -98,7 +102,7 @@ const createRecipeValidation = yup.object({
     .positive("Servings must be a positive number.")
     .min(1, "Servings must be more than 0.")
     .max(99, "Servings cannot be more than 99."),
-  image_files: yup
+  allImages: yup
     .array()
     .required()
     .min(1, "At least 1 image is required.")
