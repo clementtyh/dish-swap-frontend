@@ -26,14 +26,17 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
     password: string;
     confirm_password: string;
   }) => {
-    const url = urlcat(SERVER, "/user/...");
+    // const url = urlcat(SERVER, "/user/...");
+    const url = "http://localhost:8080/auth/login"
     console.log("here", url, values);
 
     axios
       .post(url, values)
-      .then(() => {
+      .then((res) => {
         setIsSignedIn(true);
         navigate("/recipes");
+        console.log("displayName:", res.data.payload.displayName); 
+        sessionStorage.setItem("displayName", res.data.payload.displayName);
       })
       .catch((error) => {
         console.log(error);
