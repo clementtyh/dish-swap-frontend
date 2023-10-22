@@ -85,7 +85,7 @@ const onClearFilter = (
 };
 
 function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   // HTML URLSearchParams
   let searchParams = useMemo(
