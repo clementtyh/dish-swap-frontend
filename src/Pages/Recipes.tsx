@@ -84,7 +84,7 @@ const onClearFilter = (
   setFilteredRecipes(recipesData);
 };
 
-function Recipes() {
+function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [page, setPage] = useState(1);
 
   // HTML URLSearchParams
@@ -141,7 +141,6 @@ function Recipes() {
     }
   }, [sortValue, searchParams, searchQuery]);
 
-function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [page, setPage] = useState(1);
 
   //check if token valid
@@ -295,6 +294,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
       </Container>
     </>
   );
-}}
+}
 
 export default Recipes;
