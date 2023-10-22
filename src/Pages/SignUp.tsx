@@ -1,6 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
 
@@ -8,21 +8,33 @@ import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signUpValidation from "../validations/signUpValidation.js";
 import infosvg from "../content/svg/Info_fill.svg";
 import tooltip from "../content/tooltip/data.js";
+import ITokenValid from "../types/TokenValidInterface.js";
+import verifyToken from "../functions/verifyToken.js";
 
-const SERVER = import.meta.env.VITE_SERVER;
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 
-type SignUp = {
-  isSignedIn: boolean;
-};
-
-const SignUp = ({ }: SignUp) => {
-  // if (isSignedIn === true) {
-  //   console.log("do smtg here.. if alr signed in then show ??? page????");
-  // }
-
+const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
+
+  //since token valid, signup page not accessible
+  useEffect(() => {
+    if (isTokenValid) {
+      navigate("/recipes");
+    }
+  }, [isTokenValid])
 
   const submitSignUp = (values: {
     email: string;
@@ -31,12 +43,11 @@ const SignUp = ({ }: SignUp) => {
     confirm_password: string;
   }) => {
     const url = urlcat(SERVER, "/user/register");
-
+    console.log(url)
     axios
       .post(url, values)
       .then(() => {
         navigate("/signin");
-        // save data to local storage
       })
       .catch((error) => {
         console.log(error);
@@ -45,13 +56,13 @@ const SignUp = ({ }: SignUp) => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
+    <div className="hero min-h-screen">
+      <div className="hero-content flex-col lg:flex-row mt-36">
         <div className="w-1/2">
           <img src={`${signupsigninimg}`} className="rounded-3xl" />
         </div>
         <div className="w-1/2 flex flex-col items-center text-center gap-5">
-          <h1 className="text-5xl font-bold text-neutral tracking-widest leading-snug">
+          <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-neutral tracking-widest leading-snug">
             START YOUR
             <br /> <span className="text-primary">CULINARY</span> JOURNEY
           </h1>

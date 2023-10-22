@@ -1,3 +1,4 @@
+
 // @ts-nocheck
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
@@ -7,6 +8,7 @@ import IRecipe from "../types/RecipeInterface.js";
 import Container from "../components/Container.js";
 import CardsGrid from "../components/CardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
+
 import SearchBar from "../components/SearchBar.js";
 import axios from "axios";
 import SortDropdown from "../components/SortDropdown.js";
@@ -23,10 +25,16 @@ import { overallFilter } from "../helpers/FilterFunctions.js";
 import { FilterSelection } from "../types/FilterInterface.js";
 import Recipe from "../types/RecipeInterface.js";
 
+import ITokenValid from "../types/TokenValidInterface.js";
+import verifyToken from "../functions/verifyToken.js";
+import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
+
+
 interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
+
 
 const onSubmitFilter = (
   e: React.MouseEvent<HTMLLabelElement>,
@@ -76,8 +84,8 @@ const onClearFilter = (
   setFilteredRecipes(recipesData);
 };
 
-function Recipes() {
-  const [page, setPage] = useState(1);
+function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
+  // const [page, setPage] = useState(1);
 
   // HTML URLSearchParams
   let searchParams = useMemo(
@@ -133,6 +141,18 @@ function Recipes() {
     }
   }, [sortValue, searchParams, searchQuery]);
 
+  const [page, setPage] = useState(1);
+
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
+
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
     queryFn: async (): Promise<IRecipesData> => {
@@ -154,9 +174,11 @@ function Recipes() {
   });
 
   return (
+
     <>
       <Container>
         <main className="mt-16">
+        {isTokenValid && <CreateUpdateRecipeModal recipeData={null} recipeId={null} />}
           {!isLoading && !isError && data && (
             <>
               <CardsGrid cards={data.recipes} />

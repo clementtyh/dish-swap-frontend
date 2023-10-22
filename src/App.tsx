@@ -11,34 +11,30 @@ import "./index.css";
 import Profile from "./Pages/Profile.js";
 
 function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isTokenValid, setIsTokenValid] = useState(false);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout isSignedIn={isSignedIn} />,
+      element: <Layout isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
       children: [
         {
           path: "/",
-          element: <Landing />,
+          element: <Landing isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "signup",
-          element: <SignUp isSignedIn={isSignedIn} />,
+          element: <SignUp isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "signin",
           element: 
-            <SignIn setIsSignedIn={setIsSignedIn} isSignedIn={isSignedIn} />
+            <SignIn isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>
           ,
         },
         {
           path: "recipes",
-          element: <Recipes />,
-        },
-        {
-          path: "flavourmarks",
-          element: <div>Flavourmarks</div>,
+          element: <Recipes isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "profile",
@@ -46,7 +42,7 @@ function App() {
         },
         {
           path: "recipe/:recipeId",
-          element: <Recipe />,
+          element: <Recipe isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
       ],
     },

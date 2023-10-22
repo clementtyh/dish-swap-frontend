@@ -1,66 +1,70 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
 
 import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signInValidation from "../validations/signInValidation.js";
+import verifyToken from "../functions/verifyToken.js";
+import ITokenValid from "../types/TokenValidInterface.js";
 
-import ISignIn from "../types/SignInInterface.js";
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 
-const SERVER = import.meta.env.VITE_SERVER;
-
-const SignIn = ({ setIsSignedIn }: ISignIn) => {
-  // if (isSignedIn === true) {
-  //   console.log("do smtg here.. if alr signed in then show ??? page????");
-  // }
-
+const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
-  const submitSignIn = (values: {
-    email: string;
-    display_name: string;
-    password: string;
-    confirm_password: string;
-  }) => {
-    // const url = urlcat(SERVER, "/user/...");
-    const url = "http://localhost:8080/auth/login"
-    console.log("here", url, values);
+  //check if token valid
+  useEffect(() => {
+    const authenticate = async () => {
+      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
+
+    authenticate();
+  }, []);
+
+  //since token valid, signin page not accessible
+  useEffect(() => {
+    if (isTokenValid) {
+      navigate("/recipes");
+    }
+  }, [isTokenValid])
+
+  const submitSignIn = (values: { email: string; password: string }) => {
+    const url = urlcat(SERVER, "/auth/login");
 
     axios
       .post(url, values)
-      .then((res) => {
-        setIsSignedIn(true);
+      .then((result) => {
+        sessionStorage.setItem("token", result.data.payload.token);
+        setIsTokenValid(true);
+        sessionStorage.setItem("displayName", result.data.payload.displayName);
         navigate("/recipes");
-        console.log("displayName:", res.data.payload.displayName); 
-        sessionStorage.setItem("displayName", res.data.payload.displayName);
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.message);
       });
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
+    <div className="hero min-h-screen">
+      <div className="hero-content flex-col lg:flex-row mt-36">
         <div className="w-1/2">
           <img src={`${signupsigninimg}`} className="rounded-3xl" />
         </div>
         <div className="w-1/2 flex flex-col items-center text-center gap-5">
-          <h1 className="text-5xl font-bold text-neutral tracking-widest leading-snug">
+          <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-neutral tracking-widest leading-snug">
             RESUME YOUR
             <br /> <span className="text-primary">CULINARY</span> JOURNEY
           </h1>
           <Formik
             initialValues={{
               email: "",
-              display_name: "",
               password: "",
-              confirm_password: "",
             }}
             validationSchema={signInValidation}
             onSubmit={(values) => {
@@ -97,6 +101,10 @@ const SignIn = ({ setIsSignedIn }: ISignIn) => {
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>
+                </label>
+                <label className="label cursor-pointer justify-start gap-3 mt-3">
+                  <input type="checkbox" className="checkbox checkbox-xs" />
+                  <span className="label-text-alt">Remember me</span>
                 </label>
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                   <ErrorMessage name="password" />
