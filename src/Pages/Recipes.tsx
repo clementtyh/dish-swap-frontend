@@ -295,6 +295,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
       </Container>
     </>
   );
-}
+}}
 
 export default Recipes;
