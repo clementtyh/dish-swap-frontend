@@ -24,6 +24,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
   };
 
   const deleteRecipe = () => {
+    setIsSubmitting(true);
     const token = sessionStorage.getItem("token");
 
     axios

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
+import { decodeJwt } from "jose";
 
 import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signInValidation from "../validations/signInValidation.js";
@@ -21,7 +22,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   //check if token valid
   useEffect(() => {
     const authenticate = async () => {
-      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
     };
 
     authenticate();
@@ -32,7 +33,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     if (isTokenValid) {
       navigate("/recipes");
     }
-  }, [isTokenValid])
+  }, [isTokenValid]);
 
   const submitSignIn = (values: { email: string; password: string }) => {
     const url = urlcat(SERVER, "/auth/login");
@@ -41,6 +42,9 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
       .post(url, values)
       .then((result) => {
         sessionStorage.setItem("token", result.data.payload.token);
+        const userInfo = decodeJwt(result.data.payload.token);
+        sessionStorage.setItem("userId", userInfo.id as string);
+        // sessionStorage.setItem("userDisplayName", userInfo.displayName); //will uncomment after implemented
         setIsTokenValid(true);
         navigate("/recipes");
       })

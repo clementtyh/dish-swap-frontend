@@ -1,8 +1,5 @@
 import axios from "axios";
 import urlcat from "urlcat";
-import * as fs from "fs";
-import jwt from "jsonwebtoken";
-import { result } from "lodash";
 
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
@@ -14,10 +11,11 @@ const verifyToken = async () => {
   const token = sessionStorage.getItem("token");
 
   if (!token) {
+    sessionStorage.clear();
     return false;
   }
 
-  const resultBackend = await axios
+  const result = await axios
     .post(
       url,
       {},
@@ -29,20 +27,11 @@ const verifyToken = async () => {
       return true;
     })
     .catch(() => {
+      sessionStorage.clear();
       return false;
     });
 
-  // const publicKeyPath = import.meta.env.VITE_JWT_PUBLIC_KEY_PATH;
-  
-  // const publicKey = fs.readFileSync(publicKeyPath);
-  // jwt.verify(token, publicKey, { algorithms: ["RS256"] }, function (err, payload) {
-  //   if (err) {
-  //     console.log(err.name, ": ", err.message)
-  //   }
-  // });
-
-  // return resultBackend && resultFrontend;
-  return resultBackend;
+  return result;
 };
 
 export default verifyToken;

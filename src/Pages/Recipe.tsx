@@ -130,7 +130,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
                 {data.recipe_description}
               </p>
-              {isTokenValid && (
+              {isTokenValid && sessionStorage.getItem("userId") === data.created_by && (
                 <div className="flex gap-5">
                   <CreateUpdateRecipeModal
                     recipeData={data}
