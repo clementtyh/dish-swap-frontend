@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import verifyAndDecodeToken from "../functions/verifyToken.js";
+import verifyToken from "../functions/verifyToken.js";
 import landingimg from "/mock-images/landing/landing.jpg?url";
 import ITokenValid from "../types/TokenValidInterface.js";
 
@@ -9,7 +9,7 @@ const Landing = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
 
     useEffect(() => {
       const authenticate = async () => {
-        const result = await verifyAndDecodeToken();
+        const result = await verifyToken();
   
         if (result) {
           setIsTokenValid(true);
