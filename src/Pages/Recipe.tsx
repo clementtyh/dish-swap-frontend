@@ -11,7 +11,7 @@ import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
-
+import DeleteRecipeModal from "../components/DeleteRecipeModal.js";
 
 const nutrition = {
   calories: "220",
@@ -126,10 +126,20 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 <p className="text-xl font-bold text-green-900">642</p>
               </button>
             </div>
-            <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
-              {data.recipe_description}
-            </p>
-            {isTokenValid && <CreateUpdateRecipeModal recipeData={data} recipeId={recipeId || null}/>}
+            <div className="flex items-end justify-between">
+              <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
+                {data.recipe_description}
+              </p>
+              {isTokenValid && sessionStorage.getItem("userId") === data.created_by && (
+                <div className="flex gap-5">
+                  <CreateUpdateRecipeModal
+                    recipeData={data}
+                    recipeId={recipeId || null}
+                  />
+                  <DeleteRecipeModal recipeId={recipeId || null} />
+                </div>
+              )}
+            </div>
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
               src={data.image_files[0]}
