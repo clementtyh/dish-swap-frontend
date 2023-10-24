@@ -8,6 +8,7 @@ import Recipes from "./Pages/Recipes.js";
 import Recipe from "./Pages/Recipe.js";
 
 import "./index.css";
+import Profile from "./Pages/Profile.js";
 
 function App() {
   const [isTokenValid, setIsTokenValid] = useState(false);
@@ -37,7 +38,7 @@ function App() {
         },
         {
           path: "profile",
-          element: <div>Profile</div>,
+          element: <Profile />,
         },
         {
           path: "recipe/:recipeId",

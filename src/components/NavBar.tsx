@@ -39,7 +39,7 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                   <summary>ACCOUNT</summary>
                   <ul className="p-2 bg-neutral bg-opacity-60">
                     <li>
-                      <a>PROFILE</a>
+                    <a onClick={() => navigate('profile')}>PROFILE</a>
                     </li>
                     <li>
                       <a>SETTINGS</a>
