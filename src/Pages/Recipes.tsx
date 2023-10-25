@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useQuery } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
@@ -39,12 +39,12 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
 
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
-  const [sortValue, setSortValue] = useState("newest");
   const [filters, setFilters] = useState({
     difficulty: "",
     ingredients: "",
     calories: "",
   });
+  const [sortValue, setSortValue] = useState("newest");
   const [isOpen, setIsOpen] = useState(false);
 
   // search params manipulation
@@ -96,37 +96,42 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
         recipes,
       };
     },
-    select: (data) => {
-      const rawRecipes = data.recipes;
+    select: useCallback(
+      (data: IRecipesData) => {
+        const rawRecipes = data.recipes;
 
-      const filteredRecipes = fIngre(
-        filters.ingredients,
-        fDiff(filters.difficulty, rawRecipes)
-      );
+        const filteredRecipes = fIngre(
+          filters.ingredients,
+          fDiff(filters.difficulty, rawRecipes)
+        );
 
-      let sortedFilteredRecipes;
-      switch (sortValue) {
-        case "newest":
-          sortedFilteredRecipes = sortNewest(defaultSort(filteredRecipes));
-          break;
-        // case "rating":
-        //   sortedFilteredRecipes = sortRating(defaultSort(filteredRecipes));
-        //   break;
-        case "difficulty":
-          sortedFilteredRecipes = sortDifficulty(defaultSort(filteredRecipes));
-          break;
-        case "calories":
-          sortedFilteredRecipes = sortCalories(defaultSort(filteredRecipes));
-          break;
-        default:
-          sortedFilteredRecipes = defaultSort(filteredRecipes);
-      }
+        let sortedFilteredRecipes;
+        switch (sortValue) {
+          case "newest":
+            sortedFilteredRecipes = sortNewest(defaultSort(filteredRecipes));
+            break;
+          // case "rating":
+          //   sortedFilteredRecipes = sortRating(defaultSort(filteredRecipes));
+          //   break;
+          case "difficulty":
+            sortedFilteredRecipes = sortDifficulty(
+              defaultSort(filteredRecipes)
+            );
+            break;
+          case "calories":
+            sortedFilteredRecipes = sortCalories(defaultSort(filteredRecipes));
+            break;
+          default:
+            sortedFilteredRecipes = defaultSort(filteredRecipes);
+        }
 
-      return {
-        ...data,
-        recipes: sortedFilteredRecipes,
-      };
-    },
+        return {
+          ...data,
+          recipes: sortedFilteredRecipes,
+        };
+      },
+      [filters, sortValue]
+    ),
   });
 
   return (
