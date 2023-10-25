@@ -11,20 +11,26 @@ const verifyToken = async () => {
   const token = sessionStorage.getItem("token");
 
   if (!token) {
+    sessionStorage.clear();
     return false;
   }
 
   const result = await axios
-        .post(url, {}, {
-          headers: { Authorization: "Bearer " + token },
-        })
-        .then(() => {
-          return true;
-        })
-        .catch(() => {
-          return false;
-        })
-        
+    .post(
+      url,
+      {},
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+    )
+    .then(() => {
+      return true;
+    })
+    .catch(() => {
+      sessionStorage.clear();
+      return false;
+    });
+
   return result;
 };
 
