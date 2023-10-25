@@ -1,4 +1,3 @@
-
 // @ts-nocheck
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
@@ -29,12 +28,10 @@ import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 
-
 interface IRecipesData {
   count: number;
   recipes: IRecipe[];
 }
-
 
 const onSubmitFilter = (
   e: React.MouseEvent<HTMLLabelElement>,
@@ -54,7 +51,7 @@ const onSubmitFilter = (
   window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
   setIsOpen(!isOpen);
 
-  const modal = document.getElementById("my_modal_6") as HTMLInputElement; 
+  const modal = document.getElementById("my_modal_6") as HTMLInputElement;
   modal.checked = false;
 
   const { difficulty, ingredients, calories } = filterSet;
@@ -62,7 +59,7 @@ const onSubmitFilter = (
     recipesData,
     setFilteredRecipes,
     difficulty,
-    ingredients,
+    ingredients
     // calories
   );
 };
@@ -70,7 +67,7 @@ const onSubmitFilter = (
 const onClearFilter = (
   setFilters: React.Dispatch<React.SetStateAction<FilterSelection>>,
   filters: FilterSelection,
-  params:URLSearchParams,
+  params: URLSearchParams,
   setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
   recipesData: Recipe[]
 ) => {
@@ -85,7 +82,7 @@ const onClearFilter = (
 };
 
 function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
   // HTML URLSearchParams
   let searchParams = useMemo(
@@ -104,15 +101,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     ingredients: "",
     calories: "",
   });
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/recipe/?search=${searchQuery}`)
-      .then((res) => {
-        setRecipesData(sortNewest(defaultSort(res.data)));
-        setFilteredRecipes(sortNewest(defaultSort(res.data)));
-      });
-  }, [searchQuery]);
 
   useEffect(() => {
     if (sortValue) {
@@ -141,8 +129,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     }
   }, [sortValue, searchParams, searchQuery]);
 
-  const [page, setPage] = useState(1);
-
   //check if token valid
   useEffect(() => {
     const authenticate = async () => {
@@ -152,7 +138,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     authenticate();
   }, []);
 
-
   const { isLoading, isError, data } = useQuery({
     queryKey: ["recipes", page],
     queryFn: async (): Promise<IRecipesData> => {
@@ -161,7 +146,7 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe?page=${page}`
+        }/recipe/?page=${page}&search=${searchQuery}`
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
@@ -174,11 +159,89 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   });
 
   return (
-
     <>
       <Container>
         <main className="mt-16">
-        {isTokenValid && <CreateUpdateRecipeModal recipeData={null} recipeId={null} />}
+          <div className="flex flex-row">
+            <div className="flex-none mr-6 lg:w-2/5 md:w-2/3 ">
+              <SearchBar
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+            </div>
+            <SortDropdown sortValue={sortValue} setSortValue={setSortValue} />
+
+            {/* The button to open modal */}
+            <label
+              htmlFor="my_modal_6"
+              // className="btn"
+              className="h-10 px-3 py-1 mx-4 rounded-2xl w-1/8"
+              style={{ backgroundColor: "#DDE0BD" }}
+            >
+              <img src={filterIcon} />
+            </label>
+
+            {/* Put this part before </body> tag */}
+            <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box">
+                <Filter
+                  filters={filters}
+                  setFilters={setFilters}
+                  recipesData={recipesData}
+                  setFilteredRecipes={setFilteredRecipes}
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                />
+                <div></div>
+                <div className="grid grid-cols-6 gap-4 modal-action">
+                  <div className="col-start-1 col-end-3 p-3 ">
+                    <label
+                      htmlFor="my_modal_6"
+                      className="text-sm font-semibold link link-primary"
+                      onClick={() =>
+                        onClearFilter(
+                          setFilters,
+                          filters,
+                          searchParams,
+                          setFilteredRecipes,
+                          recipesData
+                        )
+                      }
+                    >
+                      CLEAR ALL
+                    </label>
+                  </div>
+                  <div className="col-span-2 col-end-7">
+                    <label
+                      htmlFor="my_modal_6"
+                      className="btn"
+                      onClick={(e) =>
+                        onSubmitFilter(
+                          e,
+                          filters,
+                          searchParams,
+                          recipesData,
+                          // filteredRecipes,
+                          setFilteredRecipes,
+                          setIsOpen,
+                          isOpen
+                        )
+                      }
+                    >
+                      Filter for Me
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <label className="modal-backdrop" htmlFor="my_modal_6">
+                Close
+              </label>
+            </div>
+          </div>
+          {isTokenValid && (
+            <CreateUpdateRecipeModal recipeData={null} recipeId={null} />
+          )}
           {!isLoading && !isError && data && (
             <>
               <CardsGrid cards={data.recipes} />
@@ -190,107 +253,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
             </>
           )}
         </main>
-      </Container>
-      <Container>
-        <div className="flex flex-row">
-          <div className="flex-none mr-6 lg:w-2/5 md:w-2/3 ">
-            <SearchBar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-          </div>
-          <SortDropdown sortValue={sortValue} setSortValue={setSortValue} />
-
-          {/* The button to open modal */}
-          <label
-            htmlFor="my_modal_6"
-            // className="btn"
-            className=" h-10 px-3 mx-4 py-1 rounded-2xl w-1/8"
-            style={{ backgroundColor: "#DDE0BD" }}
-          >
-            <img src={filterIcon} />
-          </label>
-
-          {/* Put this part before </body> tag */}
-          <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-          <div className="modal">
-            <div className="modal-box">
-              <Filter
-                filters={filters}
-                setFilters={setFilters}
-                recipesData={recipesData}
-                setFilteredRecipes={setFilteredRecipes}
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-              />
-              <div></div>
-              <div className="modal-action grid grid-cols-6 gap-4">
-                <div className="p-3 col-start-1 col-end-3 ">
-                  <label
-                    htmlFor="my_modal_6"
-                    className="link link-primary text-sm font-semibold"
-                    onClick={() =>
-                      onClearFilter(
-                        setFilters,
-                        filters,
-                        searchParams,
-                        setFilteredRecipes,
-                        recipesData
-                      )
-                    }
-                  >
-                    CLEAR ALL
-                  </label>
-                </div>
-                <div className="col-end-7 col-span-2">
-                  <label
-                    htmlFor="my_modal_6"
-                    className="btn"
-                    // className="btn normal-case"
-                    onClick={(e) =>
-                      onSubmitFilter(
-                        e,
-                        filters,
-                        searchParams,
-                        recipesData,
-                        // filteredRecipes,
-                        setFilteredRecipes,
-                        setIsOpen,
-                        isOpen
-                      )
-                    }
-                  >
-                    Filter for Me
-                  </label>
-                </div>
-              </div>
-            </div>
-            <label className="modal-backdrop" htmlFor="my_modal_6">
-              Close
-            </label>
-          </div>
-
-          {/* 
-          <div
-            className="h-10 px-3 mx-4 py-1 rounded-2xl w-1/8"
-            style={{ backgroundColor: "#DDE0BD" }}
-          >
-            <button onClick={() => setIsOpen(!isOpen)}>
-              <img src={filterIcon} />
-            </button>
-          </div> */}
-          {/* {isOpen && (
-            <Filter
-              filters={filters}
-              setFilters={setFilters}
-              recipesData={recipesData}
-              setFilteredRecipes={setFilteredRecipes}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-            />
-          )} */}
-        </div>
-        <CardsGrid cards={filteredRecipes} />
       </Container>
     </>
   );
