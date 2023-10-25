@@ -10,6 +10,7 @@ function Card({
   recipe_name,
   image_files,
   recipe_description,
+  difficulty,
 }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -59,6 +60,7 @@ function Card({
           </button>
         </div>
         <p className="mt-2 text-md">{recipe_description}</p>
+        <p>{difficulty}</p>
       </div>
     </Link>
   );
