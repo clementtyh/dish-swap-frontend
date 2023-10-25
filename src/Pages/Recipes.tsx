@@ -28,6 +28,11 @@ import Recipe from "../types/RecipeInterface.js";
 import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
+import urlcat from "urlcat";
+
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 
 
 interface IRecipesData {
@@ -105,9 +110,10 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
     calories: "",
   });
 
+  const searchRecipesUrl = urlcat(SERVER, `/recipe/?search=${searchQuery}`);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/recipe/?search=${searchQuery}`)
+      .get(searchRecipesUrl)
       .then((res) => {
         setRecipesData(sortNewest(defaultSort(res.data)));
         setFilteredRecipes(sortNewest(defaultSort(res.data)));
@@ -205,8 +211,7 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
           <label
             htmlFor="my_modal_6"
             // className="btn"
-            className=" h-10 px-3 mx-4 py-1 rounded-2xl w-1/8"
-            style={{ backgroundColor: "#DDE0BD" }}
+            className=" h-10 px-3 mx-4 py-1 rounded-2xl w-1/8 bg-[#DDE0BD]"
           >
             <img src={filterIcon} />
           </label>

@@ -42,7 +42,6 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
       .then((result) => {
         sessionStorage.setItem("token", result.data.payload.token);
         setIsTokenValid(true);
-        sessionStorage.setItem("displayName", result.data.payload.displayName);
         navigate("/recipes");
       })
       .catch((error) => {
