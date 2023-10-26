@@ -9,7 +9,6 @@ import Recipe from "./Pages/Recipe.js";
 
 import "./index.css";
 import Profile from "./Pages/Profile.js";
-import Settings from "./Pages/Settings.js";
 
 function App() {
   const [isTokenValid, setIsTokenValid] = useState(false);
@@ -39,11 +38,7 @@ function App() {
         },
         {
           path: "profile",
-          element: <Profile isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
-        },
-        {
-          path: "settings",
-          element: <Settings isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
+          element: <Profile />,
         },
         {
           path: "recipe/:recipeId",

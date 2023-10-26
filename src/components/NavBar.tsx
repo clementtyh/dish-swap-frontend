@@ -42,7 +42,7 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                     <a onClick={() => navigate('profile')}>PROFILE</a>
                     </li>
                     <li>
-                    <a onClick={() => navigate('settings')}>SETTINGS</a>
+                      <a>SETTINGS</a>
                     </li>
                     <li>
                       <a
@@ -96,10 +96,10 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
 
                     <ul className="p-2">
                       <li>
-                      <a onClick={() => navigate('profile')}>PROFILE</a>
+                        <a>PROFILE</a>
                       </li>
                       <li>
-                      <a onClick={() => navigate('settings')}>SETTINGS</a>
+                        <a>SETTINGS</a>
                       </li>
                       <li>
                         <a
