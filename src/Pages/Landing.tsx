@@ -5,7 +5,7 @@ import landingimg from "/mock-images/landing/landing.jpg?url";
 import ITokenValid from "../types/TokenValidInterface.js";
 
 const Landing = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
-  const [link, setLink] = useState("/signup")
+  const [link, setLink] = useState("/signin")
 
     useEffect(() => {
       const authenticate = async () => {

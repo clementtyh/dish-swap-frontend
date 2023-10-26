@@ -431,11 +431,18 @@ const CreateUpdateRecipeModal = ({
                       onChange={(e) => {
                         const files = Array.from(e.target.files as FileList);
                         const filteredFiles = files.filter((file) => {
-                          const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
+                          const acceptedTypes = [
+                            "image/jpeg",
+                            "image/jpg",
+                            "image/png",
+                          ];
                           return acceptedTypes.includes(file.type);
                         });
                         setAllImages([...allImages, ...filteredFiles]);
-                        setFieldValue("allImages", [...allImages, ...filteredFiles]);
+                        setFieldValue("allImages", [
+                          ...allImages,
+                          ...filteredFiles,
+                        ]);
                       }}
                       onBlur={handleBlur}
                     />
@@ -475,29 +482,19 @@ const CreateUpdateRecipeModal = ({
                     </div>
                     <br />
                     <br />
-                    <div className="modal-action">
-                      <button
-                        type="button"
-                        className="btn"
-                        onClick={() => {
-                          resetForm();
-                          toggleModal("close");
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
                     <button
-                      className="btn ml-5"
+                      className="btn btn-error"
+                      type="button"
+                      onClick={() => {
+                        resetForm();
+                        toggleModal("close");
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="btn ml-5 btn-success"
                       type="submit"
-                      // disabled={
-                      //   !(
-                      //     Object.keys(errors).length === 0 &&
-                      //     Object.keys(touched).length !== 0
-                      //   ) ||
-                      //   values.total_time_hours * 60 + values.total_time_mins <=
-                      //     0
-                      // }
                     >
                       Confirm
                     </button>

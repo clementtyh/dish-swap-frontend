@@ -8,16 +8,7 @@ const difficultyLevelsMap = {
   hard: "3",
 };
 
-
-
-function Filter({
-  filters,
-  setFilters,
-  recipesData,
-  setFilteredRecipes,
-  isOpen,
-  setIsOpen,
-}: IFilter) {
+function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
   let searchParams = useMemo(
     () => new URLSearchParams(window.location.search),
     []
@@ -39,7 +30,7 @@ function Filter({
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="checkbox checkbox-primary mr-3"
+                className="mr-3 checkbox checkbox-primary"
                 style={{ marginBottom: "-5px" }}
                 value="easy"
                 name="difficulty"
@@ -59,7 +50,8 @@ function Filter({
                       ...filters,
                       difficulty: currentDifficultySelection
                         .filter(
-                          (lvl:string) => lvl !== difficultyLevelsMap[e.target.value]
+                          (lvl: string) =>
+                            lvl !== difficultyLevelsMap[e.target.value]
                         )
                         .join("-"),
                     });
@@ -79,7 +71,7 @@ function Filter({
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="checkbox checkbox-primary mr-3"
+                className="mr-3 checkbox checkbox-primary"
                 style={{ marginBottom: "-5px" }}
                 value="medium"
                 name="difficulty"
@@ -133,7 +125,7 @@ function Filter({
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="checkbox checkbox-primary mr-3"
+                className="mr-3 checkbox checkbox-primary"
                 style={{ marginBottom: "-5px" }}
                 value="hard"
                 name="difficulty"
@@ -177,60 +169,35 @@ function Filter({
           <h3 className="text-2xl font-semibold">Number of Ingredients</h3>
           <div className="py-3">
             <div className="pb-2">
-            <input
-            type="radio"
-            className="radio radio-primary mr-3"
-            style={{ marginBottom: "-6px" }}
-            value="1"
-            name="ingredients"
-            checked={filters.ingredients === "1"}
-            onChange={(e) =>
-              setFilters({ ...filters, ingredients: e.target.value })
-            }
-          />
-          Max 5
+              <input
+                type="radio"
+                className="mr-3 radio radio-primary"
+                style={{ marginBottom: "-6px" }}
+                value="1"
+                name="ingredients"
+                checked={filters.ingredients === "1"}
+                onChange={(e) =>
+                  setFilters({ ...filters, ingredients: e.target.value })
+                }
+              />
+              Max 5
             </div>
             <div className="pb-1">
-            <input
-            type="radio"
-            className="radio radio-primary mr-3"
-            style={{ marginBottom: "-6px" }}
-            value="2"
-            name="ingredients"
-            checked={filters.ingredients === "2"}
-            onChange={(e) =>
-              setFilters({ ...filters, ingredients: e.target.value })
-            }
-          />
-          10 & below
+              <input
+                type="radio"
+                className="mr-3 radio radio-primary"
+                style={{ marginBottom: "-6px" }}
+                value="2"
+                name="ingredients"
+                checked={filters.ingredients === "2"}
+                onChange={(e) =>
+                  setFilters({ ...filters, ingredients: e.target.value })
+                }
+              />
+              10 & below
             </div>
-
-
           </div>
-
         </div>
-        {/* <div>
-            <h3>Calories Range</h3>
-            <PriceRangeFilter minPrice={minPrice} maxPrice={maxPrice} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} filters={filters} setFilters={setFilters} />
-          </div> */}
-        {/* <button
-            style={{marginTop: 30}}
-            type="submit"
-            onClick={(e) =>
-              onSubmitFilter(
-                e,
-                filters,
-                searchParams,
-                recipesData,
-                // filteredRecipes,
-                setFilteredRecipes,
-                setIsOpen,
-                isOpen
-              )
-            }
-          >
-            Set Filter
-          </button> */}
       </form>
     </>
   );
