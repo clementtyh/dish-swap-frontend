@@ -38,7 +38,7 @@ function App() {
         },
         {
           path: "profile",
-          element: <Profile />,
+          element: <Profile isTokenValid={isTokenValid} setIsTokenValid={setIsTokenValid}/>,
         },
         {
           path: "recipe/:recipeId",
