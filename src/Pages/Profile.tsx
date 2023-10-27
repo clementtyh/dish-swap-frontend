@@ -1,22 +1,22 @@
 import Container from "../components/Container.js";
 import settingsIcon from "../content/svg/settingsIcon.svg";
-// import { useNavigate } from "react-router-dom";
-// import urlcat from "urlcat";
-import { useEffect } from "react";
-// import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import urlcat from "urlcat";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
 import UnauthorisedPage from "./UnauthorisedPage.js";
-// import IProfileDetails from "../types/ProfileDetailsInterface.js";
+import IProfileDetails from "../types/ProfileDetailsInterface.js";
 
-// const SERVER = import.meta.env.PROD
-//   ? import.meta.env.VITE_API_URL_PROD
-//   : import.meta.env.VITE_API_URL_DEV;
+const SERVER = import.meta.env.PROD
+  ? import.meta.env.VITE_API_URL_PROD
+  : import.meta.env.VITE_API_URL_DEV;
 function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
-  // const token = sessionStorage.getItem("token");
-  // const navigate = useNavigate();
-  // const [profileDetails, setProfileDetails] = useState<IProfileDetails>({email: '', display_name: ''});
-  // const getUserUrl = urlcat(SERVER, "/user/get_user");
+  const token = sessionStorage.getItem("token");
+  const navigate = useNavigate();
+  const [profileDetails, setProfileDetails] = useState<IProfileDetails>({email: '', display_name: ''});
+  const getUserUrl = urlcat(SERVER, "/user/get_user");
 
   //check if token valid
   useEffect(() => {
@@ -27,14 +27,14 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
     authenticate();
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(getUserUrl, {
-  //       headers: { Authorization: "Bearer " + token },
-  //     })
-  //     .then((res) => setProfileDetails(res.data.payload))
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(getUserUrl, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((res) => setProfileDetails(res.data.payload))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -42,10 +42,10 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
         {isTokenValid ? (
           <div className="mt-32 justify-center">
             <div className="my-8 w-full flex justify-center">
-              <div className="card w-96" style={{ backgroundColor: "#E6E6CB" }}>
+              <div className="card w-96 bg-[#E6E6CB]">
                 <div className="flex justify-end mt-3 mr-3">
-                  <button>
-                    <img src={settingsIcon} />
+                  <button onClick={() => navigate("/settings")}>
+                    <img className="h-10" src={settingsIcon} />
                   </button>
                 </div>
                 <div className="avatar justify-center">
@@ -54,7 +54,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   </div>
                 </div>
                 <div className="card-body">
-                  <h2 className="card-title justify-center">displayName</h2>
+                  <h2 className="card-title justify-center">{profileDetails.display_name}</h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="flex justify-center">Following</p>
@@ -72,7 +72,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <div className="btn-group grid grid-cols-3 gap-1">
                 <button className="btn">Flavourmarks</button>
                 <button className="btn btn-active">Recipes</button>
-                <button className="btn">Reviews by displayName</button>
+                <button className="btn">Reviews by {profileDetails.display_name}</button>
               </div>
             </div>
           </div>
