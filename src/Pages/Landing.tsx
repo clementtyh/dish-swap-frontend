@@ -5,27 +5,27 @@ import landingimg from "/mock-images/landing/landing.jpg?url";
 import ITokenValid from "../types/TokenValidInterface.js";
 
 const Landing = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
-  const [link, setLink] = useState("/signin")
+  const [link, setLink] = useState("/signin");
 
-    useEffect(() => {
-      const authenticate = async () => {
-        const result = await verifyToken();
-  
-        if (result) {
-          setIsTokenValid(true);
-        } else {
-          setIsTokenValid(false);
-        }
-      };
-  
-      authenticate();
-    }, []);
+  useEffect(() => {
+    const authenticate = async () => {
+      const result = await verifyToken();
 
-    useEffect(() => {
-      if (isTokenValid) {
-        setLink("/recipes")
+      if (result) {
+        setIsTokenValid(true);
+      } else {
+        setIsTokenValid(false);
       }
-    }, [isTokenValid])
+    };
+
+    authenticate();
+  }, []);
+
+  useEffect(() => {
+    if (isTokenValid) {
+      setLink("/recipes");
+    }
+  }, [isTokenValid]);
 
   return (
     <div
@@ -40,6 +40,7 @@ const Landing = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
           cooks in a vibrant gastronomic exchange
         </p>
         <Link
+          data-test="landing-link"
           className="btn btn-neutral btn-xs md:btn-md lg:btn-lg rounded-full px-3 lg:px-10 tracking-[0.35rem]"
           to={link}
         >
