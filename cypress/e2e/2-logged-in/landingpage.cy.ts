@@ -1,5 +1,6 @@
 describe("Landing Page, logged in", () => {
   beforeEach(() => {
+    cy.login();
     cy.checkNavigationBar(true);
   });
 

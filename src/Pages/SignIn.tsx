@@ -41,6 +41,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     axios
       .post(url, values)
       .then((result) => {
+        console.log(result)
         sessionStorage.setItem("token", result.data.payload.token);
         const userInfo = decodeJwt(result.data.payload.token);
         sessionStorage.setItem("userId", userInfo.id as string);
@@ -50,6 +51,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
         navigate("/recipes");
       })
       .catch((error) => {
+        console.log(error)
         setErrorMessage(error.response.data.message);
       });
   };
@@ -82,6 +84,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   Email
                 </label>
                 <Field
+                  data-test="signin-email-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="email"
                   onChange={handleChange}
@@ -95,6 +98,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   Password
                 </label>
                 <Field
+                  data-test="signin-password-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="password"
                   type="password"
@@ -114,6 +118,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   <ErrorMessage name="password" />
                 </label>
                 <button
+                  data-test="signin-submit-button"
                   className="btn btn-neutral"
                   type="submit"
                   disabled={

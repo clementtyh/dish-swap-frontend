@@ -27,7 +27,7 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
       >
         <div className="navbar-start w-max">
           <a
-          data-test="navbar-landing-link"
+            data-test="navbar-landing-link"
             className="btn btn-ghost text-xs md:text-lg lg:text-xl"
             onClick={() => navigate("/")}
           >
@@ -37,16 +37,21 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
         <div className="navbar-end w-max">
           <ul className="menu menu-horizontal px-1 text-xs md:text-lg lg:text-xl gap-x-5 font-regular hidden md:flex xl:gap-x-24">
             <li>
-              <a data-test="navbar-recipes-link" onClick={() => navigate("/recipes")}>RECIPES</a>
+              <a
+                data-test="navbar-recipes-link"
+                onClick={() => navigate("/recipes")}
+              >
+                RECIPES
+              </a>
             </li>
             {isTokenValid ? (
               <>
                 <li tabIndex={0}>
                   <details>
-                    <summary>ACCOUNT</summary>
+                    <summary data-test="navbar-account" >ACCOUNT</summary>
                     <ul className="p-2 bg-neutral bg-opacity-60">
                       <li>
-                        <a onClick={() => navigate("profile")}>PROFILE</a>
+                        <a data-test="navbar-profile-link" onClick={() => navigate("profile")}>PROFILE</a>
                       </li>
                       <li>
                         <a>SETTINGS</a>
@@ -68,7 +73,12 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
               </>
             ) : (
               <li>
-                <a data-test="navbar-signin-link" onClick={() => navigate("/signin")}>SIGN IN</a>
+                <a
+                  data-test="navbar-signin-link"
+                  onClick={() => navigate("/signin")}
+                >
+                  SIGN IN
+                </a>
               </li>
             )}
           </ul>
