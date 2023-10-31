@@ -28,7 +28,7 @@ interface IReviewsData {
 }
 
 function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const token = sessionStorage.getItem("token");
   const [reviewsPage, setReviewsPage] = useState(1);
 
   //check if token valid
@@ -50,7 +50,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe/${recipeId}`
+        }/recipe/${recipeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return response.json();
     },
@@ -85,22 +90,22 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>
-            <div className="flex items-end justify-between">
+            <div className="flex justify-between">
               <h1 className="text-4xl font-bold text-green-900 uppercase">
                 {data.recipe_name}
               </h1>
               <button
                 className="flex items-center gap-2"
                 onClick={(e) => {
-                  e.preventDefault();
-                  setIsBookmarked(!isBookmarked);
+                  // e.preventDefault();
+                  // setIsBookmarked(!isBookmarked);
                 }}
               >
-                {isBookmarked ? (
+                {data.is_flavourmarked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 24"
-                    className="w-8 h-8 fill-yellow-500"
+                    className="w-6 h-6 fill-yellow-500"
                   >
                     <path
                       fillRule="evenodd"
@@ -114,7 +119,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     fill="none"
                     viewBox="0 24"
                     strokeWidth="1.5"
-                    className="w-8 h-8 stroke-yellow-500"
+                    className="w-6 h-6 stroke-yellow-500"
                   >
                     <path
                       strokeLinecap="round"
@@ -123,22 +128,25 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     />
                   </svg>
                 )}
-                <p className="text-xl font-bold text-green-900">642</p>
+                <p className="text-xl font-bold text-green-900">
+                  {data.flavourmarks_count}
+                </p>
               </button>
             </div>
             <div className="flex items-end justify-between">
               <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
                 {data.recipe_description}
               </p>
-              {isTokenValid && sessionStorage.getItem("userId") === data.created_by && (
-                <div className="flex gap-5">
-                  <CreateUpdateRecipeModal
-                    recipeData={data}
-                    recipeId={recipeId || null}
-                  />
-                  <DeleteRecipeModal recipeId={recipeId || null} />
-                </div>
-              )}
+              {isTokenValid &&
+                sessionStorage.getItem("userId") === data.created_by && (
+                  <div className="flex gap-5">
+                    <CreateUpdateRecipeModal
+                      recipeData={data}
+                      recipeId={recipeId || null}
+                    />
+                    <DeleteRecipeModal recipeId={recipeId || null} />
+                  </div>
+                )}
             </div>
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"

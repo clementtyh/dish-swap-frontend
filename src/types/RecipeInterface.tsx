@@ -1,4 +1,3 @@
-
 interface Recipe {
   _id: string;
   recipe_name: string;
@@ -13,6 +12,8 @@ interface Recipe {
   created_date: string;
   last_updated_by: string;
   last_updated_date: string;
+  flavourmarks_count: number;
+  is_flavourmarked: boolean;
 }
 
 export default Recipe;
