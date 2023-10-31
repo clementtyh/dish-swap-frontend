@@ -3,20 +3,62 @@ import settingsIcon from "../content/svg/settingsIcon.svg";
 import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import axios from "axios";
 import ITokenValid from "../types/TokenValidInterface.js";
 import verifyToken from "../functions/verifyToken.js";
 import UnauthorisedPage from "./UnauthorisedPage.js";
 import IProfileDetails from "../types/ProfileDetailsInterface.js";
+import CardsGrid from "../components/CardsGrid.js";
+import PaginationButtons from "../components/PaginationButtons.js";
+import IRecipe from "../types/RecipeInterface.js";
 
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
+
+interface IRecipesData {
+  count: number;
+  recipes: IRecipe[];
+}
+
+const tabItems = ["Flavourmarks", "Recipes", "Reviews"];
+
 function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
-  const [profileDetails, setProfileDetails] = useState<IProfileDetails>({email: '', display_name: ''});
+  const [profileDetails, setProfileDetails] = useState<IProfileDetails>({
+    email: "",
+    display_name: "",
+  });
   const getUserUrl = urlcat(SERVER, "/user/get_user");
+  const [tab, setTab] = useState("Recipes");
+  const [page, setPage] = useState(1);
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["recipes-flavourmarks", page],
+    queryFn: async (): Promise<IRecipesData> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/flavourmarks`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const count = parseInt(response.headers.get("x-total-count") as string);
+      const recipes = await response.json();
+
+      return {
+        count,
+        recipes,
+      };
+    },
+  });
 
   //check if token valid
   useEffect(() => {
@@ -40,21 +82,23 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
     <>
       <Container>
         {isTokenValid ? (
-          <div className="mt-32 justify-center">
-            <div className="my-8 w-full flex justify-center">
+          <div className="justify-center mt-32">
+            <div className="flex justify-center w-full my-8">
               <div className="card w-96 bg-[#E6E6CB]">
                 <div className="flex justify-end mt-3 mr-3">
                   <button onClick={() => navigate("/settings")}>
                     <img className="h-10" src={settingsIcon} />
                   </button>
                 </div>
-                <div className="avatar justify-center">
+                <div className="justify-center avatar">
                   <div className="w-48 rounded-full">
                     <img src="https://www.womansworld.com/wp-content/uploads/2024/08/cute-cats.jpg?w=953" />
                   </div>
                 </div>
                 <div className="card-body">
-                  <h2 className="card-title justify-center">{profileDetails.display_name}</h2>
+                  <h2 className="justify-center card-title">
+                    {profileDetails.display_name}
+                  </h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="flex justify-center">Following</p>
@@ -68,12 +112,44 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 </div>
               </div>
             </div>
-            <div className="my-16 col-start-1 col-end-9">
-              <div className="btn-group grid grid-cols-3 gap-1">
-                <button className="btn">Flavourmarks</button>
-                <button className="btn btn-active">Recipes</button>
-                <button className="btn">Reviews by {profileDetails.display_name}</button>
+            <div className="col-start-1 col-end-9 my-16">
+              <div className="grid grid-cols-3 gap-1 btn-group">
+                {tabItems.map((item) => {
+                  return (
+                    <button
+                      className={`btn ${tab === item ? "btn-active" : null}`}
+                      onClick={() => setTab(item)}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
               </div>
+            </div>
+            <div>
+              {(() => {
+                switch (tab) {
+                  case "Flavourmarks":
+                    return (
+                      !isLoading &&
+                      !isError &&
+                      data && (
+                        <>
+                          <CardsGrid cards={data.recipes} />
+                          <PaginationButtons
+                            pages={Math.ceil(data.count / 9)}
+                            page={page}
+                            setPage={setPage}
+                          />
+                        </>
+                      )
+                    );
+                  case "Recipes":
+                    return <div>Recipes</div>;
+                  case "Reviews":
+                    return <div>Reviews</div>;
+                }
+              })()}
             </div>
           </div>
         ) : (
