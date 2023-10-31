@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
 import IReview from "../types/ReviewInterface.js";
@@ -29,6 +29,7 @@ interface IReviewsData {
 
 function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const token = sessionStorage.getItem("token");
+  const queryClient = useQueryClient();
   const [reviewsPage, setReviewsPage] = useState(1);
 
   //check if token valid
@@ -85,6 +86,63 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
     },
   });
 
+  const flavourmarkMutation = useMutation({
+    mutationFn: async (): Promise<IRecipe> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${recipeId}/flavourmark`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.json();
+    },
+    onMutate: async () => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["recipe", recipeId] });
+
+      // Snapshot the previous value
+      const previousRecipe = queryClient.getQueryData<IRecipe>([
+        "recipe",
+        recipeId,
+      ]);
+
+      if (previousRecipe) {
+        const previousCount = previousRecipe.flavourmarks_count;
+        const previousIsFlavourmarked = previousRecipe.is_flavourmarked;
+
+        // Optimistically update to the new value
+        queryClient.setQueryData(["recipe", recipeId], {
+          ...previousRecipe,
+          flavourmarks_count: previousIsFlavourmarked
+            ? previousCount - 1
+            : previousCount + 1,
+          is_flavourmarked: !previousIsFlavourmarked,
+        });
+      }
+
+      // Return a context object with the snapshotted value
+      return { previousRecipe };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (_, __, context) => {
+      context &&
+        queryClient.setQueryData(["recipe", recipeId], context.previousRecipe);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["recipe", recipeId] });
+    },
+  });
+
   return (
     <Container>
       <main className="mt-16">
@@ -97,8 +155,8 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <button
                 className="flex items-center gap-2"
                 onClick={(e) => {
-                  // e.preventDefault();
-                  // setIsBookmarked(!isBookmarked);
+                  e.preventDefault();
+                  token && flavourmarkMutation.mutate();
                 }}
               >
                 {data.is_flavourmarked ? (
