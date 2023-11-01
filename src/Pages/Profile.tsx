@@ -35,8 +35,12 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const [tab, setTab] = useState("Recipes");
   const [page, setPage] = useState(1);
 
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["recipes-flavourmarks", page],
+  const {
+    isLoading: isLoadingFlavourmarks,
+    isError: isErrorFlavourmarks,
+    data: flavourmarksData,
+  } = useQuery({
+    queryKey: ["profile-flavourmarks", page],
     queryFn: async (): Promise<IRecipesData> => {
       const response = await fetch(
         `${
@@ -44,6 +48,35 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
         }/recipe/flavourmarks`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const count = parseInt(response.headers.get("x-total-count") as string);
+      const recipes = await response.json();
+
+      return {
+        count,
+        recipes,
+      };
+    },
+  });
+
+  const {
+    isLoading: isLoadingRecipes,
+    isError: isErrorRecipes,
+    data: recipesData,
+  } = useQuery({
+    queryKey: ["profile-recipes", page],
+    queryFn: async (): Promise<IRecipesData> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/profile`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +151,10 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   return (
                     <button
                       className={`btn ${tab === item ? "btn-active" : null}`}
-                      onClick={() => setTab(item)}
+                      onClick={() => {
+                        setTab(item);
+                        setPage(1);
+                      }}
                     >
                       {item}
                     </button>
@@ -131,13 +167,13 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 switch (tab) {
                   case "Flavourmarks":
                     return (
-                      !isLoading &&
-                      !isError &&
-                      data && (
+                      !isLoadingFlavourmarks &&
+                      !isErrorFlavourmarks &&
+                      flavourmarksData && (
                         <>
-                          <CardsGrid cards={data.recipes} />
+                          <CardsGrid cards={flavourmarksData.recipes} />
                           <PaginationButtons
-                            pages={Math.ceil(data.count / 9)}
+                            pages={Math.ceil(flavourmarksData.count / 9)}
                             page={page}
                             setPage={setPage}
                           />
@@ -145,7 +181,20 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                       )
                     );
                   case "Recipes":
-                    return <div>Recipes</div>;
+                    return (
+                      !isLoadingRecipes &&
+                      !isErrorRecipes &&
+                      recipesData && (
+                        <>
+                          <CardsGrid cards={recipesData.recipes} />
+                          <PaginationButtons
+                            pages={Math.ceil(recipesData.count / 9)}
+                            page={page}
+                            setPage={setPage}
+                          />
+                        </>
+                      )
+                    );
                   case "Reviews":
                     return <div>Reviews</div>;
                 }
