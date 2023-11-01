@@ -67,7 +67,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
     isError: isErrorReviews,
     data: reviewsData,
   } = useQuery({
-    queryKey: ["reviews", reviewsPage],
+    queryKey: ["reviews", recipeId, reviewsPage],
     queryFn: async (): Promise<IReviewsData> => {
       const response = await fetch(
         `${
