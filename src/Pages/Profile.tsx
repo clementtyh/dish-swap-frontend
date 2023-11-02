@@ -10,8 +10,10 @@ import verifyToken from "../functions/verifyToken.js";
 import UnauthorisedPage from "./UnauthorisedPage.js";
 import IProfileDetails from "../types/ProfileDetailsInterface.js";
 import CardsGrid from "../components/CardsGrid.js";
+import ReviewCardsGrid from "../components/ReviewCardsGrid.js";
 import PaginationButtons from "../components/PaginationButtons.js";
 import IRecipe from "../types/RecipeInterface.js";
+import { ProfileReview as IReview } from "../types/ReviewInterface.js";
 
 const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
@@ -20,6 +22,11 @@ const SERVER = import.meta.env.PROD
 interface IRecipesData {
   count: number;
   recipes: IRecipe[];
+}
+
+interface IReviewsData {
+  count: number;
+  reviews: IReview[];
 }
 
 const tabItems = ["Flavourmarks", "Recipes", "Reviews"];
@@ -89,6 +96,35 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
       return {
         count,
         recipes,
+      };
+    },
+  });
+
+  const {
+    isLoading: isLoadingReviews,
+    isError: isErrorReviews,
+    data: reviewsData,
+  } = useQuery({
+    queryKey: ["profile-reviews", page],
+    queryFn: async (): Promise<IReviewsData> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/review/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const count = parseInt(response.headers.get("x-total-count") as string);
+      const reviews = await response.json();
+
+      return {
+        count,
+        reviews,
       };
     },
   });
@@ -196,7 +232,23 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                       )
                     );
                   case "Reviews":
-                    return <div>Reviews</div>;
+                    return (
+                      !isLoadingReviews &&
+                      !isErrorReviews &&
+                      reviewsData && (
+                        <>
+                          <ReviewCardsGrid
+                            cards={reviewsData.reviews}
+                            isProfile={true}
+                          />
+                          <PaginationButtons
+                            pages={Math.ceil(reviewsData.count / 9)}
+                            page={page}
+                            setPage={setPage}
+                          />
+                        </>
+                      )
+                    );
                 }
               })()}
             </div>

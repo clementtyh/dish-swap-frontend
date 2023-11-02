@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
-import IReview from "../types/ReviewInterface.js";
+import { Review as IReview } from "../types/ReviewInterface.js";
 import ITokenValid from "../types/TokenValidInterface.js";
 
 import Container from "../components/Container.js";
@@ -272,7 +272,10 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
                   <div className="w-full mt-16">
-                    <ReviewCardsGrid cards={reviewsData.reviews} />
+                    <ReviewCardsGrid
+                      cards={reviewsData.reviews}
+                      isProfile={false}
+                    />
                   </div>
                   <div>
                     <PaginationButtons
