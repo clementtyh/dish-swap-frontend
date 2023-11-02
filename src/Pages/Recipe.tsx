@@ -12,6 +12,7 @@ import PaginationButtons from "../components/PaginationButtons.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 import DeleteRecipeModal from "../components/DeleteRecipeModal.js";
+import CreateReviewModal from "../components/CreateReviewModal.js";
 
 const nutrition = {
   calories: "220",
@@ -87,7 +88,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   });
 
   const flavourmarkMutation = useMutation({
-    mutationFn: async (): Promise<IRecipe> => {
+    mutationFn: async (): Promise<any> => {
       const response = await fetch(
         `${
           import.meta.env.PROD
@@ -269,6 +270,14 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             </div>
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-xl font-bold text-green-900">Reviews</h2>
+              <div className="self-end mt-8">
+                {isTokenValid && recipeId && (
+                  <CreateReviewModal
+                    recipeId={recipeId}
+                    setReviewsPage={setReviewsPage}
+                  />
+                )}
+              </div>
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
                   <div className="w-full mt-16">
