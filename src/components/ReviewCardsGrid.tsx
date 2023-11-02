@@ -1,20 +1,40 @@
 import ReviewCard from "./ReviewCard.js";
+import ProfileReviewCard from "./ProfileReviewCard.js";
 
-import IReview from "../types/ReviewInterface.js";
+import {
+  Review as IReview,
+  ProfileReview as IProfileReview,
+} from "../types/ReviewInterface.js";
 
-interface ReivewCardsGridProps {
+interface ReviewCardsGridProps {
   cards: IReview[];
+  isProfile: false;
 }
 
-function ReviewCardsGrid({ cards }: ReivewCardsGridProps) {
+interface ProfileReviewCardsGridProps {
+  cards: IProfileReview[];
+  isProfile: true;
+}
+
+function ReviewCardsGrid({
+  cards,
+  isProfile,
+}: ReviewCardsGridProps | ProfileReviewCardsGridProps) {
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-      {cards.map((card) => (
-        <ReviewCard
-          key={`${card.created_by.display_name}: ${card.rating}`}
-          {...card}
-        />
-      ))}
+      {isProfile
+        ? cards.map((card) => (
+            <ProfileReviewCard
+              key={`${card.recipe.recipe_name}: ${card.rating}`}
+              {...card}
+            />
+          ))
+        : cards.map((card) => (
+            <ReviewCard
+              key={`${card.created_by.display_name}: ${card.rating}`}
+              {...card}
+            />
+          ))}
     </div>
   );
 }

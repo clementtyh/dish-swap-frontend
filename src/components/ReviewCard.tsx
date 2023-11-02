@@ -1,4 +1,4 @@
-import IReview from "../types/ReviewInterface.js";
+import { Review as IReview } from "../types/ReviewInterface.js";
 
 interface ReviewCardProps extends IReview {}
 
@@ -10,7 +10,7 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
           <svg
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
+            viewBox="0 24"
             className="w-6 h-6 fill-rose-500"
           >
             <path
@@ -25,7 +25,7 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
             key={idx}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 24"
             strokeWidth="1.5"
             className="w-6 h-6 stroke-rose-500"
           >
