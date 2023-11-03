@@ -152,8 +152,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   type="submit"
                   disabled={
                     !(
-                      Object.keys(errors).length === 0 &&
-                      Object.keys(touched).length !== 0
+                      Object.keys(errors).length === 0
                     )
                   }
                 >
