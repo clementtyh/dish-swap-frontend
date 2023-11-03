@@ -76,7 +76,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/review?page=${reviewsPage}&recipe=${recipeId}`
+        }/review?page=${reviewsPage}&recipe=${recipeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const reviews = await response.json();
