@@ -271,12 +271,14 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-xl font-bold text-green-900">Reviews</h2>
               <div className="self-end mt-8">
-                {isTokenValid && recipeId && (
-                  <CreateReviewModal
-                    recipeId={recipeId}
-                    setReviewsPage={setReviewsPage}
-                  />
-                )}
+                {isTokenValid &&
+                  recipeId &&
+                  sessionStorage.getItem("userId") != data.created_by && (
+                    <CreateReviewModal
+                      recipeId={recipeId}
+                      setReviewsPage={setReviewsPage}
+                    />
+                  )}
               </div>
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
