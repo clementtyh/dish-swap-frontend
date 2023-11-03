@@ -92,11 +92,14 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
       };
     },
     onSettled: (data) => {
-      if (
-        reviewsPage === 1 &&
-        data?.reviews[0].created_by._id === sessionStorage.getItem("userId")
-      ) {
-        setUserHasReviewed(true);
+      if (reviewsPage === 1) {
+        if (
+          data?.reviews[0].created_by._id === sessionStorage.getItem("userId")
+        ) {
+          setUserHasReviewed(true);
+        } else {
+          setUserHasReviewed(false);
+        }
       }
     },
   });
