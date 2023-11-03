@@ -9,7 +9,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-const baseUrl = Cypress.env("client_dev");
+const baseUrl = Cypress.env("CYPRESS_baseUrl");
 
 //command to check navigation bar, depends on logged in or not
 Cypress.Commands.add("checkNavigationBar", (loggedIn) => {

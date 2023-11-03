@@ -7,9 +7,4 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
-  // viewportWidths: {
-  //   mobile: 320,
-  //   tablet: 768,
-  //   laptop: 1024,
-  // },
 });
