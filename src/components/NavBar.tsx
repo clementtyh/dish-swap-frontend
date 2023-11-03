@@ -45,24 +45,35 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
               </a>
             </li>
             {isTokenValid ? (
-            <>
-              <li tabIndex={0}>
-                <details>
-                  <summary data-test="navbar-account">ACCOUNT</summary>
-                  <ul className="p-2 bg-neutral bg-opacity-60">
-                    <li>
-                    <a data-test="navbar-profile-link" onClick={() => navigate('profile')}>PROFILE</a>
-                    </li>
-                    <li>
-                      <a onClick={() => navigate('settings')}>SETTINGS</a>
-                    </li>
-                    <li>
-                      <a
-                        onClick={() => {
-                          sessionStorage.clear();
-                          setIsTokenValid(false);
-                          navigate("/signin");
-                        }}
+              <>
+                <li tabIndex={0}>
+                  <details>
+                    <summary data-test="navbar-account">ACCOUNT</summary>
+                    <ul className="p-2 bg-neutral bg-opacity-60 z-10">
+                      <li>
+                        <a
+                          data-test="navbar-profile-link"
+                          onClick={() => navigate("profile")}
+                        >
+                          PROFILE
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-settings-link"
+                          onClick={() => navigate("settings")}
+                        >
+                          SETTINGS
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-signout-link"
+                          onClick={() => {
+                            sessionStorage.clear();
+                            setIsTokenValid(false);
+                            navigate("/signin");
+                          }}
                         >
                           SIGN OUT
                         </a>
@@ -83,7 +94,11 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
             )}
           </ul>
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost md:hidden">
+            <label
+              data-test="navbar-dropdown"
+              tabIndex={0}
+              className="btn btn-ghost md:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -104,39 +119,58 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0 text-xs md:text-lg lg:text-xl"
             >
               <li>
-                <a onClick={() => navigate("/recipes")}>RECIPES</a>
+                <a
+                  data-test="navbar-dropdown-recipes-link"
+                  onClick={() => navigate("/recipes")}
+                >
+                  RECIPES
+                </a>
               </li>
               {isTokenValid ? (
                 <>
                   <li>
-                    <details open>
-                      <summary>ACCOUNT</summary>
+                    <a className="pointer-events-none">ACCOUNT</a>
 
                     <ul className="p-2">
                       <li>
-                        <a onClick={() => navigate('profile')}>PROFILE</a>
-                      </li>
-                      <li>
-                        <a onClick={() => navigate('settings')}>SETTINGS</a>
+                        <a
+                          data-test="navbar-dropdown-profile-link"
+                          onClick={() => navigate("profile")}
+                        >
+                          PROFILE
+                        </a>
                       </li>
                       <li>
                         <a
+                          data-test="navbar-dropdown-settings-link"
+                          onClick={() => navigate("settings")}
+                        >
+                          SETTINGS
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-dropdown-signout-link"
                           onClick={() => {
                             sessionStorage.clear();
                             setIsTokenValid(false);
                             navigate("/signin");
                           }}
-                          >
-                            SIGN OUT
-                          </a>
-                        </li>
-                      </ul>
-                    </details>
+                        >
+                          SIGN OUT
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </>
               ) : (
                 <li>
-                  <a onClick={() => navigate("/signin")}>SIGN IN</a>
+                  <a
+                    data-test="navbar-dropdown-signin-link"
+                    onClick={() => navigate("/signin")}
+                  >
+                    SIGN IN
+                  </a>
                 </li>
               )}
             </ul>
