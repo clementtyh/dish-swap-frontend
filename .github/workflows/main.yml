@@ -6,7 +6,7 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      CYPRESS_BASE_URL: https://dish-swap.pages.dev
+      CYPRESS_baseUrl: https://dish-swap.pages.dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -14,7 +14,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          record: true
           browser: chrome
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_baseUrl: ${{ env.CYPRESS_BASE_URL }}
+          CYPRESS_baseUrl: ${{ env.CYPRESS_baseUrl }}
