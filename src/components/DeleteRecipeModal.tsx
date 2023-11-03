@@ -31,7 +31,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
       .post(urlcat(SERVER, `/recipe/delete/${recipeId}`), {}, {
         headers: { Authorization: "Bearer " + token },
       })
-      .then((response) => {
+      .then(() => {
         setIsSubmitting(false);
         recipeModalRef.current?.close();
         navigate("/recipes");

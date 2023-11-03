@@ -77,7 +77,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
               setErrorMessage(null);
             }}
           >
-            {({ errors, touched, handleChange, handleBlur }) => (
+            {({ errors, handleChange, handleBlur }) => (
               <Form>
                 <label className="label text-xs sm:text-sm font-medium">
                   Email
