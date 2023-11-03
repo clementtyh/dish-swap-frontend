@@ -34,11 +34,9 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
       .then((response) => {
         setIsSubmitting(false);
         recipeModalRef.current?.close();
-        console.log("delete recipe success", response);
         navigate("/recipes");
       })
       .catch((error) => {
-        console.log("sending recipe to server failed", error);
         setErrorMessage(error.response.data.message);
         setIsSubmitting(false);
       });

@@ -41,7 +41,6 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     axios
       .post(url, values)
       .then((result) => {
-        console.log(result)
         sessionStorage.setItem("token", result.data.payload.token);
         const userInfo = decodeJwt(result.data.payload.token);
         sessionStorage.setItem("userId", userInfo.id as string);
@@ -51,7 +50,6 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
         navigate("/recipes");
       })
       .catch((error) => {
-        console.log(error)
         setErrorMessage(error.response.data.message);
       });
   };
@@ -105,7 +103,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="label">
+                {/* <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>
@@ -113,7 +111,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <label className="label cursor-pointer justify-start gap-3 mt-3">
                   <input type="checkbox" className="checkbox checkbox-xs" />
                   <span className="label-text-alt">Remember me</span>
-                </label>
+                </label> */}
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                   <ErrorMessage name="password" />
                 </label>

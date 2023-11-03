@@ -43,14 +43,12 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     confirm_password: string;
   }) => {
     const url = urlcat(SERVER, "/user/register");
-    console.log(url)
     axios
       .post(url, values)
       .then(() => {
         navigate("/signin");
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.message);
       });
   };
