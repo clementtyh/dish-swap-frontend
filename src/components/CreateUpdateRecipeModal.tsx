@@ -73,7 +73,6 @@ const CreateUpdateRecipeModal = ({
         )
         .then((response) => response.data)
         .catch((error) => {
-          console.log("Error getting upload URL", error);
           setErrorMessage(error.response.data.message);
           setIsSubmitting(false);
         });
@@ -102,7 +101,6 @@ const CreateUpdateRecipeModal = ({
             )
             .then((response) => response.data.secure_url)
             .catch((error) => {
-              console.log("Error uploading image to Cloudinary", error);
               setErrorMessage(error.response.data.message);
               setIsSubmitting(false);
             });
@@ -143,16 +141,11 @@ const CreateUpdateRecipeModal = ({
         .then((response) => {
           setIsSubmitting(false);
           recipeModalRef.current?.close();
-          console.log(
-            `${recipeData ? "update" : "create"} recipe success`,
-            response
-          );
           recipeData
             ? navigate(`/recipe/${recipeId}`)
             : navigate(`/recipe/${response.data.payload.recipe_id}`);
         })
         .catch((error) => {
-          console.log("sending recipe to server failed", error);
           setErrorMessage(error.response.data.message);
           setIsSubmitting(false);
         });
@@ -165,7 +158,6 @@ const CreateUpdateRecipeModal = ({
       .then(createUpdateRecipe)
       .catch((error) => {
         setIsSubmitting(false);
-        console.log("create recipe failed", error);
         setErrorMessage(error.response.data.message);
       });
   };

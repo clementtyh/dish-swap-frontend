@@ -8,65 +8,97 @@ type NavBarProps = {
 };
 
 const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
-
   const navigate = useNavigate();
 
   //check if token valid to detemine whats shown on navbar, necessary for when page is refreshed
   useEffect(() => {
     const authenticate = async () => {
-      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
-    }
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
+    };
 
     authenticate();
-  }, [])
+  }, []);
 
   return (
     <div className="text-base-100 px-10 md:px-20 py-10 absolute w-full">
-      <div className="navbar bg-neutral bg-opacity-60 rounded-full px-2 md:px-10 py-0 justify-between h-max">
+      <div
+        data-test="navbar"
+        className="navbar bg-neutral bg-opacity-60 rounded-full px-2 md:px-10 py-0 justify-between h-max"
+      >
         <div className="navbar-start w-max">
-          <a className="btn btn-ghost text-xs md:text-lg lg:text-xl" onClick={() => navigate("/")}>
+          <a
+            data-test="navbar-landing-link"
+            className="btn btn-ghost text-xs md:text-lg lg:text-xl"
+            onClick={() => navigate("/")}
+          >
             DISHSWAP
           </a>
         </div>
         <div className="navbar-end w-max">
-          <ul className="menu menu-horizontal px-1 text-xs md:text-lg lg:text-xl gap-x-5 font-regular hidden lg:flex xl:gap-x-24">
+          <ul className="menu menu-horizontal px-1 text-xs md:text-lg lg:text-xl gap-x-5 font-regular hidden md:flex xl:gap-x-24">
             <li>
-              <a onClick={() => navigate("/recipes")}>RECIPES</a>
+              <a
+                data-test="navbar-recipes-link"
+                onClick={() => navigate("/recipes")}
+              >
+                RECIPES
+              </a>
             </li>
-            {isTokenValid ? (<>
-              <li tabIndex={0}>
-                <details>
-                  <summary>ACCOUNT</summary>
-                  <ul className="p-2 bg-neutral bg-opacity-60">
-                    <li>
-                    <a onClick={() => navigate('profile')}>PROFILE</a>
-                    </li>
-                    <li>
-                      <a onClick={() => navigate('settings')}>SETTINGS</a>
-                    </li>
-                    <li>
-                      <a
-                        onClick={() => {
-                          sessionStorage.clear();
-                          setIsTokenValid(false);
-                          navigate("/signin");
-                        }}
+            {isTokenValid ? (
+              <>
+                <li tabIndex={0}>
+                  <details>
+                    <summary data-test="navbar-account">ACCOUNT</summary>
+                    <ul className="p-2 bg-neutral bg-opacity-60 z-10">
+                      <li>
+                        <a
+                          data-test="navbar-profile-link"
+                          onClick={() => navigate("profile")}
                         >
-                        SIGN OUT
-                      </a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-                        </>
+                          PROFILE
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-settings-link"
+                          onClick={() => navigate("settings")}
+                        >
+                          SETTINGS
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-signout-link"
+                          onClick={() => {
+                            sessionStorage.clear();
+                            setIsTokenValid(false);
+                            navigate("/signin");
+                          }}
+                        >
+                          SIGN OUT
+                        </a>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </>
             ) : (
               <li>
-                <a onClick={() => navigate("/signin")}>SIGN IN</a>
+                <a
+                  data-test="navbar-signin-link"
+                  onClick={() => navigate("/signin")}
+                >
+                  SIGN IN
+                </a>
               </li>
             )}
           </ul>
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label
+              data-test="navbar-dropdown"
+              tabIndex={0}
+              className="btn btn-ghost md:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -87,38 +119,58 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 rounded-box w-max bg-neutral bg-opacity-60 relative right-0 text-xs md:text-lg lg:text-xl"
             >
               <li>
-                <a onClick={() => navigate("/recipes")}>RECIPES</a>
+                <a
+                  data-test="navbar-dropdown-recipes-link"
+                  onClick={() => navigate("/recipes")}
+                >
+                  RECIPES
+                </a>
               </li>
-              {isTokenValid ? (<>
-                <li>
-                  <details open>
-                    <summary>ACCOUNT</summary>
+              {isTokenValid ? (
+                <>
+                  <li>
+                    <a className="pointer-events-none">ACCOUNT</a>
 
                     <ul className="p-2">
                       <li>
-                        <a onClick={() => navigate('profile')}>PROFILE</a>
-                      </li>
-                      <li>
-                        <a onClick={() => navigate('settings')}>SETTINGS</a>
+                        <a
+                          data-test="navbar-dropdown-profile-link"
+                          onClick={() => navigate("profile")}
+                        >
+                          PROFILE
+                        </a>
                       </li>
                       <li>
                         <a
+                          data-test="navbar-dropdown-settings-link"
+                          onClick={() => navigate("settings")}
+                        >
+                          SETTINGS
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          data-test="navbar-dropdown-signout-link"
                           onClick={() => {
                             sessionStorage.clear();
                             setIsTokenValid(false);
                             navigate("/signin");
                           }}
-                          >
+                        >
                           SIGN OUT
                         </a>
                       </li>
                     </ul>
-                  </details>
-                </li>
-                          </>
+                  </li>
+                </>
               ) : (
                 <li>
-                  <a onClick={() => navigate("/signin")}>SIGN IN</a>
+                  <a
+                    data-test="navbar-dropdown-signin-link"
+                    onClick={() => navigate("/signin")}
+                  >
+                    SIGN IN
+                  </a>
                 </li>
               )}
             </ul>

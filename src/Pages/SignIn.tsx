@@ -76,12 +76,13 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
               setErrorMessage(null);
             }}
           >
-            {({ errors, touched, handleChange, handleBlur }) => (
+            {({ errors, handleChange, handleBlur }) => (
               <Form>
                 <label className="label text-xs sm:text-sm font-medium">
                   Email
                 </label>
                 <Field
+                  data-test="signin-email-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="email"
                   onChange={handleChange}
@@ -95,13 +96,14 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   Password
                 </label>
                 <Field
+                  data-test="signin-password-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="password"
                   type="password"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="label">
+                {/* <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>
@@ -109,17 +111,17 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <label className="label cursor-pointer justify-start gap-3 mt-3">
                   <input type="checkbox" className="checkbox checkbox-xs" />
                   <span className="label-text-alt">Remember me</span>
-                </label>
+                </label> */}
                 <label className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                   <ErrorMessage name="password" />
                 </label>
                 <button
+                  data-test="signin-submit-button"
                   className="btn btn-neutral"
                   type="submit"
                   disabled={
                     !(
-                      Object.keys(errors).length === 0 &&
-                      Object.keys(touched).length !== 0
+                      Object.keys(errors).length === 0
                     )
                   }
                 >

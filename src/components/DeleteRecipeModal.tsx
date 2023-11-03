@@ -31,14 +31,12 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
       .post(urlcat(SERVER, `/recipe/delete/${recipeId}`), {}, {
         headers: { Authorization: "Bearer " + token },
       })
-      .then((response) => {
+      .then(() => {
         setIsSubmitting(false);
         recipeModalRef.current?.close();
-        console.log("delete recipe success", response);
         navigate("/recipes");
       })
       .catch((error) => {
-        console.log("sending recipe to server failed", error);
         setErrorMessage(error.response.data.message);
         setIsSubmitting(false);
       });

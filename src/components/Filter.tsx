@@ -66,7 +66,7 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <spam className="text-lg ">Easy</spam>
+              <span className="text-lg ">Easy</span>
             </div>
             <div className="pb-1">
               <input
@@ -120,7 +120,7 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <spam className="text-lg ">Medium</spam>
+              <span className="text-lg ">Medium</span>
             </div>
             <div className="pb-1">
               <input
@@ -160,7 +160,7 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <spam className="text-lg ">Hard</spam>
+              <span className="text-lg ">Hard</span>
             </div>
           </div>
         </div>

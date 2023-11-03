@@ -43,14 +43,12 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     confirm_password: string;
   }) => {
     const url = urlcat(SERVER, "/user/register");
-    console.log(url)
     axios
       .post(url, values)
       .then(() => {
         navigate("/signin");
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.message);
       });
   };
@@ -79,7 +77,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
               setErrorMessage(null);
             }}
           >
-            {({ errors, touched, handleChange, handleBlur }) => (
+            {({ errors, handleChange, handleBlur }) => (
               <Form>
                 <label className="label text-xs sm:text-sm font-medium">
                   Email
@@ -152,8 +150,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   type="submit"
                   disabled={
                     !(
-                      Object.keys(errors).length === 0 &&
-                      Object.keys(touched).length !== 0
+                      Object.keys(errors).length === 0
                     )
                   }
                 >
