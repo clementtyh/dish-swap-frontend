@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import IRecipe from "../types/RecipeInterface.js";
-import IReview from "../types/ReviewInterface.js";
+import { Review as IReview } from "../types/ReviewInterface.js";
 import ITokenValid from "../types/TokenValidInterface.js";
 
 import Container from "../components/Container.js";
@@ -28,7 +28,8 @@ interface IReviewsData {
 }
 
 function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const token = sessionStorage.getItem("token");
+  const queryClient = useQueryClient();
   const [reviewsPage, setReviewsPage] = useState(1);
 
   //check if token valid
@@ -50,7 +51,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe/${recipeId}`
+        }/recipe/${recipeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return response.json();
     },
@@ -61,7 +67,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
     isError: isErrorReviews,
     data: reviewsData,
   } = useQuery({
-    queryKey: ["reviews", reviewsPage],
+    queryKey: ["reviews", recipeId, reviewsPage],
     queryFn: async (): Promise<IReviewsData> => {
       const response = await fetch(
         `${
@@ -80,12 +86,69 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
     },
   });
 
+  const flavourmarkMutation = useMutation({
+    mutationFn: async (): Promise<IRecipe> => {
+      const response = await fetch(
+        `${
+          import.meta.env.PROD
+            ? import.meta.env.VITE_API_URL_PROD
+            : import.meta.env.VITE_API_URL_DEV
+        }/recipe/${recipeId}/flavourmark`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.json();
+    },
+    onMutate: async () => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["recipe", recipeId] });
+
+      // Snapshot the previous value
+      const previousRecipe = queryClient.getQueryData<IRecipe>([
+        "recipe",
+        recipeId,
+      ]);
+
+      if (previousRecipe) {
+        const previousCount = previousRecipe.flavourmarks_count;
+        const previousIsFlavourmarked = previousRecipe.is_flavourmarked;
+
+        // Optimistically update to the new value
+        queryClient.setQueryData(["recipe", recipeId], {
+          ...previousRecipe,
+          flavourmarks_count: previousIsFlavourmarked
+            ? previousCount - 1
+            : previousCount + 1,
+          is_flavourmarked: !previousIsFlavourmarked,
+        });
+      }
+
+      // Return a context object with the snapshotted value
+      return { previousRecipe };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (_, __, context) => {
+      context &&
+        queryClient.setQueryData(["recipe", recipeId], context.previousRecipe);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["recipe", recipeId] });
+    },
+  });
+
   return (
     <Container>
       <main className="mt-16">
         {!isLoading && !isError && data && (
           <>
-            <div className="flex items-end justify-between">
+            <div className="flex justify-between">
               <h1 className="text-4xl font-bold text-green-900 uppercase">
                 {data.recipe_name}
               </h1>
@@ -93,14 +156,14 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 className="flex items-center gap-2"
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsBookmarked(!isBookmarked);
+                  token && flavourmarkMutation.mutate();
                 }}
               >
-                {isBookmarked ? (
+                {data.is_flavourmarked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 24"
-                    className="w-8 h-8 fill-yellow-500"
+                    className="w-6 h-6 fill-yellow-500"
                   >
                     <path
                       fillRule="evenodd"
@@ -114,7 +177,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     fill="none"
                     viewBox="0 24"
                     strokeWidth="1.5"
-                    className="w-8 h-8 stroke-yellow-500"
+                    className="w-6 h-6 stroke-yellow-500"
                   >
                     <path
                       strokeLinecap="round"
@@ -123,22 +186,25 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     />
                   </svg>
                 )}
-                <p className="text-xl font-bold text-green-900">642</p>
+                <p className="text-xl font-bold text-green-900">
+                  {data.flavourmarks_count}
+                </p>
               </button>
             </div>
             <div className="flex items-end justify-between">
               <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
                 {data.recipe_description}
               </p>
-              {isTokenValid && sessionStorage.getItem("userId") === data.created_by && (
-                <div className="flex gap-5">
-                  <CreateUpdateRecipeModal
-                    recipeData={data}
-                    recipeId={recipeId || null}
-                  />
-                  <DeleteRecipeModal recipeId={recipeId || null} />
-                </div>
-              )}
+              {isTokenValid &&
+                sessionStorage.getItem("userId") === data.created_by && (
+                  <div className="flex gap-5">
+                    <CreateUpdateRecipeModal
+                      recipeData={data}
+                      recipeId={recipeId || null}
+                    />
+                    <DeleteRecipeModal recipeId={recipeId || null} />
+                  </div>
+                )}
             </div>
             <img
               className="object-cover w-full mt-8 h-96 rounded-xl"
@@ -206,7 +272,10 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
                   <div className="w-full mt-16">
-                    <ReviewCardsGrid cards={reviewsData.reviews} />
+                    <ReviewCardsGrid
+                      cards={reviewsData.reviews}
+                      isProfile={false}
+                    />
                   </div>
                   <div>
                     <PaginationButtons

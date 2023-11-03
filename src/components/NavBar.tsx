@@ -45,24 +45,24 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
               </a>
             </li>
             {isTokenValid ? (
-              <>
-                <li tabIndex={0}>
-                  <details>
-                    <summary data-test="navbar-account" >ACCOUNT</summary>
-                    <ul className="p-2 bg-neutral bg-opacity-60">
-                      <li>
-                        <a data-test="navbar-profile-link" onClick={() => navigate("profile")}>PROFILE</a>
-                      </li>
-                      <li>
-                        <a>SETTINGS</a>
-                      </li>
-                      <li>
-                        <a
-                          onClick={() => {
-                            sessionStorage.clear();
-                            setIsTokenValid(false);
-                            navigate("/signin");
-                          }}
+            <>
+              <li tabIndex={0}>
+                <details>
+                  <summary data-test="navbar-account">ACCOUNT</summary>
+                  <ul className="p-2 bg-neutral bg-opacity-60">
+                    <li>
+                    <a data-test="navbar-profile-link" onClick={() => navigate('profile')}>PROFILE</a>
+                    </li>
+                    <li>
+                      <a onClick={() => navigate('settings')}>SETTINGS</a>
+                    </li>
+                    <li>
+                      <a
+                        onClick={() => {
+                          sessionStorage.clear();
+                          setIsTokenValid(false);
+                          navigate("/signin");
+                        }}
                         >
                           SIGN OUT
                         </a>
@@ -112,20 +112,20 @@ const NavBar = ({ isTokenValid, setIsTokenValid }: NavBarProps) => {
                     <details open>
                       <summary>ACCOUNT</summary>
 
-                      <ul className="p-2">
-                        <li>
-                          <a>PROFILE</a>
-                        </li>
-                        <li>
-                          <a>SETTINGS</a>
-                        </li>
-                        <li>
-                          <a
-                            onClick={() => {
-                              sessionStorage.clear();
-                              setIsTokenValid(false);
-                              navigate("/signin");
-                            }}
+                    <ul className="p-2">
+                      <li>
+                        <a onClick={() => navigate('profile')}>PROFILE</a>
+                      </li>
+                      <li>
+                        <a onClick={() => navigate('settings')}>SETTINGS</a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => {
+                            sessionStorage.clear();
+                            setIsTokenValid(false);
+                            navigate("/signin");
+                          }}
                           >
                             SIGN OUT
                           </a>
