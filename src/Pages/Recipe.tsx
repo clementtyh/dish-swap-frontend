@@ -32,6 +32,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const token = sessionStorage.getItem("token");
   const queryClient = useQueryClient();
   const [reviewsPage, setReviewsPage] = useState(1);
+  const [userHasReviewed, setUserHasReviewed] = useState(false);
 
   //check if token valid
   useEffect(() => {
@@ -84,6 +85,14 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
         count,
         reviews,
       };
+    },
+    onSettled: (data) => {
+      if (
+        reviewsPage === 1 &&
+        data?.reviews[0].created_by._id === sessionStorage.getItem("userId")
+      ) {
+        setUserHasReviewed(true);
+      }
     },
   });
 
@@ -273,7 +282,8 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <div className="self-end mt-8">
                 {isTokenValid &&
                   recipeId &&
-                  sessionStorage.getItem("userId") != data.created_by && (
+                  sessionStorage.getItem("userId") != data.created_by &&
+                  !userHasReviewed && (
                     <CreateReviewModal
                       recipeId={recipeId}
                       setReviewsPage={setReviewsPage}
