@@ -1,8 +1,15 @@
 import { Review as IReview } from "../types/ReviewInterface.js";
+import DeleteReviewModal from "../components/DeleteReviewModal.js";
 
 interface ReviewCardProps extends IReview {}
 
-function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
+function ReviewCard({
+  _id,
+  recipe_id,
+  created_by,
+  rating,
+  text,
+}: ReviewCardProps) {
   return (
     <div className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-4 md:p-8">
       <div className="flex self-center gap-2">
@@ -38,9 +45,18 @@ function ReviewCard({ created_by, rating, text }: ReviewCardProps) {
         ))}
       </div>
       <p>{text}</p>
-      <p className="self-end mt-auto text-xl font-bold text-green-900">
-        {created_by.display_name}
-      </p>
+      <div className="flex items-start justify-end gap-4">
+        {sessionStorage.getItem("userId") === created_by._id ? (
+          <>
+            <p className="text-xl font-bold text-green-900">Reviewed by you</p>
+            <DeleteReviewModal reviewId={_id} recipeId={recipe_id} />
+          </>
+        ) : (
+          <p className="mt-auto text-xl font-bold text-green-900">
+            {created_by.display_name}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

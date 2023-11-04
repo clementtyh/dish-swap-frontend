@@ -12,6 +12,7 @@ import PaginationButtons from "../components/PaginationButtons.js";
 import verifyToken from "../functions/verifyToken.js";
 import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 import DeleteRecipeModal from "../components/DeleteRecipeModal.js";
+import CreateReviewModal from "../components/CreateReviewModal.js";
 
 const nutrition = {
   calories: "220",
@@ -31,6 +32,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
   const token = sessionStorage.getItem("token");
   const queryClient = useQueryClient();
   const [reviewsPage, setReviewsPage] = useState(1);
+  const [userHasReviewed, setUserHasReviewed] = useState(false);
 
   //check if token valid
   useEffect(() => {
@@ -74,7 +76,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/review?page=${reviewsPage}&recipe=${recipeId}`
+        }/review?page=${reviewsPage}&recipe=${recipeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const reviews = await response.json();
@@ -84,10 +91,21 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
         reviews,
       };
     },
+    onSettled: (data) => {
+      if (reviewsPage === 1) {
+        if (
+          data?.reviews[0].created_by._id === sessionStorage.getItem("userId")
+        ) {
+          setUserHasReviewed(true);
+        } else {
+          setUserHasReviewed(false);
+        }
+      }
+    },
   });
 
   const flavourmarkMutation = useMutation({
-    mutationFn: async (): Promise<IRecipe> => {
+    mutationFn: async (): Promise<any> => {
       const response = await fetch(
         `${
           import.meta.env.PROD
@@ -269,6 +287,17 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             </div>
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-xl font-bold text-green-900">Reviews</h2>
+              <div className="self-end mt-8">
+                {isTokenValid &&
+                  recipeId &&
+                  sessionStorage.getItem("userId") != data.created_by &&
+                  !userHasReviewed && (
+                    <CreateReviewModal
+                      recipeId={recipeId}
+                      setReviewsPage={setReviewsPage}
+                    />
+                  )}
+              </div>
               {!isLoadingReviews && !isErrorReviews && reviewsData && (
                 <>
                   <div className="w-full mt-16">
