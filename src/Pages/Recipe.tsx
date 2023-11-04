@@ -316,7 +316,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
             </div>
             <div className="flex flex-col items-center w-full mt-16">
               <h2 className="text-base md:text-xl font-bold text-green-900">Reviews</h2>
-              <div className="self-end mt-8">
+              <div className="mt-8">
                 {isTokenValid &&
                   recipeId &&
                   sessionStorage.getItem("userId") != data.created_by &&
