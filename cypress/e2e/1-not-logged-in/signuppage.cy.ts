@@ -11,10 +11,8 @@ describe("Sign Up Page, not logged in", () => {
 
   it("sign up successfully", () => {
     const randomUser = generateData();
-    console.log(randomUser);
-    cy.wait(10000);
 
-    cy.get("[data-test=signup-email-input]").type(randomUser.email);
+    cy.get("#signup-email-input").type(randomUser.email);
     cy.get("[data-test=signup-display_name-input]").type(
       randomUser.display_name
     );
@@ -36,33 +34,33 @@ describe("Sign Up Page, not logged in", () => {
       .should("have.text", "Sign up successful!");
   });
 
-  // it("sign up fail because email or name already exists", () => {
-  //   cy.get("[data-test=signup-email-input]").type("test@gmail.com");
-  //   cy.get("[data-test=signup-display_name-input]").type("test123");
-  //   cy.get("[data-test=signup-password-input]").type("Test123@");
-  //   cy.get("[data-test=signup-confirm_password-input]").type("Test123@");
+  it("sign up fail because email or name already exists", () => {
+    cy.get("[data-test=signup-email-input]").type("test@gmail.com");
+    cy.get("[data-test=signup-display_name-input]").type("test123");
+    cy.get("[data-test=signup-password-input]").type("Test123@");
+    cy.get("[data-test=signup-confirm_password-input]").type("Test123@");
 
-  //   cy.intercept("POST", "**/user/register").as("postSignup");
+    cy.intercept("POST", "**/user/register").as("postSignup");
 
-  //   cy.get("[data-test=signup-submit-button]").click();
+    cy.get("[data-test=signup-submit-button]").click();
 
-  //   cy.wait("@postSignup")
-  //     .its("response.statusCode")
-  //     .should("eq", 400);
+    cy.wait("@postSignup")
+      .its("response.statusCode")
+      .should("eq", 400);
 
-  //   cy.get("[data-test=signup-error-message]")
-  //     .should("exist")
-  //     .should("have.text", "User with the given email or display name already exists");
-  // });
+    cy.get("[data-test=signup-error-message]")
+      .should("exist")
+      .should("have.text", "User with the given email or display name already exists");
+  });
 
-  // it("sign up disabled because pw dont match", () => {
-  //   cy.get("[data-test=signup-email-input]").type("test@gmail.com");
-  //   cy.get("[data-test=signup-display_name-input]").type("test123");
-  //   cy.get("[data-test=signup-password-input]").type("Test123@");
-  //   cy.get("[data-test=signup-confirm_password-input]").type("Test123");
+  it("sign up disabled because pw dont match", () => {
+    cy.get("[data-test=signup-email-input]").type("test@gmail.com");
+    cy.get("[data-test=signup-display_name-input]").type("test123");
+    cy.get("[data-test=signup-password-input]").type("Test123@");
+    cy.get("[data-test=signup-confirm_password-input]").type("Test123");
 
-  //   cy.intercept("POST", "**/user/register").as("postSignup");
+    cy.intercept("POST", "**/user/register").as("postSignup");
 
-  //   cy.get("[data-test=signup-submit-button]").should("be.disabled");
-  // });
+    cy.get("[data-test=signup-submit-button]").should("be.disabled");
+  });
 });
