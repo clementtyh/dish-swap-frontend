@@ -9,7 +9,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-const baseUrl = Cypress.env("baseUrl");
+const baseUrl = Cypress.env("CYPRESS_baseUrl");
 
 // mobile: 320, tablet: 768, laptop: 1024,
 const sizes = [
@@ -78,7 +78,7 @@ Cypress.Commands.add("checkNavigationBar", (loggedIn) => {
 Cypress.Commands.add("checkLandingPage", (loggedIn) => {
   sizes.map((size) => {
     cy.viewport(size[0], size[1]);
-
+    
     cy.visit(baseUrl);
 
     cy.get("h1").should("have.text", "DISH SWAP");
