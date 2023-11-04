@@ -13,6 +13,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          record: true
           browser: chrome
-          env: CYPRESS_baseUrl=https://dish-swap.pages.dev,CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }}
+          env: CYPRESS_baseUrl=https://dish-swap.pages.dev
