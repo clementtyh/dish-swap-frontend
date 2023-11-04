@@ -46,15 +46,4 @@ describe("Sign In Page, not logged in", () => {
         "Invalid password"
       );
   });
-  
-  // it("sign up disabled because pw dont match", () => {
-  //   cy.get("[data-test=signup-email-input]").type("test@gmail.com");
-  //   cy.get("[data-test=signup-display_name-input]").type("test123");
-  //   cy.get("[data-test=signup-password-input]").type("Test123@");
-  //   cy.get("[data-test=signup-confirm_password-input]").type("Test123");
-
-  //   cy.intercept("POST", "**/user/register").as("postSignup");
-
-  //   cy.get("[data-test=signup-submit-button]").should("be.disabled");
-  // });
 });
