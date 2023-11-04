@@ -167,7 +167,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
         {!isLoading && !isError && data && (
           <>
             <div className="flex justify-between">
-              <h1 className="text-4xl font-bold text-green-900 uppercase">
+              <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-green-900 uppercase">
                 {data.recipe_name}
               </h1>
               <button
@@ -204,18 +204,18 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     />
                   </svg>
                 )}
-                <p className="text-xl font-bold text-green-900">
+                <p className="text-sm md:text-xl font-bold text-green-900">
                   {data.flavourmarks_count}
                 </p>
               </button>
             </div>
-            <div className="flex items-end justify-between">
-              <p className="text-md mt-4 max-w-full lg:max-w-[50%]">
+            <div className="flex flex-col gap-4 sm:flex-row md:items-end justify-between mt-4">
+              <p className="text-xs md:text-sm lg:text-base max-w-full lg:max-w-[50%]">
                 {data.recipe_description}
               </p>
               {isTokenValid &&
                 sessionStorage.getItem("userId") === data.created_by && (
-                  <div className="flex gap-5">
+                  <div className="flex sm:items-center sm:justify-center gap-5">
                     <CreateUpdateRecipeModal
                       recipeData={data}
                       recipeId={recipeId || null}
@@ -224,7 +224,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   </div>
                 )}
             </div>
-            <div className="carousel w-full h-96 mt-8 rounded-xl">
+            <div className="carousel w-full h-44 md:h-64 lg:h-96 mt-8 rounded-xl">
               {data.image_files.map((image, i) => (
                 <div
                   key={i}
@@ -232,6 +232,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   className="carousel-item relative w-full"
                 >
                   <img src={image} alt={data.recipe_name} className="w-full object-cover" />
+                  {data.image_files.length > 1 &&
                   <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <a
                       href={
@@ -239,7 +240,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                           ? `#${data.image_files.length - 1}`
                           : `#${i - 1}`
                       }
-                      className="btn btn-circle"
+                      className="btn btn-circle btn-xs lg:btn-md"
                     >
                       ❮
                     </a>
@@ -247,33 +248,35 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                       href={
                         i + 1 === data.image_files.length ? "#0" : `#${i + 1}`
                       }
-                      className="btn btn-circle"
+                      className="btn btn-circle btn-xs lg:btn-md"
                     >
                       ❯
                     </a>
                   </div>
+
+                  }
                 </div>
               ))}
             </div>
             <div className="flex flex-col gap-8 mt-16 lg:flex-row">
               <div className="w-full lg:w-2/3">
                 <div className="bg-[#dce0ba] rounded-lg p-4">
-                  <p className="text-xl font-bold text-green-900">
+                  <p className="text-sm md:text-lg font-bold text-green-900">
                     Ingredients
                   </p>
                   <ul className="flex flex-col gap-4 mt-4 list-disc list-inside ">
                     {data.ingredients.map((ingredient) => (
-                      <li key={ingredient}>{ingredient}</li>
+                      <li key={ingredient} className="text-xs md:text-base">{ingredient}</li>
                     ))}
                   </ul>
                 </div>
                 <div className="bg-[#dce0ba] rounded-lg mt-8 p-4">
-                  <p className="text-xl font-bold text-green-900">
+                  <p className="text-sm md:text-lg font-bold text-green-900">
                     Preparation Steps
                   </p>
                   <ol className="flex flex-col gap-4 mt-4 list-decimal list-inside">
                     {data.steps.map((step) => (
-                      <li key={step}>{step}</li>
+                      <li key={step} className="text-xs md:text-base">{step}</li>
                     ))}
                   </ol>
                 </div>
@@ -281,20 +284,20 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <div className="w-full lg:w-1/3">
                 <div className="flex flex-col gap-8 bg-[#eedcb4] rounded-lg p-4 md:p-8">
                   <div className="flex justify-between">
-                    <p className="text-xl font-bold text-green-900">
+                    <p className="text-sm md:text-lg font-bold text-green-900">
                       Difficulty
                     </p>
-                    <p className="text-xl text-[#8eb44f]">{data.difficulty}</p>
+                    <p className="text-xs md:text-base text-[#8eb44f]">{data.difficulty}</p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-xl font-bold text-green-900">
+                    <p className="text-sm md:text-lg font-bold text-green-900">
                       Total Time
                     </p>
-                    <p className="text-xl text-[#8eb44f]">{data.total_time}</p>
+                    <p className="text-xs md:text-base text-[#8eb44f]">{data.total_time}</p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-xl font-bold text-green-900">Servings</p>
-                    <p className="text-xl text-[#8eb44f]">{data.servings}</p>
+                    <p className="text-sm md:text-lg font-bold text-green-900">Servings</p>
+                    <p className="text-xs md:text-base text-[#8eb44f]">{data.servings}</p>
                   </div>
                 </div>
                 {/* <div className="bg-[#eedcb4] rounded-lg p-4 mt-8">
@@ -312,7 +315,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
               </div>
             </div>
             <div className="flex flex-col items-center w-full mt-16">
-              <h2 className="text-xl font-bold text-green-900">Reviews</h2>
+              <h2 className="text-base md:text-xl font-bold text-green-900">Reviews</h2>
               <div className="self-end mt-8">
                 {isTokenValid &&
                   recipeId &&

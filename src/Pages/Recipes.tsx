@@ -137,9 +137,9 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
   return (
     <>
       <Container>
-        <main className="mt-16">
-          <div className="flex flex-row">
-            <div className="flex-none mr-6 lg:w-2/5 md:w-2/3 ">
+        <main className="mt-20 lg:mt-28">
+          <div className="grid md:flex items-center justify-center mb-10 lg:mb-20 gap-5">
+            <div className="md:w-1/2">
               <SearchBar
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
@@ -149,7 +149,7 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
 
             <label
               htmlFor="my_modal_6"
-              className="h-10 px-3 py-1 mx-4 rounded-2xl w-1/8"
+              className="h-10 p-2.5 md:p-2 rounded-xl flex justify-center"
               style={{ backgroundColor: "#DDE0BD" }}
             >
               <img src={filterIcon} />
@@ -173,8 +173,6 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
               <CreateUpdateRecipeModal recipeData={null} recipeId={null} />
             )}
           </div>
-          {/* <div className="flex justify-end mb-8">
-          </div> */}
           {!isLoading && !isError && data && (
             <>
               <CardsGrid cards={data.recipes} />

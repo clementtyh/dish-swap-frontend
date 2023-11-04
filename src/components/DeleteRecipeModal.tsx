@@ -45,7 +45,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
   return (
     <div>
       <button
-        className="btn btn-error btn-sm font-bold normal-case rounded-lg"
+        className="btn btn-error btn-xs md:btn-sm font-bold normal-case rounded-lg"
         onClick={() => toggleModal("show")}
       >
         Delete Recipe
@@ -72,7 +72,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
               <p className="text-xs sm:text-sm">Are you sure you want to delete this recipe?</p>
               <div className="mt-5">
                 <button
-                  className="btn btn-error"
+                  className="btn btn-error btn-xs md:btn-sm"
                   type="button"
                   onClick={() => {
                     toggleModal("close");
@@ -80,7 +80,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
                 >
                   Cancel
                 </button>
-                <button className="btn btn-success ml-5" onClick={deleteRecipe}>
+                <button className="btn btn-success btn-xs md:btn-sm ml-5" onClick={deleteRecipe}>
                   Confirm
                 </button>
               </div>

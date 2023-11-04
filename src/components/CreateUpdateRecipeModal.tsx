@@ -167,9 +167,9 @@ const CreateUpdateRecipeModal = ({
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <button
-        className="btn btn-secondary btn-sm text-neutral font-bold normal-case rounded-lg"
+        className="btn btn-secondary btn-xs md:btn-sm text-neutral font-bold normal-case rounded-lg"
         onClick={() => toggleModal("show")}
       >
         {recipeData ? "Edit Recipe" : "Create Recipe"}
@@ -192,7 +192,7 @@ const CreateUpdateRecipeModal = ({
             </div>
           ) : (
             <>
-              <h3 className="font-bold text-lg">Create Recipe</h3>
+              <h3 className="font-bold text-lg">{recipeData ? "Edit Recipe" : "Create Recipe"}</h3>
               <Formik
                 initialValues={{
                   recipe_name: recipeData?.recipe_name || "",
@@ -259,7 +259,7 @@ const CreateUpdateRecipeModal = ({
                             Ingredients
                             <img
                               src={addsvg}
-                              className="pl-5"
+                              className="pl-5 h-5 md:h-6"
                               onClick={() => push("")}
                             />
                           </label>
@@ -280,7 +280,7 @@ const CreateUpdateRecipeModal = ({
                                   ) : (
                                     <img
                                       src={trashsvg}
-                                      className="pl-5"
+                                      className="pl-5 h-5 md:h-6"
                                       onClick={() => remove(i)}
                                     />
                                   )}
@@ -301,7 +301,7 @@ const CreateUpdateRecipeModal = ({
                             Steps
                             <img
                               src={addsvg}
-                              className="pl-5"
+                              className="pl-5 h-5 md:h-6"
                               onClick={() => push("")}
                             />
                           </label>
@@ -322,7 +322,7 @@ const CreateUpdateRecipeModal = ({
                                   ) : (
                                     <img
                                       src={trashsvg}
-                                      className="pl-5"
+                                      className="pl-5 h-5 md:h-6"
                                       onClick={() => remove(i)}
                                     />
                                   )}
@@ -410,7 +410,7 @@ const CreateUpdateRecipeModal = ({
                       Images (jpg, jpeg, png)
                       <img
                         src={addsvg}
-                        className="pl-5"
+                        className="pl-5 h-5 md:h-6"
                         onClick={handleImages}
                       />
                     </label>
@@ -459,7 +459,7 @@ const CreateUpdateRecipeModal = ({
                           <div className="absolute top-2 right-2 cursor-pointer">
                             <img
                               src={trashsvg}
-                              className="pl-5"
+                              className="pl-5 h-5 md:h-6"
                               onClick={() => {
                                 const newAllImages = allImages.filter(
                                   (e) => e !== image
@@ -475,7 +475,7 @@ const CreateUpdateRecipeModal = ({
                     <br />
                     <br />
                     <button
-                      className="btn btn-error"
+                      className="btn btn-error btn-xs md:btn-md"
                       type="button"
                       onClick={() => {
                         resetForm();
@@ -485,7 +485,7 @@ const CreateUpdateRecipeModal = ({
                       Cancel
                     </button>
                     <button
-                      className="btn ml-5 btn-success"
+                      className="btn ml-5 btn-success btn-xs md:btn-md"
                       type="submit"
                     >
                       Confirm
