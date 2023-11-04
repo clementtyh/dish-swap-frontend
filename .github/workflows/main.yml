@@ -14,7 +14,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          env: CYPRESS_baseUrl=https://dish-swap.pages.dev
+          env: CYPRESS_baseUrl=https://dish-swap.pages.dev,CYPRESS_HEADLESS=false
 
       - name: Cypress artifacts
         uses: actions/upload-artifact@v2
@@ -22,9 +22,3 @@ jobs:
         with:
           name: cypress-screenshots
           path: ./cypress/screenshots
-      - name: Cypress artifacts
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-videos
-          path: ./cypress/videos
