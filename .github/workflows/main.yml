@@ -13,8 +13,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          headed: true
           browser: chrome
-          env: CYPRESS_baseUrl=https://dish-swap.pages.dev,CYPRESS_HEADLESS=false
+          env: CYPRESS_baseUrl=https://dish-swap.pages.dev
 
       - name: Cypress artifacts
         uses: actions/upload-artifact@v2
