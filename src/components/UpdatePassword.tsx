@@ -21,7 +21,9 @@ function UpdatePassword({}) {
 
   const token = sessionStorage.getItem("token");
   const updatePwUrl = urlcat(SERVER, "/user/update_password");
-  const updatePwModal = document.querySelector("#my_modal_6") as HTMLInputElement | null; 
+  const updatePwModal = document.querySelector(
+    "#my_modal_6"
+  ) as HTMLInputElement | null;
 
   const submitUpdatePassword = (
     values: {
@@ -35,7 +37,6 @@ function UpdatePassword({}) {
         headers: { Authorization: "Bearer " + token },
       })
       .then((res) => {
-        console.log(res.data.status);
         if (res.data.status === "success") {
           updatePwModal!.checked = false;
           toast.success("Password updated successfully!");
@@ -43,7 +44,6 @@ function UpdatePassword({}) {
         }
       })
       .catch((error) => {
-        console.log("Update pw error:", error.response.data.message);
         setErrorMessage(error.response.data.message);
       });
   };
@@ -67,7 +67,7 @@ function UpdatePassword({}) {
           >
             {({ errors, touched, handleChange, handleBlur }) => (
               <Form>
-                <label className="label text-xs sm:text-sm font-medium">
+                <label className="text-xs font-medium label sm:text-sm">
                   Current Password
                   <div
                     className="tooltip tooltip-left"
@@ -78,7 +78,7 @@ function UpdatePassword({}) {
                 </label>
                 <div className="flex flex-row">
                   <Field
-                    className="input input-bordered input-xs md:input-sm w-full text-xs"
+                    className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="current_password"
                     type={showCurrentPassword ? "text" : "password"}
                     onChange={handleChange}
@@ -100,7 +100,7 @@ function UpdatePassword({}) {
                   <ErrorMessage name="current_password" />
                 </label>
 
-                <label className="label text-xs sm:text-sm font-medium">
+                <label className="text-xs font-medium label sm:text-sm">
                   New Password
                   <div
                     className="tooltip tooltip-left"
@@ -111,7 +111,7 @@ function UpdatePassword({}) {
                 </label>
                 <div className="flex flex-row">
                   <Field
-                    className="input input-bordered input-xs md:input-sm w-full text-xs"
+                    className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="new_password"
                     type={showNewPassword ? "text" : "password"}
                     onChange={handleChange}
@@ -133,12 +133,12 @@ function UpdatePassword({}) {
                   <ErrorMessage name="new_password" />
                 </label>
 
-                <label className="label text-xs sm:text-sm font-medium">
+                <label className="text-xs font-medium label sm:text-sm">
                   Confirm New Password
                 </label>
                 <div className="flex flex-row">
                   <Field
-                    className="input input-bordered input-xs md:input-sm w-full text-xs"
+                    className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="confirm_password"
                     type={showConfirmPassword ? "text" : "password"}
                     onChange={handleChange}
@@ -163,7 +163,7 @@ function UpdatePassword({}) {
                 <div className="flex flex-row justify-between">
                   <label
                     htmlFor="my_modal_6"
-                    className="link link-primary text-sm font-semibold mt-3"
+                    className="mt-3 text-sm font-semibold link link-primary"
                   >
                     CLOSE
                   </label>
