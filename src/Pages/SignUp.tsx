@@ -90,6 +90,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signup-email-input"
+                  id="signup-email-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="email"
                   onChange={handleChange}
