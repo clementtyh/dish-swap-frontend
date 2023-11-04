@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
-
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signUpValidation from "../validations/signUpValidation.js";
 import infosvg from "../content/svg/Info_fill.svg";
@@ -23,7 +25,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
   //check if token valid
   useEffect(() => {
     const authenticate = async () => {
-      await verifyToken() ? setIsTokenValid(true) : setIsTokenValid(false);
+      (await verifyToken()) ? setIsTokenValid(true) : setIsTokenValid(false);
     };
 
     authenticate();
@@ -34,7 +36,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     if (isTokenValid) {
       navigate("/recipes");
     }
-  }, [isTokenValid])
+  }, [isTokenValid]);
 
   const submitSignUp = (values: {
     email: string;
@@ -46,7 +48,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     axios
       .post(url, values)
       .then(() => {
-        navigate("/signin");
+        toast.success("Sign up successful!");
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
@@ -64,6 +66,9 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
             START YOUR
             <br /> <span className="text-primary">CULINARY</span> JOURNEY
           </h1>
+          <div data-test="signup-toast-success">
+            <ToastContainer />
+          </div>
           <Formik
             initialValues={{
               email: "",
@@ -72,17 +77,19 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
               confirm_password: "",
             }}
             validationSchema={signUpValidation}
-            onSubmit={(values) => {
+            onSubmit={(values, { resetForm }) => {
               submitSignUp(values);
               setErrorMessage(null);
+              resetForm();
             }}
           >
-            {({ errors, handleChange, handleBlur }) => (
+            {({ errors, touched, handleChange, handleBlur }) => (
               <Form>
                 <label className="label text-xs sm:text-sm font-medium">
                   Email
                 </label>
                 <Field
+                  data-test="signup-email-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="email"
                   onChange={handleChange}
@@ -102,6 +109,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   </div>
                 </label>
                 <Field
+                  data-test="signup-display_name-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="display_name"
                   onChange={handleChange}
@@ -121,6 +129,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   </div>
                 </label>
                 <Field
+                  data-test="signup-password-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="password"
                   type="password"
@@ -135,6 +144,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   Confirm Password
                 </label>
                 <Field
+                  data-test="signup-confirm_password-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="confirm_password"
                   type="password"
@@ -146,13 +156,11 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <br />
                 <button
+                  data-test="signup-submit-button"
                   className="btn btn-neutral"
                   type="submit"
-                  disabled={
-                    !(
-                      Object.keys(errors).length === 0
-                    )
-                  }
+                  disabled={!(Object.keys(errors).length === 0  &&
+                    Object.keys(touched).length !== 0)}
                 >
                   BROWSE RECIPES
                 </button>
@@ -168,7 +176,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
             )}
           </Formik>
           {errorMessage ? (
-            <label className="label text-error text-[10px] sm:text-[12px]">
+            <label data-test="signup-error-message" className="label text-error text-[10px] sm:text-[12px]">
               {errorMessage}
             </label>
           ) : (
