@@ -168,7 +168,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   <h2 className="justify-center card-title">
                     {profileDetails.display_name}
                   </h2>
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="flex justify-center">Following</p>
                       <p className="flex justify-center">42</p>
@@ -177,7 +177,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                       <p className="flex justify-center">Followers</p>
                       <p className="flex justify-center">893</p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
