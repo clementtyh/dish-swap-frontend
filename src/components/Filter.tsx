@@ -25,12 +25,12 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
     <>
       <form className="p-4">
         <div className="p-2">
-          <h3 className="text-2xl font-semibold">Difficulty</h3>
+          <h3 className="text-md md:text-lg font-semibold">Difficulty</h3>
           <div className="py-3">
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="mr-3 checkbox checkbox-primary"
+                className="mr-3 checkbox checkbox-primary checkbox-sm md:checkbox-md"
                 style={{ marginBottom: "-5px" }}
                 value="easy"
                 name="difficulty"
@@ -66,12 +66,12 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <span className="text-lg ">Easy</span>
+              <span className="text-sm md:text-base">Easy</span>
             </div>
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="mr-3 checkbox checkbox-primary"
+                className="mr-3 checkbox checkbox-primary checkbox-sm md:checkbox-md"
                 style={{ marginBottom: "-5px" }}
                 value="medium"
                 name="difficulty"
@@ -120,12 +120,12 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <span className="text-lg ">Medium</span>
+              <span className="text-sm md:text-base">Medium</span>
             </div>
             <div className="pb-1">
               <input
                 type="checkbox"
-                className="mr-3 checkbox checkbox-primary"
+                className="mr-3 checkbox checkbox-primary checkbox-sm md:checkbox-md"
                 style={{ marginBottom: "-5px" }}
                 value="hard"
                 name="difficulty"
@@ -160,18 +160,18 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   }
                 }}
               />
-              <span className="text-lg ">Hard</span>
+              <span className="text-sm md:text-base">Hard</span>
             </div>
           </div>
         </div>
         <div className="divider"></div>
         <div className="p-2">
-          <h3 className="text-2xl font-semibold">Number of Ingredients</h3>
+          <h3 className="text-md md:text-lg font-semibold">Number of Ingredients</h3>
           <div className="py-3">
             <div className="pb-2">
               <input
                 type="radio"
-                className="mr-3 radio radio-primary"
+                className="mr-3 radio radio-primary radio-sm md:radio-md"
                 style={{ marginBottom: "-6px" }}
                 value="1"
                 name="ingredients"
@@ -180,12 +180,12 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   setFilters({ ...filters, ingredients: e.target.value })
                 }
               />
-              Max 5
+              <span className="text-sm md:text-base">Max 5</span>
             </div>
             <div className="pb-1">
               <input
                 type="radio"
-                className="mr-3 radio radio-primary"
+                className="mr-3 radio radio-primary radio-sm md:radio-md"
                 style={{ marginBottom: "-6px" }}
                 value="2"
                 name="ingredients"
@@ -194,7 +194,7 @@ function Filter({ filters, setFilters, isOpen, setIsOpen }: IFilter) {
                   setFilters({ ...filters, ingredients: e.target.value })
                 }
               />
-              10 & below
+              <span className="text-sm md:text-base">10 & below</span>
             </div>
           </div>
         </div>
