@@ -14,14 +14,14 @@ import CreateUpdateRecipeModal from "../components/CreateUpdateRecipeModal.js";
 import DeleteRecipeModal from "../components/DeleteRecipeModal.js";
 import CreateReviewModal from "../components/CreateReviewModal.js";
 
-const nutrition = {
-  calories: "220",
-  protein: "12g",
-  fat: "5g",
-  carbohydrates: "35g",
-  fiber: "4g",
-  sugar: "20g",
-};
+// const nutrition = {
+//   calories: "220",
+//   protein: "12g",
+//   fat: "5g",
+//   carbohydrates: "35g",
+//   fiber: "4g",
+//   sugar: "20g",
+// };
 
 interface IReviewsData {
   count: number;
@@ -76,7 +76,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/review?page=${reviewsPage}&recipe=${recipeId}`,
+        }/review/?page=${reviewsPage}&recipe=${recipeId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -271,7 +271,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                     <p className="text-xl text-[#8eb44f]">{data.servings}</p>
                   </div>
                 </div>
-                <div className="bg-[#eedcb4] rounded-lg p-4 mt-8">
+                {/* <div className="bg-[#eedcb4] rounded-lg p-4 mt-8">
                   <p className="text-xl font-bold text-green-900">
                     Nutritional Information (per serving)
                   </p>
@@ -282,7 +282,7 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="flex flex-col items-center w-full mt-16">

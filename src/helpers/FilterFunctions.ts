@@ -7,45 +7,34 @@ const difficultyLevelsMap = {
 };
 
 export const fDiff = (filter: string, recipes: Recipe[]): Recipe[] => {
-  console.log("[Difficulty] Recipes Input (Start):", recipes);
   const split = filter.split("-");
-  console.log("Wtf inside split:", split);
-  console.log("[Difficulty] How many checked:", split.length);
+
   if (split.length === Object.keys(difficultyLevelsMap).length) return recipes;
   else if (split.length === 1) {
     switch (split[0]) {
       case "":
         return recipes;
       case "1":
-        console.log("[Difficulty] Recipes Input (Easy)", recipes);
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "easy"));
         return recipes.filter((recipe) => recipe.difficulty === "easy");
       // break;
       case "2":
-        console.log("input recipes:", recipes);
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "medium"));
         return recipes.filter((recipe) => recipe.difficulty === "medium");
       // break;
       case "3":
-        console.log("input recipes:", recipes);
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "hard"));
         return recipes.filter((recipe) => recipe.difficulty === "hard");
       // break;
     }
   } else if (split.length === 2) {
     if (!split.includes("1")) {
-      console.log("Only 2 & 3 inside");
-      console.log("input recipes:", recipes);
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "easy"));
       return recipes.filter((recipe) => recipe.difficulty !== "easy");
     } else if (!split.includes("2")) {
-      console.log("Only 1 & 3 inside");
-      console.log("input recipes:", recipes);
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "medium"));
       return recipes.filter((recipe) => recipe.difficulty !== "medium");
     } else {
-      console.log("Only 1 & 2 inside");
-      console.log("input recipes:", recipes);
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "hard"));
       return recipes.filter((recipe) => recipe.difficulty !== "hard");
     }
@@ -55,10 +44,8 @@ export const fDiff = (filter: string, recipes: Recipe[]): Recipe[] => {
 
 export const fIngre = (filter: string, recipes: Recipe[]): Recipe[] => {
   if (filter === "1") {
-    console.log("[Ingredients] Recipes Input (<=5):", recipes);
     return recipes?.filter((recipe) => recipe.ingredients.length <= 5);
   } else {
-    console.log("[Ingredients] Recipes Input (<=10):", recipes);
     return recipes?.filter((recipe) => recipe.ingredients.length <= 10);
   }
 };
