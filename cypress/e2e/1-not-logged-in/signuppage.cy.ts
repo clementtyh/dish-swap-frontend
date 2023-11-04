@@ -13,7 +13,7 @@ describe("Sign Up Page, not logged in", () => {
     const randomUser = generateData();
     console.log(randomUser);
 
-    cy.get("[data-test=signup-email-input]").type(randomUser.email);
+    cy.get("[data-test=signup-email-input]").should("exist").type(randomUser.email);
     cy.get("[data-test=signup-display_name-input]").type(
       randomUser.display_name
     );
