@@ -169,12 +169,12 @@ function Recipes({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 Close
               </label>
             </div>
-          </div>
-          <div className="flex justify-end mb-8">
             {isTokenValid && (
               <CreateUpdateRecipeModal recipeData={null} recipeId={null} />
             )}
           </div>
+          {/* <div className="flex justify-end mb-8">
+          </div> */}
           {!isLoading && !isError && data && (
             <>
               <CardsGrid cards={data.recipes} />

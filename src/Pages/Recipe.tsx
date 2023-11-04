@@ -224,11 +224,37 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   </div>
                 )}
             </div>
-            <img
-              className="object-cover w-full mt-8 h-96 rounded-xl"
-              src={data.image_files[0]}
-              alt={data.recipe_name}
-            />
+            <div className="carousel w-full h-96 mt-8 rounded-xl">
+              {data.image_files.map((image, i) => (
+                <div
+                  key={i}
+                  id={`${i}`}
+                  className="carousel-item relative w-full"
+                >
+                  <img src={image} alt={data.recipe_name} className="w-full object-cover" />
+                  <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                    <a
+                      href={
+                        i - 1 === -1
+                          ? `#${data.image_files.length - 1}`
+                          : `#${i - 1}`
+                      }
+                      className="btn btn-circle"
+                    >
+                      ❮
+                    </a>
+                    <a
+                      href={
+                        i + 1 === data.image_files.length ? "#0" : `#${i + 1}`
+                      }
+                      className="btn btn-circle"
+                    >
+                      ❯
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-col gap-8 mt-16 lg:flex-row">
               <div className="w-full lg:w-2/3">
                 <div className="bg-[#dce0ba] rounded-lg p-4">
