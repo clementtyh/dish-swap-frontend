@@ -112,7 +112,7 @@ Cypress.Commands.add("login", () => {
 
   cy.wait("@postLogin")
     .its("response.statusCode")
-    .should("be.oneOf", [200, 304]);
+    .should("eq", 200);
 });
 
 declare namespace Cypress {
