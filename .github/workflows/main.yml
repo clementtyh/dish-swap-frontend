@@ -17,9 +17,8 @@ jobs:
           start: npm run preview
           browser: chrome
           wait-on: 'http://127.0.0.1:4173/'
-          record: true
           env: CYPRESS_baseUrl=http://127.0.0.1:4173/
-          
+
       - name: Cypress artifacts
         uses: actions/upload-artifact@v2
         if: failure()
