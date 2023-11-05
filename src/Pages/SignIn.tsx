@@ -83,7 +83,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signin-email-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -97,7 +97,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signin-password-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="password"
                   type="password"
                   onChange={handleChange}
@@ -117,7 +117,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <button
                   data-test="signin-submit-button"
-                  className="btn btn-neutral"
+                  className="btn btn-neutral btn-xs md:btn-md"
                   type="submit"
                   disabled={!(Object.keys(errors).length === 0)}
                 >
@@ -125,7 +125,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </button>
                 <br />
                 <br />
-                <label className="label-text-alt">
+                <label className="label-text-alt text-xs sm:text-sm">
                   Don't have an account?{" "}
                   <Link className="link" to="/signup">
                     Sign Up

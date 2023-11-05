@@ -13,8 +13,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          build: npm run build
+          start: npm run preview
           browser: chrome
-          env: CYPRESS_baseUrl=https://dish-swap.pages.dev
+          env: CYPRESS_baseUrl=http://127.0.0.1:4173/
 
       - name: Cypress artifacts
         uses: actions/upload-artifact@v2
