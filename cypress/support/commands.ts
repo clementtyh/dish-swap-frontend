@@ -108,8 +108,12 @@ Cypress.Commands.add("signin", () => {
 
   cy.get("[data-test=signin-submit-button]").click();
 
-  cy.wait("@postSignin").its("response.statusCode").should("eq", 200);
+  // cy.wait("@postSignin").its("response.statusCode").should("eq", 200);
 
+  cy.wait('@postSignin').should((interception) => {
+    expect(interception?.response?.statusCode).to.equal(200);
+    cy.log(interception?.response?.body);
+  });
 });
 
 declare namespace Cypress {

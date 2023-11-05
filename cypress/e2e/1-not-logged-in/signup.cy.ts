@@ -25,10 +25,15 @@ describe("Sign Up Page, not logged in", () => {
 
     cy.get("[data-test=signup-submit-button]").click();
 
-    cy.wait("@postSignup")
-      .its("response.statusCode")
-      .should("eq", 200);
+    // cy.wait("@postSignup")
+    //   .its("response.statusCode")
+    //   .should("eq", 200);
 
+      cy.wait('@postSignup').should((interception) => {
+        expect(interception?.response?.statusCode).to.equal(200);
+        cy.log(interception?.response?.body);
+      });
+      
     cy.get("[data-test=signup-toast-success]")
       .should("exist")
       .should("have.text", "Sign up successful!");
@@ -44,9 +49,14 @@ describe("Sign Up Page, not logged in", () => {
 
     cy.get("[data-test=signup-submit-button]").click();
 
-    cy.wait("@postSignup")
-      .its("response.statusCode")
-      .should("eq", 400);
+    // cy.wait("@postSignup")
+    //   .its("response.statusCode")
+    //   .should("eq", 400);
+
+    cy.wait('@postSignup').should((interception) => {
+      expect(interception?.response?.statusCode).to.equal(400);
+      cy.log(interception?.response?.body);
+    });
 
     cy.get("[data-test=signup-error-message]")
       .should("exist")

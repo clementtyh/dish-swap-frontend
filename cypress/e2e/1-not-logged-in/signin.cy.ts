@@ -15,11 +15,16 @@ describe("Sign In Page, not logged in", () => {
     cy.get("[data-test=signin-email-input]").type("gugugaga@gmail.com");
     cy.get("[data-test=signin-password-input]").type("Test123@");
 
-    cy.intercept("POST", "**/auth/login").as("postLogin");
+    cy.intercept("POST", "**/auth/login").as("postSignin");
 
     cy.get("[data-test=signin-submit-button]").click();
 
-    cy.wait("@postLogin").its("response.statusCode").should("eq", 400);
+    // cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
+    
+    cy.wait('@postSignin').should((interception) => {
+      expect(interception?.response?.statusCode).to.equal(400);
+      cy.log(interception?.response?.body);
+    });
 
     cy.get("[data-test=signin-error-message]")
       .should("exist")
@@ -33,11 +38,16 @@ describe("Sign In Page, not logged in", () => {
     cy.get("[data-test=signin-email-input]").type("test@gmail.com");
     cy.get("[data-test=signin-password-input]").type("Test123");
 
-    cy.intercept("POST", "**/auth/login").as("postLogin");
+    cy.intercept("POST", "**/auth/login").as("postSignin");
 
     cy.get("[data-test=signin-submit-button]").click();
 
-    cy.wait("@postLogin").its("response.statusCode").should("eq", 400);
+    // cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
+
+    cy.wait('@postSignin').should((interception) => {
+      expect(interception?.response?.statusCode).to.equal(400);
+      cy.log(interception?.response?.body);
+    });
 
     cy.get("[data-test=signin-error-message]")
       .should("exist")
