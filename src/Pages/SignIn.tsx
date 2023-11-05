@@ -119,11 +119,7 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                   data-test="signin-submit-button"
                   className="btn btn-neutral"
                   type="submit"
-                  disabled={
-                    !(
-                      Object.keys(errors).length === 0
-                    )
-                  }
+                  disabled={!(Object.keys(errors).length === 0)}
                 >
                   BROWSE RECIPES
                 </button>
@@ -139,7 +135,10 @@ const SignIn = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
             )}
           </Formik>
           {errorMessage ? (
-            <label className="label text-error text-[10px] sm:text-[12px]">
+            <label
+              data-test="signin-error-message"
+              className="label text-error text-[10px] sm:text-[12px]"
+            >
               {errorMessage}
             </label>
           ) : (
