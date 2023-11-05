@@ -78,7 +78,7 @@ Cypress.Commands.add("checkNavigationBar", (loggedIn) => {
 Cypress.Commands.add("checkLandingPage", (loggedIn) => {
   sizes.map((size) => {
     cy.viewport(size[0], size[1]);
-    
+
     cy.visit(baseUrl);
 
     cy.get("h1").should("have.text", "DISH SWAP");
@@ -98,28 +98,24 @@ Cypress.Commands.add("checkLandingPage", (loggedIn) => {
 });
 
 //command to login
-Cypress.Commands.add("login", () => {
+Cypress.Commands.add("signin", () => {
   cy.visit(baseUrl + "/signin");
 
-  cy.fixture("login.json").then((login) => {
-    cy.get("[data-test=signin-email-input]").type(login.email);
-    cy.get("[data-test=signin-password-input]").type(login.password);
-  });
+  cy.get("[data-test=signin-email-input]").type("test@gmail.com");
+  cy.get("[data-test=signin-password-input]").type("Test123@");
 
-  cy.intercept("POST", "**/auth/login").as("postLogin");
+  cy.intercept("POST", "**/auth/login").as("postSignin");
 
   cy.get("[data-test=signin-submit-button]").click();
 
-  cy.wait("@postLogin")
-    .its("response.statusCode")
-    .should("be.oneOf", [200, 304]);
+  cy.wait("@postSignin").its("response.statusCode").should("eq", 200);
 });
 
 declare namespace Cypress {
   interface Chainable {
     checkNavigationBar(loggedIn: boolean): void;
     checkLandingPage(loggedIn: boolean): void;
-    login(): void;
+    signin(): void;
   }
 }
 
