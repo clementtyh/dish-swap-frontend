@@ -13,5 +13,6 @@ describe("Profile page, logged in", () => {
     cy.get("[data-test=profile-settings-button]").should("exist").click();
     cy.url().should("eq", baseUrl + "/settings");
 
+    cy.get("[data-test=profile-Recipes-button]").should("exist").click();
   });
 });

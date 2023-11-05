@@ -186,6 +186,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
                 {tabItems.map((item) => {
                   return (
                     <button
+                    data-test={`profile-${item}-button`}
                       className={`btn ${tab === item ? "btn-active" : null}`}
                       onClick={() => {
                         setTab(item);
