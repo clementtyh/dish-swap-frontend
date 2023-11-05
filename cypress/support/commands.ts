@@ -108,8 +108,7 @@ Cypress.Commands.add("signin", () => {
 
   cy.get("[data-test=signin-submit-button]").click();
 
-  // cy.wait("@postSignin").its("response.statusCode").should("eq", 200);
-  cy.get("[data-test=navbar-account]").should("exist")
+  cy.wait("@postSignin").its("response.statusCode").should("eq", 200);
 
 });
 
