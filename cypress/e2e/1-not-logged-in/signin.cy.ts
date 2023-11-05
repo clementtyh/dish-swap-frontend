@@ -8,7 +8,7 @@ describe("Sign In Page, not logged in", () => {
   });
 
   it("sign in successfully", () => {
-    cy.login();
+    cy.signin();
   });
 
   it("sign in fail bc user not found", () => {
