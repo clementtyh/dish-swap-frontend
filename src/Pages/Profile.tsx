@@ -155,7 +155,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
             <div className="flex justify-center w-full my-8">
               <div className="card w-96 bg-[#E6E6CB]">
                 <div className="flex justify-end mt-3 mr-3">
-                  <button onClick={() => navigate("/settings")}>
+                  <button data-test="profile-settings-button" onClick={() => navigate("/settings")}>
                     <img className="h-10" src={settingsIcon} />
                   </button>
                 </div>
