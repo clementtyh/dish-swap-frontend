@@ -19,12 +19,7 @@ describe("Sign In Page, not logged in", () => {
 
     cy.get("[data-test=signin-submit-button]").click();
 
-    // cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
-    
-    cy.wait('@postSignin').should((interception) => {
-      expect(interception?.response?.statusCode).to.equal(400);
-      cy.log(interception?.response?.body);
-    });
+    cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
 
     cy.get("[data-test=signin-error-message]")
       .should("exist")
@@ -42,12 +37,7 @@ describe("Sign In Page, not logged in", () => {
 
     cy.get("[data-test=signin-submit-button]").click();
 
-    // cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
-
-    cy.wait('@postSignin').should((interception) => {
-      expect(interception?.response?.statusCode).to.equal(400);
-      cy.log(interception?.response?.body);
-    });
+    cy.wait("@postSignin").its("response.statusCode").should("eq", 400);
 
     cy.get("[data-test=signin-error-message]")
       .should("exist")
