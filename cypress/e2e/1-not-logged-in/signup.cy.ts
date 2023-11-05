@@ -28,7 +28,7 @@ describe("Sign Up Page, not logged in", () => {
     cy.wait("@postSignup")
       .its("response.statusCode")
       .should("eq", 200);
-
+      
     cy.get("[data-test=signup-toast-success]")
       .should("exist")
       .should("have.text", "Sign up successful!");

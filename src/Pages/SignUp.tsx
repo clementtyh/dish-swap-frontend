@@ -91,7 +91,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <Field
                   data-test="signup-email-input"
                   id="signup-email-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -103,7 +103,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <label className="label text-xs sm:text-sm font-medium">
                   Username
                   <div
-                    className="tooltip tooltip-right"
+                    className="tooltip tooltip-top"
                     data-tip={tooltip.username}
                   >
                     <img src={infosvg} />
@@ -111,7 +111,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signup-display_name-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="display_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -123,7 +123,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <label className="label text-xs sm:text-sm font-medium">
                   Password
                   <div
-                    className="tooltip tooltip-right"
+                    className="tooltip tooltip-top"
                     data-tip={tooltip.password}
                   >
                     <img src={infosvg} />
@@ -131,7 +131,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signup-password-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="password"
                   type="password"
                   onChange={handleChange}
@@ -146,7 +146,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signup-confirm_password-input"
-                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="confirm_password"
                   type="password"
                   onChange={handleChange}
@@ -158,7 +158,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 <br />
                 <button
                   data-test="signup-submit-button"
-                  className="btn btn-neutral"
+                  className="btn btn-neutral btn-xs md:btn-md"
                   type="submit"
                   disabled={!(Object.keys(errors).length === 0  &&
                     Object.keys(touched).length !== 0)}
