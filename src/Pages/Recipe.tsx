@@ -291,12 +291,12 @@ function Recipe({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   </div>
                   <div className="flex justify-between">
                     <p className="text-sm md:text-lg font-bold text-green-900">
-                      Total Time
+                      Total Time (min)
                     </p>
                     <p className="text-xs md:text-base text-[#8eb44f]">{data.total_time}</p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-sm md:text-lg font-bold text-green-900">Servings</p>
+                    <p className="text-sm md:text-lg font-bold text-green-900">Servings (pax)</p>
                     <p className="text-xs md:text-base text-[#8eb44f]">{data.servings}</p>
                   </div>
                 </div>
