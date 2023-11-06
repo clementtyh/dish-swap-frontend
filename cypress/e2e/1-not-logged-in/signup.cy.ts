@@ -12,7 +12,7 @@ describe("Sign Up Page, not logged in", () => {
   it("sign up successfully", () => {
     const randomUser = generateData();
 
-    cy.get("#signup-email-input").type(randomUser.email);
+    cy.get("[data-test=signup-email-input]").type(randomUser.email);
     cy.get("[data-test=signup-display_name-input]").type(
       randomUser.display_name
     );
@@ -29,9 +29,8 @@ describe("Sign Up Page, not logged in", () => {
       .its("response.statusCode")
       .should("eq", 200);
       
-    cy.get("[data-test=signup-toast-success]")
-      .should("exist")
-      .should("have.text", "Sign up successful!");
+      const baseUrl = Cypress.env("CYPRESS_baseUrl");
+      cy.url().should("eq", baseUrl + "/signin");
   });
 
   it("sign up fail because email or name already exists", () => {

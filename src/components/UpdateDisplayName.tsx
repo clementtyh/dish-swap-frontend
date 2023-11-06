@@ -12,29 +12,38 @@ const SERVER = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL_PROD
   : import.meta.env.VITE_API_URL_DEV;
 
-  type updateDisplayNameProps = {
-    profileDetails: IProfileDetails; 
-    displayNameChanged: boolean; 
-    setDisplayNameChanged: React.Dispatch<React.SetStateAction<boolean>>; 
-  }
+type updateDisplayNameProps = {
+  profileDetails: IProfileDetails;
+  displayNameChanged: boolean;
+  setDisplayNameChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-function UpdateDisplayName({ profileDetails, displayNameChanged, setDisplayNameChanged }: updateDisplayNameProps) {
+function UpdateDisplayName({
+  profileDetails,
+  displayNameChanged,
+  setDisplayNameChanged,
+}: updateDisplayNameProps) {
   const token = sessionStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState(null);
-  const updateDisplayNameModal = document.querySelector("#my_modal_7") as HTMLInputElement | null; 
+  const updateDisplayNameModal = document.querySelector(
+    "#my_modal_7"
+  ) as HTMLInputElement | null;
 
-  const submitUpdateDisplayName = (values: { new_display_name: string }, resetForm: any) => {
+  const submitUpdateDisplayName = (
+    values: { new_display_name: string },
+    resetForm: any
+  ) => {
     const url = urlcat(SERVER, "/user/update_display_name");
     axios
       .post(url, values, {
         headers: { Authorization: "Bearer " + token },
       })
       .then((res) => {
-        if (res.data.status === "success"){
-          updateDisplayNameModal!.checked = false; 
-          toast.success("Display name updated successfully!"); 
-          setDisplayNameChanged(!displayNameChanged); 
-          resetForm({ values: '' })
+        if (res.data.status === "success") {
+          updateDisplayNameModal!.checked = false;
+          toast.success("Display name updated successfully!");
+          setDisplayNameChanged(!displayNameChanged);
+          resetForm({ values: "" });
         }
       })
       .catch((err) => setErrorMessage(err.response.data.message));
@@ -48,19 +57,19 @@ function UpdateDisplayName({ profileDetails, displayNameChanged, setDisplayNameC
           <Formik
             initialValues={{ current_display_name: "", new_display_name: "" }}
             validationSchema={updateDisplayNameValidation}
-            onSubmit={(values, {resetForm}) => {
+            onSubmit={(values, { resetForm }) => {
               submitUpdateDisplayName(values, resetForm);
               setErrorMessage(null);
             }}
           >
-            {({ errors, touched, handleChange, handleBlur }) => (
+            {({ errors, handleChange, handleBlur }) => (
               <Form>
                 <label className="label text-xs sm:text-sm font-medium">
                   Current Display Name
-
                 </label>
                 <Field
-                  className="input input-bordered input-xs md:input-sm w-full text-xs" disabled
+                  className="input input-bordered input-xs md:input-sm w-full text-xs"
+                  disabled
                   name="current_display_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -80,6 +89,7 @@ function UpdateDisplayName({ profileDetails, displayNameChanged, setDisplayNameC
                   </div>
                 </label>
                 <Field
+                  data-test="settings-display-input"
                   className="input input-bordered input-xs md:input-sm w-full text-xs"
                   name="new_display_name"
                   onChange={handleChange}
@@ -98,19 +108,23 @@ function UpdateDisplayName({ profileDetails, displayNameChanged, setDisplayNameC
                     CLOSE
                   </label>
                   <button
+                  data-test="settings-display-submit"
                     className="btn btn-neutral"
                     type="submit"
                     disabled={
                       !(
-                        Object.keys(errors).length === 0 &&
-                        Object.keys(touched).length !== 0
+                        Object.keys(errors).length === 0
                       )
                     }
                   >
                     Update Display Name
                   </button>
                 </div>
-                {errorMessage !== null && <p className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">{errorMessage}</p>}
+                {errorMessage !== null && (
+                  <p className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
+                    {errorMessage}
+                  </p>
+                )}
               </Form>
             )}
           </Formik>

@@ -51,9 +51,9 @@ function Settings({ setIsTokenValid, isTokenValid }: ITokenValid) {
             <div className="mt-32 justify-center">
               <div className="flex flex-row">
                 <img className="h-10" src={settingsIcon} />
-                <p className="text-xl font-medium my-1 mx-5">Settings</p>
+                <p data-test="settings-title" className="text-xl font-medium my-1 mx-5">Settings</p>
               </div>
-              <div>
+              <div data-test="settings-toast-success">
                 <ToastContainer />
               </div>
               <div className="flex flex-col items-center">
@@ -72,7 +72,7 @@ function Settings({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   <p>Display Name:</p>
                   <p className="text-center">{profileDetails.display_name}</p>
 
-                  <label htmlFor="my_modal_7">
+                  <label data-test="settings-display-edit" htmlFor="my_modal_7">
                     <img className="h-6 mx-14" src={editIcon} />
                   </label>
                   <UpdateDisplayName
@@ -84,7 +84,7 @@ function Settings({ setIsTokenValid, isTokenValid }: ITokenValid) {
                   <p>Password:</p>
                   <p className="text-center">****************</p>
 
-                  <label htmlFor="my_modal_6">
+                  <label data-test="settings-pw-edit" htmlFor="my_modal_6">
                     <img className="h-6 mx-14" src={editIcon} />
                   </label>
                   <UpdatePassword />
