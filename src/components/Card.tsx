@@ -19,7 +19,7 @@ function Card({
           alt={recipe_name}
         />
         <div className="flex justify-between mt-6">
-          <h2 className="text-base lg:text-lg text-green-900 font-bold">{recipe_name}</h2>
+          <h2 data-test="recipe-name" className="text-base lg:text-lg text-green-900 font-bold">{recipe_name}</h2>
         </div>
         <p className="text-sm lg:text-base mt-2 text-md">{recipe_description}</p>
       </div>

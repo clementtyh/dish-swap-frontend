@@ -28,9 +28,13 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
     const token = sessionStorage.getItem("token");
 
     axios
-      .post(urlcat(SERVER, `/recipe/delete/${recipeId}`), {}, {
-        headers: { Authorization: "Bearer " + token },
-      })
+      .post(
+        urlcat(SERVER, `/recipe/delete/${recipeId}`),
+        {},
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
       .then(() => {
         setIsSubmitting(false);
         recipeModalRef.current?.close();
@@ -45,6 +49,7 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
   return (
     <div>
       <button
+        data-test="delete-recipe-button"
         className="btn btn-error btn-xs md:btn-sm font-bold normal-case rounded-lg"
         onClick={() => toggleModal("show")}
       >
@@ -69,7 +74,9 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
           ) : (
             <>
               <h3 className="font-bold text-md sm:text-lg">Delete Recipe</h3>
-              <p className="text-xs sm:text-sm">Are you sure you want to delete this recipe?</p>
+              <p className="text-xs sm:text-sm">
+                Are you sure you want to delete this recipe?
+              </p>
               <div className="mt-5">
                 <button
                   className="btn btn-error btn-xs md:btn-sm"
@@ -80,7 +87,10 @@ const DeleteRecipeModal = ({ recipeId }: { recipeId: string | null }) => {
                 >
                   Cancel
                 </button>
-                <button className="btn btn-success btn-xs md:btn-sm ml-5" onClick={deleteRecipe}>
+                <button
+                  className="btn btn-success btn-xs md:btn-sm ml-5"
+                  onClick={deleteRecipe}
+                >
                   Confirm
                 </button>
               </div>

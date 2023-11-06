@@ -108,20 +108,19 @@ function UpdateDisplayName({
                     CLOSE
                   </label>
                   <button
-                  data-test="settings-display-submit"
+                    data-test="settings-display-submit"
                     className="btn btn-neutral"
                     type="submit"
-                    disabled={
-                      !(
-                        Object.keys(errors).length === 0
-                      )
-                    }
+                    disabled={!(Object.keys(errors).length === 0)}
                   >
                     Update Display Name
                   </button>
                 </div>
                 {errorMessage !== null && (
-                  <p className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
+                  <p
+                    data-test="settings-error-message"
+                    className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]"
+                  >
                     {errorMessage}
                   </p>
                 )}
