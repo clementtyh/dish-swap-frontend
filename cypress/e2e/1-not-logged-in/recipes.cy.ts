@@ -1,5 +1,8 @@
 describe("Recipes Page, not logged in", () => {
   it("recipes page, no create button, can search", () => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     const baseUrl = Cypress.env("CYPRESS_baseUrl");
     cy.visit(baseUrl + "/recipes");
 

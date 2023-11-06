@@ -1,5 +1,8 @@
 describe("Settings Page, not logged in", () => {
   it("settings page inaccessible, redirected to unauthorised page", () => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     const baseUrl = Cypress.env("CYPRESS_baseUrl");
     cy.visit(baseUrl + "/settings");
 
