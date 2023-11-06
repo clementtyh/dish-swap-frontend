@@ -32,7 +32,7 @@ export const sortNewest = (recipes:Recipe[]):Recipe[] => {
 //* Difficulty 
 export const sortDifficulty = (recipes:Recipe[]):Recipe[] => {
     const sortMap = {"easy": 0, "medium": 1, "hard": 2}; 
-    return recipes.toSorted((a,b) => sortMap[a.difficulty] - sortMap[b.difficulty]); 
+    return recipes.toSorted((a,b) => sortMap[a.difficulty.toLowerCase()] - sortMap[b.difficulty.toLowerCase()]); 
 }; 
 
 //* Least Calories

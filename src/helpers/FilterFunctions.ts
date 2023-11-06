@@ -16,27 +16,27 @@ export const fDiff = (filter: string, recipes: Recipe[]): Recipe[] => {
         return recipes;
       case "1":
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "easy"));
-        return recipes.filter((recipe) => recipe.difficulty === "easy");
+        return recipes.filter((recipe) => recipe.difficulty.toLowerCase() === "easy");
       // break;
       case "2":
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "medium"));
-        return recipes.filter((recipe) => recipe.difficulty === "medium");
+        return recipes.filter((recipe) => recipe.difficulty.toLowerCase() === "medium");
       // break;
       case "3":
         // setRecipes(recipes.filter(recipe => recipe.difficulty === "hard"));
-        return recipes.filter((recipe) => recipe.difficulty === "hard");
+        return recipes.filter((recipe) => recipe.difficulty.toLowerCase() === "hard");
       // break;
     }
   } else if (split.length === 2) {
     if (!split.includes("1")) {
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "easy"));
-      return recipes.filter((recipe) => recipe.difficulty !== "easy");
+      return recipes.filter((recipe) => recipe.difficulty.toLowerCase() !== "easy");
     } else if (!split.includes("2")) {
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "medium"));
-      return recipes.filter((recipe) => recipe.difficulty !== "medium");
+      return recipes.filter((recipe) => recipe.difficulty.toLowerCase() !== "medium");
     } else {
       // setRecipes(recipes.filter(recipe => recipe.difficulty !== "hard"));
-      return recipes.filter((recipe) => recipe.difficulty !== "hard");
+      return recipes.filter((recipe) => recipe.difficulty.toLowerCase() !== "hard");
     }
   }
   return recipes;

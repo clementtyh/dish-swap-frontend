@@ -120,6 +120,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const reviews = await response.json();
+      
       return {
         count,
         reviews,
