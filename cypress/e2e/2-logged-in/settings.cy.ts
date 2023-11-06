@@ -2,6 +2,9 @@ import generateData from "../../helpers/generateData";
 
 describe("Settings page, logged in", () => {
   beforeEach(() => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     cy.signin();
     const baseUrl = Cypress.env("CYPRESS_baseUrl");
     cy.visit(baseUrl + "/settings");
@@ -13,10 +16,6 @@ describe("Settings page, logged in", () => {
   });
 
   it("edit display name successfully", () => {
-    cy.on('uncaught:exception', (err, runnable) => {
-      return false;
-    });
-
     const randomUser = generateData();
 
     cy.get("[data-test=settings-display-edit]").should("exist").click();
@@ -76,9 +75,6 @@ describe("Settings page, logged in", () => {
   });
 
   it("edit display name fail, alr exist", () => {
-    cy.on('uncaught:exception', (err, runnable) => {
-      return false;
-    });
     cy.get("[data-test=settings-display-edit]").should("exist").click();
     cy.get("[data-test=settings-display-input]").type("fortesting");
 

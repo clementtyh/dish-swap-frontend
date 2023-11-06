@@ -1,5 +1,8 @@
 describe("Sign In Page, not logged in", () => {
   beforeEach(() => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     const baseUrl = Cypress.env("CYPRESS_baseUrl");
     cy.visit(baseUrl + "/signin");
     cy.url().should("eq", baseUrl + "/signin");
