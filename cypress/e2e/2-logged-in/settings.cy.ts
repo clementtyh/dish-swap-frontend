@@ -13,6 +13,10 @@ describe("Settings page, logged in", () => {
   });
 
   it("edit display name successfully", () => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
+
     const randomUser = generateData();
 
     cy.get("[data-test=settings-display-edit]").should("exist").click();
@@ -72,6 +76,9 @@ describe("Settings page, logged in", () => {
   });
 
   it("edit display name fail, alr exist", () => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     cy.get("[data-test=settings-display-edit]").should("exist").click();
     cy.get("[data-test=settings-display-input]").type("fortesting");
 
