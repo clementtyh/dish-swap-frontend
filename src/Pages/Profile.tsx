@@ -54,7 +54,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe/flavourmarks`,
+        }/recipe/flavourmarks?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,6 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
-        console.log(recipes)
       return {
         count,
         recipes,
@@ -83,7 +82,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/recipe/profile`,
+        }/recipe/profile?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -112,7 +111,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
           import.meta.env.PROD
             ? import.meta.env.VITE_API_URL_PROD
             : import.meta.env.VITE_API_URL_DEV
-        }/review/profile`,
+        }/review/profile?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,7 +120,6 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const reviews = await response.json();
-
       return {
         count,
         reviews,
