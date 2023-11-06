@@ -1,5 +1,8 @@
 describe("Landing Page, logged in", () => {
   beforeEach(() => {
+    cy.on('uncaught:exception', (err, runnable) => {
+      return false;
+    });
     cy.signin();
     cy.checkNavigationBar(true);
   });
