@@ -186,7 +186,10 @@ function UpdatePassword({}) {
                 </div>
                 {errorMessage !== null &&
                   (errorMessage === "Invalid password" ? (
-                    <p className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
+                    <p
+                      data-test="settings-error-message"
+                      className="label text-left text-error text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]"
+                    >
                       Wrong password
                     </p>
                   ) : (

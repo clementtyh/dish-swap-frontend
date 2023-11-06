@@ -170,6 +170,7 @@ const CreateUpdateRecipeModal = ({
   return (
     <div className="flex justify-center items-center">
       <button
+        data-test="create-update-recipe-button"
         className="btn btn-secondary btn-xs md:btn-sm text-neutral font-bold normal-case rounded-lg"
         onClick={() => toggleModal("show")}
       >

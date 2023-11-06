@@ -67,6 +67,7 @@ const CreateReviewModal = ({ recipeId, setReviewsPage }: CreateUpdateProps) => {
   return (
     <div>
       <button
+        data-test="write-review-button"
         className="font-bold normal-case rounded-lg btn btn-secondary btn-xs md:btn-sm text-neutral"
         onClick={() => toggleModal("show")}
       >
@@ -170,7 +171,10 @@ const CreateReviewModal = ({ recipeId, setReviewsPage }: CreateUpdateProps) => {
                     >
                       Cancel
                     </button>
-                    <button className="ml-5 btn btn-success btn-xs md:btn-sm" type="submit">
+                    <button
+                      className="ml-5 btn btn-success btn-xs md:btn-sm"
+                      type="submit"
+                    >
                       Confirm
                     </button>
                   </Form>
