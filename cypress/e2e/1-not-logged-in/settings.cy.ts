@@ -1,7 +1,7 @@
-describe("Profile Page, not logged in", () => {
-  it("profile page inaccessible, redirected to unauthorised page", () => {
+describe("Settings Page, not logged in", () => {
+  it("settings page inaccessible, redirected to unauthorised page", () => {
     const baseUrl = Cypress.env("CYPRESS_baseUrl");
-    cy.visit(baseUrl + "/profile");
+    cy.visit(baseUrl + "/settings");
 
     cy.get("h1").should("have.text", "Whoops!");
 

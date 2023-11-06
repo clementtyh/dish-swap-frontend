@@ -101,8 +101,10 @@ Cypress.Commands.add("checkLandingPage", (loggedIn) => {
 Cypress.Commands.add("signin", () => {
   cy.visit(baseUrl + "/signin");
 
-  cy.get("[data-test=signin-email-input]").type("test@gmail.com");
-  cy.get("[data-test=signin-password-input]").type("Test123@");
+  cy.fixture("signin.json").then((signin) => {
+    cy.get("[data-test=signin-email-input]").type(signin.email);
+    cy.get("[data-test=signin-password-input]").type(signin.password);
+  })
 
   cy.intercept("POST", "**/auth/login").as("postSignin");
 

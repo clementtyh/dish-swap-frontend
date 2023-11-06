@@ -7,7 +7,7 @@ interface ProfileReviewCardProps extends IReview {}
 function ProfileReviewCard({ recipe, rating, text }: ProfileReviewCardProps) {
   return (
     <Link to={`/recipe/${recipe._id}`}>
-      <div className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-4 md:p-8">
+      <div data-test="profile-review-card" className="flex flex-col gap-8 bg-[#dce0ba] rounded-lg p-4 md:p-8">
         <div className="flex self-center gap-2">
           {[...Array(rating).keys()].map((idx) => (
             <svg

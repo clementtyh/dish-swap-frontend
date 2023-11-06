@@ -140,10 +140,11 @@ const CreateUpdateRecipeModal = ({
         )
         .then((response) => {
           setIsSubmitting(false);
-          recipeModalRef.current?.close();
+          // recipeModalRef.current?.close();
           recipeData
             ? navigate(`/recipe/${recipeId}`)
             : navigate(`/recipe/${response.data.payload.recipe_id}`);
+          window.location.reload();
         })
         .catch((error) => {
           setErrorMessage(error.response.data.message);
@@ -192,7 +193,9 @@ const CreateUpdateRecipeModal = ({
             </div>
           ) : (
             <>
-              <h3 className="font-bold text-lg">{recipeData ? "Edit Recipe" : "Create Recipe"}</h3>
+              <h3 className="font-bold text-lg">
+                {recipeData ? "Edit Recipe" : "Create Recipe"}
+              </h3>
               <Formik
                 initialValues={{
                   recipe_name: recipeData?.recipe_name || "",

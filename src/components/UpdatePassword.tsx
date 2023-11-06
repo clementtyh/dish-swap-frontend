@@ -78,6 +78,7 @@ function UpdatePassword({}) {
                 </label>
                 <div className="flex flex-row">
                   <Field
+                    data-test="settings-currentpw-input"
                     className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="current_password"
                     type={showCurrentPassword ? "text" : "password"}
@@ -111,6 +112,7 @@ function UpdatePassword({}) {
                 </label>
                 <div className="flex flex-row">
                   <Field
+                    data-test="settings-newpw-input"
                     className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="new_password"
                     type={showNewPassword ? "text" : "password"}
@@ -138,6 +140,7 @@ function UpdatePassword({}) {
                 </label>
                 <div className="flex flex-row">
                   <Field
+                    data-test="settings-confirmnewpw-input"
                     className="w-full text-xs input input-bordered input-xs md:input-sm"
                     name="confirm_password"
                     type={showConfirmPassword ? "text" : "password"}
@@ -168,6 +171,7 @@ function UpdatePassword({}) {
                     CLOSE
                   </label>
                   <button
+                    data-test="settings-pw-submit"
                     className="btn btn-neutral"
                     type="submit"
                     disabled={

@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import urlcat from "urlcat";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import signupsigninimg from "/mock-images/signupsignin/signup_signin.jpg?url";
 import signUpValidation from "../validations/signUpValidation.js";
 import infosvg from "../content/svg/Info_fill.svg";
@@ -48,7 +45,7 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
     axios
       .post(url, values)
       .then(() => {
-        toast.success("Sign up successful!");
+        navigate("/signin")
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
@@ -66,9 +63,6 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
             START YOUR
             <br /> <span className="text-primary">CULINARY</span> JOURNEY
           </h1>
-          <div data-test="signup-toast-success">
-            <ToastContainer />
-          </div>
           <Formik
             initialValues={{
               email: "",
@@ -90,7 +84,6 @@ const SignUp = ({ setIsTokenValid, isTokenValid }: ITokenValid) => {
                 </label>
                 <Field
                   data-test="signup-email-input"
-                  id="signup-email-input"
                   className="input input-bordered input-xs sm:input-sm md:input-md w-full text-xs"
                   name="email"
                   onChange={handleChange}

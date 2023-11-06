@@ -12,7 +12,7 @@ function Card({
 }: CardProps) {
   return (
     <Link to={`/recipe/${_id}`}>
-      <div className="flex flex-col mb-5">
+      <div data-test="card" className="flex flex-col mb-5">
         <img
           className="object-cover w-full h-64 rounded-2xl"
           src={image_files[0]}

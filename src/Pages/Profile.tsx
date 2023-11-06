@@ -63,7 +63,7 @@ function Profile({ setIsTokenValid, isTokenValid }: ITokenValid) {
       );
       const count = parseInt(response.headers.get("x-total-count") as string);
       const recipes = await response.json();
-
+        console.log(recipes)
       return {
         count,
         recipes,

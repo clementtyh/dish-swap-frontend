@@ -128,7 +128,10 @@ const DeleteReviewModal = ({ reviewId, recipeId }: DeleteReviewModalProps) => {
             </button>
             <button
               className="ml-5 btn btn-success"
-              onClick={() => mutation.mutate()}
+              onClick={() => {
+                mutation.mutate();
+                window.location.reload();
+              }}
             >
               Confirm
             </button>
